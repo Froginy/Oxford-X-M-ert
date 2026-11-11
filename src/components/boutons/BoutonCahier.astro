@@ -53,6 +53,11 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 		cursor: pointer;
 	}
 
+	/* envoi en cours */
+	.bouton-cahier[aria-busy] {
+		cursor: progress;
+	}
+
 	/* liseré doré, comme sur une couverture de carnet */
 	.bouton-cahier::before {
 		content: '';

@@ -90,24 +90,30 @@ const coulures = [
 	}
 
 	/* --- survol --- */
-	.bouton-coulis:is(:hover, :focus-visible) .chocolat {
+	.bouton-coulis:not(:disabled):is(:hover, :focus-visible) .chocolat {
 		opacity: 1;
 		transition: opacity 0s;
 	}
 
-	.bouton-coulis:is(:hover, :focus-visible) .coulure {
+	.bouton-coulis:not(:disabled):is(:hover, :focus-visible) .coulure {
 		height: var(--long);
 		transition: height 0.9s cubic-bezier(0.3, 0.7, 0.4, 1) var(--retard);
 	}
 
-	.bouton-coulis:is(:hover, :focus-visible) .nappe {
+	.bouton-coulis:not(:disabled):is(:hover, :focus-visible) .nappe {
 		height: 100%;
 		transition: height 0.9s cubic-bezier(0.6, 0, 0.3, 1) 0.45s;
 	}
 
-	.bouton-coulis:is(:hover, :focus-visible) .libelle {
+	.bouton-coulis:not(:disabled):is(:hover, :focus-visible) .libelle {
 		color: var(--color-creme);
 		transition: color 0.4s 0.75s;
+	}
+
+	/* Complet : bouton désactivé, sans coulure */
+	.bouton-coulis:disabled {
+		cursor: not-allowed;
+		opacity: 0.6;
 	}
 
 	.bouton-coulis:focus-visible {
@@ -123,7 +129,7 @@ const coulures = [
 		.bouton-coulis .libelle {
 			transition: none !important;
 		}
-		.bouton-coulis:is(:hover, :focus-visible) .nappe {
+		.bouton-coulis:not(:disabled):is(:hover, :focus-visible) .nappe {
 			height: 100%;
 		}
 	}

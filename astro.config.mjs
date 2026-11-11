@@ -1,13 +1,31 @@
 // @ts-check
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, envField, fontProviders } from 'astro/config';
 
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
+  // Routes d'API serveur (réservation) : fonctions Vercel ; le reste du site reste statique
+  adapter: vercel(),
+
+  // Variables d'environnement (Vercel ; en local : `vercel env pull .env.local`)
+  env: {
+    schema: {
+      KV_REST_API_URL: envField.string({ context: 'server', access: 'secret' }),
+      KV_REST_API_TOKEN: envField.string({ context: 'server', access: 'secret' }),
+      TURNSTILE_SECRET_KEY: envField.string({ context: 'server', access: 'secret' }),
+      // Sans clé Resend, les réservations fonctionnent mais aucun e-mail ne part
+      RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
+      RESEND_EXPEDITEUR: envField.string({ context: 'server', access: 'secret', default: 'Méert × Oxford <onboarding@resend.dev>' }),
+      PLACES_TOTAL: envField.number({ context: 'server', access: 'secret', default: 10 }),
+      // Clé de test Cloudflare par défaut (toujours valide)
+      PUBLIC_TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', default: '1x00000000000000000000AA' }),
+    },
+  },
 
   fonts: [
     {
