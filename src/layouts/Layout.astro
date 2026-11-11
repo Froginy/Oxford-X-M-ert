@@ -1,6 +1,8 @@
 ---
 import { Font } from 'astro:assets';
 import Chargement from '../components/Chargement.astro';
+import FiltreCoulis from '../components/boutons/FiltreCoulis.astro';
+import Header from '../components/Header.astro';
 import ModaleReservation from '../components/ModaleReservation.astro';
 import '../styles/global.css';
 ---
@@ -19,7 +21,9 @@ import '../styles/global.css';
 		<title>Méert × Oxford — Transmettre votre savoir-faire</title>
 	</head>
 	<body>
+		<FiltreCoulis />
 		<Chargement />
+		<Header />
 		<slot />
 		<ModaleReservation />
 	</body>
