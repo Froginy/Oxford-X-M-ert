@@ -1,5 +1,6 @@
 ---
-import Crayon from '../assets/motifs/crayon.svg'; 
+import Crayon from '../assets/motifs/crayon.svg';
+import LienSouligne from './LienSouligne.astro';
 import '../styles/global.css';
 ---
 
@@ -28,10 +29,10 @@ import '../styles/global.css';
             Le site
           </p>
           <ul class="flex flex-col gap-2.5">
-            <li><a href="#collab" class="text-base text-encre hover:underline transition-opacity">La collab</a></li>
-            <li><a href="#produit" class="text-base text-encre hover:underline transition-opacity">Le produit</a></li>
-            <li><a href="#evenement" class="text-base text-encre hover:underline transition-opacity">L’événement</a></li>
-            <li><a href="#reserver" class="text-base text-encre hover:underline transition-opacity">Réserver</a></li>
+            <li><LienSouligne href="#collab" class="text-base text-encre">La collab</LienSouligne></li>
+            <li><LienSouligne href="#produit" class="text-base text-encre">Le produit</LienSouligne></li>
+            <li><LienSouligne href="#evenement" class="text-base text-encre">L’événement</LienSouligne></li>
+            <li><LienSouligne class="text-base text-encre" data-reservation-ouvrir>Réserver</LienSouligne></li>
           </ul>
         </div>
 
@@ -41,10 +42,10 @@ import '../styles/global.css';
             Les marques
           </p>
           <ul class="flex flex-col gap-2.5">
-            <li><a href="https://www.meert.fr" target="_blank" rel="noopener" class="text-base text-encre transition-opacity hover:underline">Méert</a></li>
-            <li><a href="https://www.oxford.fr" target="_blank" rel="noopener" class="text-base text-encre transition-opacity hover:underline">Oxford</a></li>
-            <li><a href="#contact" class="text-base text-encre transition-opacity hover:underline">Contact</a></li>
-            <li><a href="#presse" class="text-base text-encre transition-opacity hover:underline">Presse</a></li>
+            <li><LienSouligne href="https://www.meert.fr" target="_blank" rel="noopener" class="text-base text-encre">Méert</LienSouligne></li>
+            <li><LienSouligne href="https://www.oxford.fr" target="_blank" rel="noopener" class="text-base text-encre">Oxford</LienSouligne></li>
+            <li><LienSouligne href="#contact" class="text-base text-encre">Contact</LienSouligne></li>
+            <li><LienSouligne href="#presse" class="text-base text-encre">Presse</LienSouligne></li>
           </ul>
         </div>
 
@@ -72,10 +73,10 @@ import '../styles/global.css';
       <p>© 2026 Méert × Oxford</p>
 
       <div class="flex flex-wrap gap-x-6 gap-y-2">
-        <a href="#mentions-legales" class="hover:underline transition-colors">Mentions légales</a>
-        <a href="#confidentialite" class=" hover:underline transition-colors">Politique de confidentialité</a>
-        <a href="#cookies" class=" transition-colors hover:underline">Cookies</a>
-        <a href="#cgv" class=" transition-colors hover:underline">CGV</a>
+        <LienSouligne href="#mentions-legales">Mentions légales</LienSouligne>
+        <LienSouligne href="#confidentialite">Politique de confidentialité</LienSouligne>
+        <LienSouligne href="#cookies">Cookies</LienSouligne>
+        <LienSouligne href="#cgv">CGV</LienSouligne>
       </div>
 
     </div>
