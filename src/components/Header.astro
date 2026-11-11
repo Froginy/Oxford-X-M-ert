@@ -1,0 +1,228 @@
+---
+import burger from '../assets/header/burger.svg';
+import contourDesktop from '../assets/header/contour-ouvert.svg';
+import contourTablette from '../assets/header/contour-ouvert-tablette.svg';
+
+// Header flottant — Figma : « Header flottant » (état 1 haut de page, état 2 au scroll) + tablette 768.
+// Tablette/desktop : barre au contour gribouillé (liens · logo · L'événement + Réserver). Au scroll vers le bas,
+// elle disparaît et seul le burger reste dans le coin haut droit ; elle ne revient qu'au clic sur le burger
+// (ou tout en haut de la page).
+// Mobile : burger seul en permanence ; il ouvre le header en modale.
+const liens = [
+	{ href: '#collab', texte: 'La collab' },
+	{ href: '#produit', texte: 'Le produit' },
+	{ href: '#evenement', texte: 'L’événement' },
+];
+---
+
+<header id="header" class="group pointer-events-none fixed inset-x-0 top-0 z-50" data-etat="ouvert">
+	<!-- Tablette/desktop : barre complète -->
+	<div
+		class="pointer-events-auto relative mx-auto mt-[27px] hidden h-16 w-[672px] transition-[opacity,translate] duration-300 ease-out group-data-[etat=reduit]:pointer-events-none group-data-[etat=reduit]:-translate-y-4 group-data-[etat=reduit]:opacity-0 motion-reduce:transition-none md:block lg:mt-8 lg:h-[84px] lg:w-[min(1200px,calc(100%-80px))]"
+		data-barre
+	>
+		<!-- Fond crème arrondi sous le contour gribouillé (un contour par maquette) -->
+		<div class="absolute inset-0 rounded-[32px] bg-creme lg:rounded-[42px]" aria-hidden="true"></div>
+		<img src={contourTablette.src} alt="" class="pointer-events-none absolute inset-0 size-full lg:hidden" aria-hidden="true" />
+		<img src={contourDesktop.src} alt="" class="pointer-events-none absolute inset-0 hidden size-full lg:block" aria-hidden="true" />
+
+		<nav class="relative grid h-full grid-cols-[1fr_auto_1fr] items-center px-8 lg:px-[42px]" aria-label="Navigation principale">
+			<div class="grid grid-cols-2 items-center">
+				{
+					liens.slice(0, 2).map((lien) => (
+						<a href={lien.href} class="lien">
+							{lien.texte}
+						</a>
+					))
+				}
+			</div>
+
+			<!-- Logo collab : placeholder en attente du fichier -->
+			<a
+				href="#hero"
+				class="flex h-10 w-[110px] items-center justify-center border border-encre text-[11px] text-gris lg:h-12 lg:w-[150px] lg:text-xs"
+				aria-label="Méert × Oxford — retour en haut de page"
+			>
+				Logo
+			</a>
+
+			<div class="grid grid-cols-[1fr_auto] items-center">
+				<a href={liens[2].href} class="lien justify-self-center">{liens[2].texte}</a>
+				<button type="button" class="bouton-reserver flex" data-reservation-ouvrir>Réserver</button>
+			</div>
+		</nav>
+	</div>
+
+	<!-- Burger : toujours visible sur mobile ; sur tablette/desktop uniquement quand la barre est masquée -->
+	<button
+		type="button"
+		class="pointer-events-auto absolute top-5 right-5 size-[56px] cursor-pointer transition-[opacity,translate,scale] duration-300 ease-out hover:scale-105 motion-reduce:transition-none md:pointer-events-none md:top-[27px] md:right-12 md:size-[60px] md:-translate-y-2 md:opacity-0 md:group-data-[etat=reduit]:pointer-events-auto md:group-data-[etat=reduit]:translate-y-0 md:group-data-[etat=reduit]:opacity-100 lg:top-8 lg:right-[max(40px,calc((100%-1200px)/2))]"
+		aria-label="Menu"
+		aria-haspopup="dialog"
+		aria-controls="menu-mobile"
+		data-burger
+	>
+		<img src={burger.src} alt="" class="size-full" />
+	</button>
+</header>
+
+<!-- Mobile : le header s'ouvre en modale -->
+<dialog
+	id="menu-mobile"
+	aria-label="Menu"
+	class="fixed inset-0 m-0 size-full max-h-none max-w-none overflow-hidden bg-transparent p-0 backdrop:bg-transparent md:hidden"
+>
+	<div class="absolute inset-0 bg-encre/60" data-menu-voile></div>
+	<div class="absolute inset-x-3 top-3 flex flex-col rounded-[28px] border-[1.5px] border-encre bg-creme px-6 pt-5 pb-7 shadow-[0_18px_40px_rgba(28,18,15,0.25)]" data-menu-panneau>
+		<div class="flex items-center justify-between">
+			<a href="#hero" class="flex h-[34px] w-[92px] items-center justify-center border border-encre text-[11px] text-gris" aria-label="Méert × Oxford — retour en haut de page" data-menu-lien>
+				Logo
+			</a>
+			<button type="button" class="-mr-1 cursor-pointer px-2 text-[28px] leading-none text-encre" aria-label="Fermer le menu" autofocus data-menu-fermer>×</button>
+		</div>
+
+		<nav class="mt-8 flex flex-col items-center gap-6" aria-label="Navigation principale">
+			{
+				liens.map((lien) => (
+					<a href={lien.href} class="text-xl font-medium text-encre" data-menu-lien>
+						{lien.texte}
+					</a>
+				))
+			}
+		</nav>
+
+		<hr class="my-7 border-sable" />
+
+		<button type="button" class="bouton-reserver flex justify-center self-center" data-reservation-ouvrir data-menu-lien>Réserver sa place</button>
+	</div>
+</dialog>
+
+<style>
+	.lien {
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--color-encre);
+		white-space: nowrap;
+		transition: opacity 150ms;
+	}
+	.lien:hover {
+		opacity: 0.7;
+	}
+	/* L'affichage (flex / hidden) reste dans les classes Tailwind pour garder les variantes responsive */
+	.bouton-reserver {
+		align-items: center;
+		height: 44px;
+		padding-inline: 22px;
+		border-radius: 9999px;
+		background: var(--color-dore);
+		font-size: 15px;
+		font-weight: 500;
+		color: var(--color-encre);
+		white-space: nowrap;
+		cursor: pointer;
+	}
+	@media (width >= 48rem) {
+		.bouton-reserver {
+			height: 38px;
+			padding-inline: 18px;
+			font-size: 14px;
+		}
+	}
+	@media (width >= 64rem) {
+		.lien,
+		.bouton-reserver {
+			font-size: 15px;
+		}
+		.bouton-reserver {
+			height: 44px;
+			padding-inline: 22px;
+		}
+	}
+	a:focus-visible,
+	button:focus-visible {
+		outline: 2px solid var(--color-encre);
+		outline-offset: 2px;
+	}
+</style>
+
+<script>
+	import { gsap, mouvementReduit } from '../scripts/gsap';
+
+	const header = document.getElementById('header');
+	const menu = document.getElementById('menu-mobile') as HTMLDialogElement | null;
+	const ecranLarge = () => window.matchMedia('(min-width: 768px)').matches;
+
+	if (header && menu) {
+		// --- Tablette/desktop : barre masquée au scroll vers le bas, réaffichée par le burger ---
+		const SEUIL = 120; // tout en haut de la page, la barre est toujours affichée
+		const ECART = 6; // ignore les micro-défilements
+		let dernierY = window.scrollY;
+		let enAttente = false;
+		const definirEtat = (etat: 'ouvert' | 'reduit') => (header.dataset.etat = etat);
+
+		window.addEventListener(
+			'scroll',
+			() => {
+				if (enAttente) return;
+				enAttente = true;
+				requestAnimationFrame(() => {
+					enAttente = false;
+					const y = window.scrollY;
+					const delta = y - dernierY;
+					if (Math.abs(delta) < ECART) return;
+					if (y <= SEUIL) definirEtat('ouvert');
+					else if (delta > 0) definirEtat('reduit');
+					// Scroll vers le haut : on ne réaffiche pas la barre, seul le burger le fait
+					dernierY = y;
+				});
+			},
+			{ passive: true },
+		);
+
+		// --- Mobile : menu en modale ---
+		const voile = menu.querySelector<HTMLElement>('[data-menu-voile]')!;
+		const panneau = menu.querySelector<HTMLElement>('[data-menu-panneau]')!;
+
+		const ouvrirMenu = () => {
+			if (menu.open) return;
+			document.documentElement.style.overflow = 'hidden';
+			menu.showModal();
+			gsap.killTweensOf([voile, panneau]);
+			gsap.fromTo(voile, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' });
+			gsap.fromTo(
+				panneau,
+				{ autoAlpha: 0, y: mouvementReduit() ? 0 : -16 },
+				{ autoAlpha: 1, y: 0, duration: 0.4, ease: 'power3.out' },
+			);
+		};
+
+		const fermerMenu = (immediat = false) => {
+			if (!menu.open) return;
+			const fin = () => {
+				menu.close();
+				// Ne libère le défilement que si aucune autre fenêtre (ex. réservation) n'est ouverte
+				if (!document.querySelector('dialog[open]')) document.documentElement.style.overflow = '';
+			};
+			gsap.killTweensOf([voile, panneau]);
+			if (immediat) return fin();
+			gsap.to(voile, { autoAlpha: 0, duration: 0.25, ease: 'power1.in' });
+			gsap.to(panneau, { autoAlpha: 0, y: mouvementReduit() ? 0 : -12, duration: 0.25, ease: 'power2.in', onComplete: fin });
+		};
+
+		header.querySelector('[data-burger]')!.addEventListener('click', () => {
+			if (ecranLarge()) definirEtat('ouvert');
+			else ouvrirMenu();
+		});
+
+		menu.querySelector('[data-menu-fermer]')!.addEventListener('click', () => fermerMenu());
+		voile.addEventListener('click', () => fermerMenu());
+		menu.addEventListener('cancel', (evenement) => {
+			evenement.preventDefault();
+			fermerMenu();
+		});
+		// Un lien (ou « Réserver ») ferme le menu tout de suite pour laisser place à la suite
+		menu.querySelectorAll('[data-menu-lien]').forEach((lien) => lien.addEventListener('click', () => fermerMenu(true)));
+		// Passage en tablette/desktop menu ouvert : on le ferme
+		window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => e.matches && fermerMenu(true));
+	}
+</script>
