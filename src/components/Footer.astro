@@ -1,6 +1,7 @@
 ---
 import Crayon from '../assets/motifs/crayon.svg';
 import LienSouligne from './LienSouligne.astro';
+import Logo from '../assets/logo/logo-de-main-en-main.svg';
 import '../styles/global.css';
 ---
 
@@ -12,9 +13,7 @@ import '../styles/global.css';
       
       <!-- Bloc Logo & Slogan -->
       <div class="flex flex-col gap-4">
-        <div class="border border-chocolat px-5 py-2 bg-creme rounded-full inline-flex items-center justify-center w-max shadow-sm">
-          <span class="text-sm tracking-wide font-medium text-encre">Logo</span>
-        </div>
+        <Logo class="h-24 w-auto self-start text-encre md:h-28" />
         <p class="text-sm md:text-base text-gris">
           Méert × Oxford — Transmettez votre savoir-faire
         </p>

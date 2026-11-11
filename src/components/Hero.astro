@@ -1,5 +1,6 @@
 ---
 import BoutonCoulis from './boutons/BoutonCoulis.astro';
+import Logo from '../assets/logo/logo-de-main-en-main.svg';
 import type { ImageMetadata } from 'astro';
 
 import moitieOxford from '../assets/hero/moitie-oxford.svg';
@@ -165,10 +166,8 @@ function visibilite(objet: Objet) {
 
 	<!-- Desktop : la carte garde la proportion de la maquette (600 / 1440) pour ne pas recouvrir les visuels -->
 	<div class="relative flex w-full max-w-[342px] flex-col items-center gap-5 border border-encre bg-creme px-5 py-6 text-center md:max-w-[498px] md:p-8 xl:mt-[22px] xl:w-[41.667%] xl:max-w-[600px] xl:gap-6 xl:p-9">
-		<!-- Logo collab : placeholder en attente du fichier -->
-		<div class="flex h-14 w-[150px] items-center justify-center border border-encre bg-creme text-xs text-gris md:w-[170px] xl:h-20 xl:w-60 xl:border-[1.5px]">
-			Logo
-		</div>
+		<!-- Logo de la collab -->
+		<Logo class="h-24 w-auto text-encre md:h-28 xl:h-32" />
 
 		<div class="flex flex-col items-center gap-5 xl:gap-3">
 			<h1 class="flex flex-col items-center gap-0.5 text-[26px] leading-normal font-bold whitespace-nowrap md:text-[34px] xl:text-[44px]">

@@ -2,6 +2,8 @@
 import burger from '../assets/header/burger.svg';
 import BoutonCoulis from './boutons/BoutonCoulis.astro';
 import LienSouligne from './LienSouligne.astro';
+import Logo from '../assets/logo/logo-de-main-en-main.svg';
+import Embleme from '../assets/logo/embleme-de-main-en-main.svg';
 import contourDesktop from '../assets/header/contour-ouvert.svg';
 import contourTablette from '../assets/header/contour-ouvert-tablette.svg';
 
@@ -39,13 +41,9 @@ const liens = [
 				}
 			</div>
 
-			<!-- Logo collab : placeholder en attente du fichier -->
-			<a
-				href="#hero"
-				class="flex h-10 w-[110px] items-center justify-center border border-encre text-[11px] text-gris lg:h-12 lg:w-[150px] lg:text-xs"
-				aria-label="Méert × Oxford — retour en haut de page"
-			>
-				Logo
+			<!-- Emblème de la collab : dans la barre, le texte du logo serait illisible -->
+			<a href="#hero" class="block text-encre" aria-label="De Main en Main, Méert × Oxford — retour en haut de page">
+				<Embleme class="h-11 w-auto lg:h-13" aria-hidden="true" />
 			</a>
 
 			<div class="grid grid-cols-[1fr_auto] items-center">
@@ -79,8 +77,8 @@ const liens = [
 	<div class="absolute inset-0 bg-encre/60" data-menu-voile></div>
 	<div class="absolute inset-x-3 top-3 flex flex-col rounded-[28px] border-[1.5px] border-encre bg-creme px-6 pt-5 pb-7 shadow-[0_18px_40px_rgba(28,18,15,0.25)]" data-menu-panneau>
 		<div class="flex items-center justify-between">
-			<a href="#hero" class="flex h-[34px] w-[92px] items-center justify-center border border-encre text-[11px] text-gris" aria-label="Méert × Oxford — retour en haut de page" data-menu-lien>
-				Logo
+			<a href="#hero" class="block text-encre" aria-label="De Main en Main, Méert × Oxford — retour en haut de page" data-menu-lien>
+				<Logo class="h-20 w-auto" aria-hidden="true" />
 			</a>
 			<button type="button" class="-mr-1 cursor-pointer px-2 text-[28px] leading-none text-encre" aria-label="Fermer le menu" autofocus data-menu-fermer>×</button>
 		</div>
