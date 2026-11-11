@@ -3,6 +3,8 @@
 /* Palette Méert × Oxford (Figma : « Palette & contrastes ») */
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-titre: var(--font-playfair), ui-serif, Georgia, serif; /* Playfair Display italique */
+  --font-manuscrit: var(--font-caveat), cursive; /* Caveat */
 
   --color-encre: #1b1310; /* noir encre — texte, aplats */
   --color-creme: #faf6ef; /* blanc crème — fonds */
@@ -17,6 +19,8 @@
   --color-creme-oxford: #f3ede2;
   --color-sable-clair: #e8decd;
   --color-cacao: #55392a;
+  --color-papier: #fffdf8; /* feuille de cahier, cases à cocher (modale) */
+  --color-gris-clair: #9a8a7a; /* texte d'exemple, mentions (modale) */
 }
 
 @layer base {

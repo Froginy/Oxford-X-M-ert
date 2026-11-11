@@ -1,0 +1,261 @@
+---
+import tacheCafe from '../assets/modale/tache-cafe.svg';
+import gaufreCroquee from '../assets/modale/gaufre-croquee.svg';
+import numeroEntoure from '../assets/modale/numero-de-place-entoure.svg';
+import spiraleVerticale from '../assets/modale/spirale-verticale.svg';
+import spiraleHorizontale from '../assets/modale/spirale-horizontale.svg';
+import coche from '../assets/modale/coche.svg';
+
+// Modale « Réserver sa place » — Figma : « Modale – Réservation (fenêtre JS) », direction « Le carnet Oxford ».
+// Mobile (< 768) : feuille collée en bas de l'écran ; tablette 560 px ; desktop (≥ 1280) 600 px.
+---
+
+<dialog
+	id="modale-reservation"
+	aria-labelledby="modale-reservation-titre"
+	class="fixed inset-0 m-0 size-full max-h-none max-w-none overflow-hidden bg-transparent p-0 backdrop:bg-transparent"
+>
+	<div class="absolute inset-0 bg-encre/60" data-voile></div>
+
+	<div class="absolute inset-0 flex items-end justify-center overflow-y-auto md:items-center md:p-10" data-fond>
+		<div class="relative w-full drop-shadow-[0_18px_20px_rgba(28,18,15,0.3)] md:w-[560px] xl:w-[600px]" data-feuille>
+			<!-- Spirale du carnet : à gauche sur desktop/tablette, en haut sur mobile -->
+			<div
+				class="pointer-events-none absolute inset-y-0 -left-3 z-10 hidden w-8 bg-size-[32px_774.331px] bg-repeat-y md:block"
+				style={`background-image: url(${spiraleVerticale.src})`}
+				aria-hidden="true"
+			>
+			</div>
+			<div
+				class="pointer-events-none absolute inset-x-0 -top-3.5 z-10 h-8 bg-size-[390px_32px] bg-top bg-no-repeat md:hidden"
+				style={`background-image: url(${spiraleHorizontale.src})`}
+				aria-hidden="true"
+			>
+			</div>
+
+			<div
+				class="papier relative max-h-[calc(100dvh-24px)] overflow-y-auto rounded-t-[22px] [--marge:20px] md:max-h-none md:overflow-hidden md:rounded-[6px] md:[--marge:58px]"
+				data-papier
+			>
+				<img
+					src={tacheCafe.src}
+					alt=""
+					class="pointer-events-none absolute top-0.5 -right-[22px] size-[156px] mix-blend-multiply md:-top-[13px] md:-right-[18px] md:size-[225px]"
+				/>
+
+				<button
+					type="button"
+					class="absolute top-2.5 right-[34px] z-10 translate-x-full cursor-pointer text-[26px] leading-none text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre md:top-3 md:right-[38px]"
+					aria-label="Fermer la fenêtre de réservation"
+					autofocus
+					data-reservation-fermer
+				>
+					×
+				</button>
+
+				<!-- État 1 : formulaire (et erreur sur l'e-mail) -->
+				<div class="relative flex flex-col gap-4 pt-[34px] pr-5 pb-7 pl-9 md:gap-[18px] md:pt-10 md:pr-11 md:pb-9 md:pl-[72px]" data-etat="formulaire">
+					<div class="flex items-start gap-3.5">
+						<div class="flex flex-1 flex-col items-start gap-2 md:gap-2.5">
+							<h2 id="modale-reservation-titre" class="font-titre text-[28px] leading-[34px] text-encre italic md:text-[34px] md:leading-10">
+								Réserver sa place
+							</h2>
+							<p class="flex items-center gap-2 text-[13px] font-medium text-encre">
+								<span class="size-2 rounded-full bg-bordeaux" aria-hidden="true"></span>
+								<span><span data-places-restantes>XX</span> places restantes</span>
+							</p>
+							<p class="text-sm leading-[21px] text-gris">
+								L’événement est accessible sur réservation, dans la limite des places disponibles.
+							</p>
+						</div>
+						<!-- Emplacement réservé à la tache de café -->
+						<div class="h-24 w-[104px] shrink-0 md:h-[130px] md:w-[150px]" aria-hidden="true"></div>
+					</div>
+
+					<form class="flex flex-col gap-4 md:gap-[18px]" data-reservation-formulaire>
+						<label class="flex flex-col gap-1.5">
+							<span class="text-xs font-medium text-gris">Nom et prénom *</span>
+							<input
+								type="text"
+								name="nom"
+								autocomplete="name"
+								required
+								placeholder="Lorem ipsum"
+								class="h-[34px] border-b-[1.2px] border-bordeaux bg-transparent font-manuscrit text-xl text-encre outline-none placeholder:text-gris-clair focus:shadow-[inset_0_-1px_0_var(--color-bordeaux)]"
+							/>
+						</label>
+
+						<div class="group flex flex-col gap-1.5" data-champ="email">
+							<label for="reservation-email" class="text-xs font-medium text-gris group-data-erreur:text-bordeaux">Adresse e-mail *</label>
+							<input
+								id="reservation-email"
+								type="email"
+								name="email"
+								autocomplete="email"
+								required
+								placeholder="prenom.nom@exemple.fr"
+								aria-describedby="reservation-email-aide reservation-email-erreur"
+								class="h-[34px] border-b-[1.2px] border-bordeaux bg-transparent font-manuscrit text-xl text-encre outline-none placeholder:text-gris-clair focus:shadow-[inset_0_-1px_0_var(--color-bordeaux)] group-data-erreur:border-b-[2.2px]"
+							/>
+							<p id="reservation-email-aide" class="text-[11px] text-gris-clair group-data-erreur:hidden">une seule place par adresse</p>
+							<p id="reservation-email-erreur" class="hidden items-start gap-2 group-data-erreur:flex" role="alert">
+								<span class="flex size-4 shrink-0 items-center justify-center rounded-full bg-bordeaux text-[11px] font-semibold text-creme" aria-hidden="true">!</span>
+								<span class="text-xs leading-[17px] font-medium text-bordeaux" data-message-erreur></span>
+							</p>
+						</div>
+
+						<hr class="border-sable" />
+
+						<label class="flex items-start gap-2.5 text-[13px] leading-[19px] text-encre">
+							<input type="checkbox" name="newsletter" class="case" style={`--coche: url(${coche.src})`} />
+							Je souhaite recevoir des informations sur la collab et les prochains événements (newsletter).
+						</label>
+						<label class="flex items-start gap-2.5 text-[13px] leading-[19px] text-encre">
+							<input type="checkbox" name="rgpd" required class="case" style={`--coche: url(${coche.src})`} />
+							J’accepte la politique de confidentialité et le traitement de mes données. *
+						</label>
+
+						<!-- Emplacement du widget CAPTCHA (à intégrer avec le back) -->
+						<div class="flex h-15 items-center gap-3 rounded-sm bg-creme-oxford pl-3.5 text-xs text-gris" data-captcha>
+							<span class="size-[22px] rounded-[3px] border-[1.3px] border-gris bg-papier" aria-hidden="true"></span>
+							Je ne suis pas un robot — widget CAPTCHA
+						</div>
+
+						<button
+							type="submit"
+							class="h-[52px] w-full cursor-pointer rounded-sm bg-dore text-[15px] font-semibold text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre"
+						>
+							Confirmer ma réservation
+						</button>
+					</form>
+
+					<div class="flex items-center gap-3">
+						<p class="flex-1 text-[11px] leading-4 text-gris-clair">
+							* Champs obligatoires.<br />Une place par adresse e-mail.
+						</p>
+						<div class="flex shrink-0 flex-col items-center">
+							<img src={gaufreCroquee.src} alt="" class="my-1.5 w-28 rotate-7 md:my-2 md:w-[150px]" />
+							<p class="font-manuscrit text-base font-bold whitespace-nowrap text-bordeaux md:text-lg">on vous garde une part !</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- État 2 : confirmation -->
+				<div class="relative flex flex-col items-start gap-4 pt-[34px] pr-5 pb-7 pl-9 md:gap-[18px] md:pt-10 md:pr-11 md:pb-9 md:pl-[72px]" data-etat="confirmation" hidden>
+					<div class="flex w-full items-start gap-3.5">
+						<div class="flex flex-1 flex-col gap-2 md:gap-2.5">
+							<p class="font-manuscrit text-[22px] font-bold text-bordeaux md:text-2xl">C’est noté !</p>
+							<h2 class="font-titre text-[28px] leading-[34px] text-encre italic md:text-[34px] md:leading-10">Votre place est réservée</h2>
+						</div>
+						<div class="h-24 w-[104px] shrink-0 md:h-[130px] md:w-[150px]" aria-hidden="true"></div>
+					</div>
+
+					<p class="text-[15px] leading-[23px] text-encre">
+						Un e-mail de confirmation vient de partir vers <span data-confirmation-email>prenom.nom@exemple.fr</span>. Il fait office de billet&nbsp;: présentez-le à l’entrée.
+					</p>
+
+					<p class="relative flex h-[74px] w-[250px] items-center justify-center font-manuscrit text-[28px] font-bold text-bordeaux md:w-[270px] md:text-[32px]">
+						<img src={numeroEntoure.src} alt="" class="absolute inset-0 size-full" />
+						<span class="relative">Place n° <span data-confirmation-numero>XXX</span> / 500</span>
+					</p>
+
+					<p class="text-[13px] leading-[19px] text-gris" data-confirmation-newsletter>
+						Vous avez aussi choisi de recevoir les nouvelles de la collab&nbsp;: rendez-vous dans votre boîte mail.
+					</p>
+
+					<button
+						type="button"
+						class="h-[52px] w-full cursor-pointer rounded-sm bg-dore text-[15px] font-semibold text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre"
+						data-reservation-fermer
+					>
+						Retour au site
+					</button>
+
+					<div class="flex w-full items-center gap-3">
+						<!-- Lien agenda (.ics) à brancher avec le back -->
+						<button type="button" class="flex-1 cursor-pointer text-left text-sm font-medium text-encre underline" data-reservation-agenda>
+							Ajouter à mon agenda
+						</button>
+						<div class="flex shrink-0 flex-col items-center">
+							<img src={gaufreCroquee.src} alt="" class="my-1.5 w-28 rotate-7 md:my-2 md:w-[150px]" />
+							<p class="font-manuscrit text-base font-bold whitespace-nowrap text-bordeaux md:text-lg">à très vite autour d’une gaufre&nbsp;!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</dialog>
+
+<style>
+	/* Feuille de cahier Oxford : petits carreaux de 16 px et marge bordeaux (Figma « Papier petits carreaux ») */
+	.papier {
+		background-color: var(--color-papier);
+		background-image:
+			linear-gradient(90deg, rgb(110 30 31 / 0.5) 0 1.2px, transparent 0),
+			linear-gradient(rgb(217 205 187 / 0.7) 0 0.7px, transparent 0),
+			linear-gradient(90deg, rgb(217 205 187 / 0.7) 0 0.7px, transparent 0);
+		background-size:
+			100% 100%,
+			16px 16px,
+			16px 16px;
+		background-position:
+			var(--marge) 0,
+			0 0,
+			0 0;
+		background-repeat: no-repeat, repeat, repeat;
+		background-attachment: local;
+	}
+
+	.case {
+		appearance: none;
+		flex-shrink: 0;
+		width: 18px;
+		height: 18px;
+		border: 1.3px solid var(--color-encre);
+		border-radius: 3px;
+		background: var(--color-papier) center / 18px no-repeat;
+		cursor: pointer;
+	}
+	.case:checked {
+		background-color: var(--color-encre);
+		background-image: var(--coche);
+	}
+	.case:focus-visible {
+		outline: 2px solid var(--color-encre);
+		outline-offset: 2px;
+	}
+</style>
+
+<script>
+	import { EVENEMENT_ENVOI, fermerReservation, ouvrirReservation } from '../scripts/reservation';
+
+	const modale = document.getElementById('modale-reservation') as HTMLDialogElement | null;
+
+	if (modale) {
+		// Tout bouton du site portant data-reservation-ouvrir ouvre la modale (hero, header, section event…)
+		document.addEventListener('click', (evenement) => {
+			const cible = evenement.target as Element;
+			if (cible.closest('[data-reservation-ouvrir]')) ouvrirReservation();
+			if (cible.closest('[data-reservation-fermer]')) fermerReservation();
+		});
+
+		// Clic sur la zone assombrie autour de la feuille
+		modale.querySelector('[data-fond]')!.addEventListener('click', (evenement) => {
+			if (evenement.target === evenement.currentTarget) fermerReservation();
+		});
+
+		// Échap : on garde l'animation de fermeture
+		modale.addEventListener('cancel', (evenement) => {
+			evenement.preventDefault();
+			fermerReservation();
+		});
+
+		// Envoi : pas encore branché au back, on transmet les données à qui écoute l'événement
+		modale.querySelector<HTMLFormElement>('[data-reservation-formulaire]')!.addEventListener('submit', (evenement) => {
+			evenement.preventDefault();
+			const formulaire = evenement.currentTarget as HTMLFormElement;
+			window.dispatchEvent(new CustomEvent(EVENEMENT_ENVOI, { detail: new FormData(formulaire) }));
+		});
+	}
+</script>
