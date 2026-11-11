@@ -1,0 +1,175 @@
+
+---
+import MeertLogo from '../../assets/MeertLogo.svg';
+import OxfordLogo from '../../assets/OxfordLogo.png';
+import Qualite from '../../assets/pictos/qualite.svg';
+import SavoirFaire from '../../assets/pictos/savoir-faire.svg';
+import Transmission from '../../assets/pictos/transmission.svg';
+import Citation from '../../assets/objets/citation-tapee.svg';
+import FondCarnet from '../../assets/motifs/cahier.svg';
+import FeuillePapier from '../../assets/objets/feuille-seyes.svg';
+import Gaufre from '../../assets/objets/gaufre-caramel.svg';
+import CahierRouge from '../../assets/objets/cahier-bordeaux.svg';
+---
+
+<section class="relative overflow-hidden bg-[#FAF6EF] px-6 py-16 md:px-12 md:py-24">
+
+    <div class=" absolute -right-70 -top-100 z-0 hidden w-1/2 -rotate-12 overflow-hidden md:block pointer-events-none">
+  <img 
+    src={FondCarnet.src} 
+    alt="" 
+    class="h-full w-full object-cover object-left opacity-90"
+  />
+</div>
+  
+  <div class="pointer-events-none absolute inset-0 z-0 hidden md:block">
+    
+    <img 
+      src={FeuillePapier.src} 
+      alt="" 
+      class="float-element absolute left-[2%] top-[8%] w-36 lg:w-48"
+    />
+
+    
+    <img 
+      src={Gaufre.src} 
+      alt="" 
+      class="float-element absolute left-[5%] top-[22%] w-40 lg:w-52"
+    />
+
+    
+    <img 
+      src={CahierRouge.src} 
+      alt="" 
+      class="float-element absolute right-[8%] top-[25%] w-32 lg:w-40"
+    />
+  </div>
+  <div class="relative z-10 mx-auto max-w-6xl">
+
+ 
+    <div class="mb-16 text-center md:mb-20">
+
+      <p class="mb-12 text-sm font-semibold uppercase tracking-[0.25em] text-[#796758] md:mb-14 md:text-lg">
+        MÉERT × OXFORD
+      </p>
+
+ 
+      <div class="mx-auto flex w-full max-w-2xl items-center justify-center gap-4 md:gap-12">
+
+        <div class="flex h-24 min-w-0 flex-1 items-center justify-center border-2 border-[#2A211C] px-2 md:h-32 md:px-6">
+          <img
+            src={MeertLogo.src}
+            alt="Logo Méert"
+            class="max-h-full max-w-full object-contain"
+          />
+        </div>
+
+        <span class="shrink-0 text-3xl font-medium text-[#796758] md:text-5xl">
+          ×
+        </span>
+
+        <div class="flex h-24 min-w-0 flex-1 items-center justify-center border-2 border-[#2A211C] px-2 md:h-32 md:px-6">
+          <img
+            src={OxfordLogo.src}
+            alt="Logo Oxford"
+            class="max-h-full max-w-full object-contain"
+          />
+        </div>
+
+      </div>
+    </div>
+
+  
+    <div class="mx-auto mb-20 max-w-4xl text-center md:mb-24">
+
+      <h2 class="mx-auto mb-12 max-w-3xl text-4xl font-bold leading-tight tracking-tight text-[#211914] sm:text-5xl md:mb-10 md:text-5xl lg:text-6xl">
+        Les recettes ont une histoire
+      </h2>
+
+      <p class="mx-auto max-w-3xl text-lg leading-relaxed text-[#796758] md:text-xl md:leading-relaxed">
+        Derrière chaque recette se cache bien plus qu’une liste
+        d’ingrédients : un souvenir, un geste, une tradition que l’on
+        souhaite faire perdurer. C’est autour de cette conviction
+        que nous avons choisi de nous réunir.
+      </p>
+
+    </div>
+
+   
+    <div class="mx-auto flex max-w-4xl flex-col gap-10 md:grid md:max-w-none md:grid-cols-3 md:gap-16">
+
+    
+      <article class="flex items-start gap-6 md:flex-col md:items-start md:gap-5">
+
+        <img
+          src={Transmission.src}
+          alt=""
+          class="mt-1 h-14 w-14 shrink-0 object-contain md:mt-0 md:h-16 md:w-16"
+        />
+
+        <div class="min-w-0">
+          <h3 class="mb-3 text-xl font-bold text-[#211914] md:text-2xl">
+            Transmission
+          </h3>
+
+          <p class="text-base leading-relaxed text-[#796758] md:text-lg">
+            Un savoir-faire prend toute sa valeur lorsqu’il est partagé,
+            puis transmis à son tour.
+          </p>
+        </div>
+
+      </article>
+
+     
+      <article class="flex items-start gap-6 md:flex-col md:items-start md:gap-5">
+
+        <img
+          src={Qualite.src}
+          alt=""
+          class="mt-1 h-14 w-14 shrink-0 object-contain md:mt-0 md:h-16 md:w-16"
+        />
+
+        <div class="min-w-0">
+          <h3 class="mb-3 text-xl font-bold text-[#211914] md:text-2xl">
+            Qualité
+          </h3>
+
+          <p class="text-base leading-relaxed text-[#796758] md:text-lg">
+            L’exigence d’une maison de pâtisserie et celle d’un papetier,
+            réunies dans un même objet.
+          </p>
+        </div>
+
+      </article>
+
+
+      <article class="flex items-start gap-6 md:flex-col md:items-start md:gap-5">
+
+        <img
+          src={SavoirFaire.src}
+          alt=""
+          class="mt-1 h-14 w-14 shrink-0 object-contain md:mt-0 md:h-16 md:w-16"
+        />
+
+        <div class="min-w-0">
+          <h3 class="mb-3 text-xl font-bold text-[#211914] md:text-2xl">
+            Savoir-faire
+          </h3>
+
+          <p class="text-base leading-relaxed text-[#796758] md:text-lg">
+            Des gestes qui traversent le temps, et un support qui leur
+            permet de durer.
+          </p>
+          <img
+                src={Citation.src}
+                alt="citation de Méert 'une recette est bien plus q'un plat'"
+                class="ml-auto w-36 -rotate-3deg object-contain md:w-48"
+              />
+        </div>
+
+      </article>
+
+    </div>
+  </div>
+
+</section>
