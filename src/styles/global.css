@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+/* Palette Méert × Oxford (Figma : « Palette & contrastes ») */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-titre: var(--font-playfair), ui-serif, Georgia, serif; /* Playfair Display italique */
+  --font-manuscrit: var(--font-caveat), cursive; /* Caveat */
+
+  --color-encre: #1b1310; /* noir encre — texte, aplats */
+  --color-creme: #faf6ef; /* blanc crème — fonds */
+  --color-gris: #6b5b4e; /* gris chaud — texte secondaire */
+  --color-sable: #d9cdbb; /* sable — filets, bordures */
+  --color-bordeaux: #6e1e1f; /* bordeaux — accent léger */
+  --color-chocolat: #3c261b; /* chocolat — couleur dominante */
+  --color-beige: #ede4d3; /* beige doux — fonds alternés */
+  --color-dore: #be9120; /* doré — accent principal */
+
+  /* Teintes de la maquette hors palette (zone Oxford, placeholders) */
+  --color-creme-oxford: #f3ede2;
+  --color-sable-clair: #e8decd;
+  --color-cacao: #55392a;
+  --color-papier: #fffdf8; /* feuille de cahier, cases à cocher (modale) */
+  --color-gris-clair: #9a8a7a; /* texte d'exemple, mentions (modale) */
+}
+
+@layer base {
+  body {
+    @apply bg-creme font-sans text-encre antialiased;
+  }
+}
