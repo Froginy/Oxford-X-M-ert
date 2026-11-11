@@ -170,11 +170,7 @@ function visibilite(objet: Objet) {
 							{
 								motsSlogan.map((mot, i) => (
 									<span class:list={['col-start-1 row-start-1 whitespace-nowrap', i > 0 && 'opacity-0']} data-mot>
-										{[...mot].map((lettre) => (
-											<span class="inline-block" data-lettre>
-												{lettre}
-											</span>
-										))}
+										{mot}
 									</span>
 								))
 							}
