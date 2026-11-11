@@ -39,7 +39,7 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 		--couverture: var(--color-bordeaux);
 		--couverture-dos: #4d1314; /* bordeaux plus sombre : revers du coin corné */
 		--dorure: var(--color-dore); /* liseré */
-		--dorure-claire: #d9b45e; /* lettrage : contraste 5,7:1 sur le bordeaux (le doré de la palette n'atteint que 3,9:1) */
+		--dorure-claire: var(--color-dore-clair); /* lettrage : contraste 5,7:1 sur le bordeaux (le doré de la palette n'atteint que 3,9:1) */
 		position: relative;
 		display: flex;
 		align-items: center;
