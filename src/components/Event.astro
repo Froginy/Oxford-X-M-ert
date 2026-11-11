@@ -1,0 +1,125 @@
+---
+import Fouet from '../assets/motifs/fouet.svg';
+import PostIt from '../assets/objets/post-it-reserver.svg';
+import TicketMarron from '../assets/objets/ticket-atelier.svg';
+import ModaleReservation from './ModaleReservation.astro';
+---
+
+<section class="relative overflow-hidden bg-creme px-6 py-16 md:px-12 md:py-24">
+
+    <div class="absolute -bottom-100 -right-25 pointer-events-none z-0 hidden lg:block opacity-60 w-64 md:w-80 lg:w-200 -rotate-12">
+    <img src={Fouet.src} alt="" class="w-full h-auto object-contain" />
+  </div>
+
+  <div class="mx-auto max-w-6xl relative z-10">
+
+    <!-- En-tête de section -->
+    <div class="mb-16 text-center md:mb-20">
+      <!-- Badge "Sur réservation" -->
+      <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-sable bg-creme shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-encre">
+          Sur réservation · Places limitées
+        </p>
+      </div>
+
+      <h2 class="mx-auto mb-6 text-4xl font-bold tracking-tight text-encre sm:text-5xl md:text-6xl">
+        L’événement
+      </h2>
+
+      <p class="mx-auto max-w-2xl text-base leading-relaxed text-gris md:text-lg">
+        Parce que le savoir-faire ne se transmet pas uniquement par les mots, nous avons
+        souhaité donner vie à cette collaboration à travers un événement exclusif. Une rencontre pensée
+        comme une invitation à découvrir, apprendre et partager autour de nos deux expériences.
+      </p>
+    </div>
+
+    <!-- Grille des 4 cartes (1 col sur mobile, 2 sur tablette, 4 sur desktop) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+      
+      <!-- Carte 1 : L'espace Méert -->
+      <article class="flex flex-col">
+        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
+          <span class="text-sm text-gris-clair italic">Visuel pâtisserie</span>
+        </div>
+        <h3 class="mb-3 text-xl font-bold text-encre">L’espace Méert</h3>
+        <p class="text-sm leading-relaxed text-gris">
+          Découvrir et déguster la création pâtissière exclusive imaginée pour la collaboration.
+        </p>
+      </article>
+
+      <!-- Carte 2 : L'espace Oxford -->
+      <article class="flex flex-col">
+        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
+          <span class="text-sm text-gris-clair italic">Visuel livre de recettes</span>
+        </div>
+        <h3 class="mb-3 text-xl font-bold text-encre">L’espace Oxford</h3>
+        <p class="text-sm leading-relaxed text-gris">
+          La présentation et la vente du livre de recettes Méert × Oxford, en édition limitée pour l’événement.
+        </p>
+      </article>
+
+      <!-- Carte 3 : L'atelier d'écriture en chocolat -->
+      <article class="flex flex-col">
+        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
+          <span class="text-sm text-gris-clair italic">Visuel atelier</span>
+        </div>
+        <h3 class="mb-3 text-xl font-bold text-encre">L’atelier d’écriture en chocolat</h3>
+        <p class="text-sm leading-relaxed text-gris">
+          Une expérience artisanale autour de l’art de l’écriture gastronomique. Chacun repart avec sa propre réalisation.
+        </p>
+      </article>
+
+      <!-- Carte 4 : Les conférences -->
+      <article class="flex flex-col">
+        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
+          <span class="text-sm text-gris-clair italic">Visuel conférence</span>
+        </div>
+        <h3 class="mb-3 text-xl font-bold text-encre">Les conférences</h3>
+        <p class="text-sm leading-relaxed text-gris">
+          Un temps d’échange autour de la transmission, des savoir-faire et de l’importance de préserver ce qui nous est cher.
+        </p>
+      </article>
+
+    </div>
+
+
+    <!-- BLOC D'APPEL À L'ACTION / RÉSERVATION -->
+    <div class="relative max-w-3xl mx-auto mt-12 px-4">
+
+      <!-- Post-it décoratif (Gauche) - Décalé plus loin sur PC -->
+      <div class="absolute -left-4 md:-left-12 lg:-left-72 -top-6 z-20 w-32 md:w-40 -rotate-12 pointer-events-none hidden sm:block">
+        <img src={PostIt.src} alt="Ne pas oublier : réserver sa place" class="w-full h-auto drop-shadow-md" />
+      </div>
+
+      <!-- Ticket marron décoratif (Droite) - Décalé plus loin sur PC -->
+      <div class="absolute -right-4 md:-right-10 lg:-right-72 lg:top-25 -bottom-3  z-20 w-36 md:w-62 rotate-6 pointer-events-none hidden sm:block">
+        <img src={TicketMarron.src} alt="Invitation atelier d'écriture" class="w-full h-auto drop-shadow-md" />
+      </div>
+
+      <!-- Encadré principal de réservation -->
+      <div class="relative z-10 border-2 border-encre bg-creme p-8 md:p-12 text-center shadow-sm">
+        
+        <!-- Compteur de places -->
+        <div class="flex items-center justify-center gap-2 mb-4">
+          <span class="w-2 h-2 rounded-full bg-bordeaux animate-pulse"></span>
+          <span class="text-sm font-semibold tracking-wide text-encre">XX places restantes</span>
+        </div>
+
+        <p class="max-w-xl mx-auto text-base text-gris mb-8 leading-relaxed">
+          Nous vous invitons à partager cette expérience avec nous et avec vos proches. Une place par adresse e-mail.
+        </p>
+
+        <!-- Bouton de réservation centré -->
+        <button
+          type="button"
+          class="mx-auto flex h-13 w-60 cursor-pointer items-center justify-center rounded-sm bg-dore text-sm font-medium text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre md:text-[15px] xl:h-14 xl:text-base shadow-md hover:opacity-95 transition-opacity"
+          data-reservation-ouvrir
+        >
+			Réserver sa place
+		</button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
