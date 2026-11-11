@@ -63,7 +63,7 @@ import coche from '../assets/modale/coche.svg';
 							</h2>
 							<p class="flex items-center gap-2 text-[13px] font-medium text-encre">
 								<span class="size-2 rounded-full bg-bordeaux" aria-hidden="true"></span>
-								<span><span data-places-restantes>XX</span> places restantes</span>
+								<span data-places-restantes>Places limitées</span>
 							</p>
 							<p class="text-sm leading-[21px] text-gris">
 								L’événement est accessible sur réservation, dans la limite des places disponibles.
@@ -116,13 +116,15 @@ import coche from '../assets/modale/coche.svg';
 							J’accepte la politique de confidentialité et le traitement de mes données. *
 						</label>
 
-						<!-- Emplacement du widget CAPTCHA (à intégrer avec le back) -->
-						<div class="flex h-15 items-center gap-3 rounded-sm bg-creme-oxford pl-3.5 text-xs text-gris" data-captcha>
-							<span class="size-[22px] rounded-[3px] border-[1.3px] border-gris bg-papier" aria-hidden="true"></span>
-							Je ne suis pas un robot — widget CAPTCHA
-						</div>
+						<!-- Widget anti-robot Cloudflare Turnstile (rendu à l'ouverture de la modale) -->
+						<div class="flex min-h-[65px] items-center text-xs text-gris" data-captcha>Chargement de la vérification anti-robot…</div>
 
-						<BoutonCahier type="submit" libelle="Confirmer ma réservation" class="h-[52px] w-full text-[15px] font-semibold" />
+						<p class="flex items-start gap-2" role="alert" data-erreur-formulaire hidden>
+							<span class="flex size-4 shrink-0 items-center justify-center rounded-full bg-bordeaux text-[11px] font-semibold text-creme" aria-hidden="true">!</span>
+							<span class="text-xs leading-[17px] font-medium text-bordeaux" data-message-erreur></span>
+						</p>
+
+						<BoutonCahier type="submit" libelle="Confirmer ma réservation" class="h-[52px] w-full text-[15px] font-semibold" data-reservation-envoyer />
 					</form>
 
 					<div class="flex items-center gap-3">
@@ -146,13 +148,16 @@ import coche from '../assets/modale/coche.svg';
 						<div class="h-24 w-[104px] shrink-0 md:h-[130px] md:w-[150px]" aria-hidden="true"></div>
 					</div>
 
-					<p class="text-[15px] leading-[23px] text-encre">
+					<p class="text-[15px] leading-[23px] text-encre" data-confirmation-mail-envoye>
 						Un e-mail de confirmation vient de partir vers <span data-confirmation-email>prenom.nom@exemple.fr</span>. Il fait office de billet&nbsp;: présentez-le à l’entrée.
+					</p>
+					<p class="text-[15px] leading-[23px] text-encre" data-confirmation-mail-absent hidden>
+						Votre place est enregistrée pour <span data-confirmation-email>prenom.nom@exemple.fr</span>. Notez bien votre numéro&nbsp;: il vous sera demandé à l’entrée.
 					</p>
 
 					<p class="relative flex h-[74px] w-[250px] items-center justify-center font-manuscrit text-[28px] font-bold text-bordeaux md:w-[270px] md:text-[32px]">
 						<img src={numeroEntoure.src} alt="" class="absolute inset-0 size-full" />
-						<span class="relative">Place n° <span data-confirmation-numero>XXX</span> / 500</span>
+						<span class="relative">Place n° <span data-confirmation-numero>XXX</span> / <span data-places-total>XX</span></span>
 					</p>
 
 					<p class="text-[13px] leading-[19px] text-gris" data-confirmation-newsletter>
@@ -218,15 +223,26 @@ import coche from '../assets/modale/coche.svg';
 </style>
 
 <script>
-	import { EVENEMENT_ENVOI, fermerReservation, ouvrirReservation } from '../scripts/reservation';
+	import { afficherCaptcha, relancerCaptcha } from '../scripts/captcha';
+	import { actualiserPlaces, afficherPlaces } from '../scripts/places';
+	import { afficherConfirmation, afficherErreurEmail, afficherErreurFormulaire, fermerReservation, ouvrirReservation } from '../scripts/reservation';
 
 	const modale = document.getElementById('modale-reservation') as HTMLDialogElement | null;
 
 	if (modale) {
+		const formulaire = modale.querySelector<HTMLFormElement>('[data-reservation-formulaire]')!;
+		const envoyer = formulaire.querySelector<HTMLButtonElement>('[data-reservation-envoyer]')!;
+
+		actualiserPlaces();
+
 		// Tout bouton du site portant data-reservation-ouvrir ouvre la modale (hero, header, section event…)
 		document.addEventListener('click', (evenement) => {
 			const cible = evenement.target as Element;
-			if (cible.closest('[data-reservation-ouvrir]')) ouvrirReservation();
+			if (cible.closest('[data-reservation-ouvrir]')) {
+				ouvrirReservation();
+				afficherCaptcha(modale.querySelector<HTMLElement>('[data-captcha]')!);
+				actualiserPlaces();
+			}
 			if (cible.closest('[data-reservation-fermer]')) fermerReservation();
 		});
 
@@ -241,11 +257,49 @@ import coche from '../assets/modale/coche.svg';
 			fermerReservation();
 		});
 
-		// Envoi : pas encore branché au back, on transmet les données à qui écoute l'événement
-		modale.querySelector<HTMLFormElement>('[data-reservation-formulaire]')!.addEventListener('submit', (evenement) => {
+		// Pendant l'envoi : bouton désactivé et libellé « Envoi en cours… » (couverture et page du bouton cahier)
+		const libelles = [envoyer.querySelector('.libelle-couverture')!, envoyer.querySelector('.libelle-page')!.firstChild!];
+		const libelleInitial = libelles[0].textContent;
+		const occupe = (actif: boolean) => {
+			envoyer.disabled = actif;
+			envoyer.toggleAttribute('aria-busy', actif);
+			libelles.forEach((libelle) => (libelle.textContent = actif ? 'Envoi en cours…' : libelleInitial));
+		};
+
+		formulaire.addEventListener('submit', async (evenement) => {
 			evenement.preventDefault();
-			const formulaire = evenement.currentTarget as HTMLFormElement;
-			window.dispatchEvent(new CustomEvent(EVENEMENT_ENVOI, { detail: new FormData(formulaire) }));
+			if (envoyer.disabled) return;
+			const donnees = new FormData(formulaire);
+			afficherErreurEmail(null);
+			afficherErreurFormulaire(null);
+			occupe(true);
+
+			try {
+				const reponse = await fetch('/api/reservation', { method: 'POST', body: donnees });
+				const resultat = await reponse.json();
+				if (typeof resultat.restantes === 'number') afficherPlaces(resultat);
+
+				if (reponse.ok) {
+					afficherConfirmation({
+						email: String(donnees.get('email')).trim(),
+						numero: resultat.numero,
+						newsletter: donnees.has('newsletter'),
+						emailEnvoye: resultat.emailEnvoye,
+					});
+				} else if (resultat.champ === 'email') {
+					relancerCaptcha();
+					afficherErreurEmail(resultat.message);
+					formulaire.querySelector<HTMLInputElement>('[name="email"]')!.focus();
+				} else {
+					relancerCaptcha();
+					afficherErreurFormulaire(resultat.message ?? 'La réservation n’a pas abouti. Merci de réessayer.');
+				}
+			} catch {
+				relancerCaptcha();
+				afficherErreurFormulaire('Connexion impossible. Vérifiez votre réseau puis réessayez.');
+			} finally {
+				occupe(false);
+			}
 		});
 	}
 </script>

@@ -1,9 +1,7 @@
 import { gsap, mouvementReduit } from './gsap';
 
 // Modale de réservation (composant ModaleReservation) : ouverture / fermeture animées et états d'affichage.
-// L'envoi du formulaire n'est pas encore branché : le composant émet `reservation:envoi` avec les données.
-
-export const EVENEMENT_ENVOI = 'reservation:envoi';
+// L'envoi du formulaire (POST /api/reservation) est géré dans le composant.
 
 const ecranLarge = () => window.matchMedia('(min-width: 768px)').matches;
 
@@ -17,6 +15,7 @@ function elements() {
 		formulaire: modale.querySelector<HTMLElement>('[data-etat="formulaire"]')!,
 		confirmation: modale.querySelector<HTMLElement>('[data-etat="confirmation"]')!,
 		champEmail: modale.querySelector<HTMLElement>('[data-champ="email"]')!,
+		erreurFormulaire: modale.querySelector<HTMLElement>('[data-erreur-formulaire]')!,
 	};
 }
 
@@ -78,17 +77,21 @@ export function afficherFormulaire() {
 	el.confirmation.hidden = true;
 	el.formulaire.querySelector('form')?.reset();
 	afficherErreurEmail(null);
+	afficherErreurFormulaire(null);
 }
 
 /** Passe à l'écran « C'est noté ! » avec les informations de la réservation. */
-export function afficherConfirmation(infos: { email: string; numero: string | number; newsletter: boolean }) {
+export function afficherConfirmation(infos: { email: string; numero: number; newsletter: boolean; emailEnvoye: boolean }) {
 	const el = elements();
 	if (!el) return;
 	const { formulaire, confirmation, feuille } = el;
 
-	confirmation.querySelector('[data-confirmation-email]')!.textContent = infos.email;
+	confirmation.querySelectorAll('[data-confirmation-email]').forEach((email) => (email.textContent = infos.email));
 	confirmation.querySelector('[data-confirmation-numero]')!.textContent = String(infos.numero);
 	confirmation.querySelector<HTMLElement>('[data-confirmation-newsletter]')!.hidden = !infos.newsletter;
+	// E-mail non parti (Resend non configuré ou en mode test) : on invite à noter le numéro
+	confirmation.querySelector<HTMLElement>('[data-confirmation-mail-envoye]')!.hidden = !infos.emailEnvoye;
+	confirmation.querySelector<HTMLElement>('[data-confirmation-mail-absent]')!.hidden = infos.emailEnvoye;
 
 	formulaire.hidden = true;
 	confirmation.hidden = false;
@@ -111,4 +114,12 @@ export function afficherErreurEmail(message: string | null = 'Cette adresse a d�
 		delete champEmail.dataset.erreur;
 		saisie.removeAttribute('aria-invalid');
 	}
+}
+
+/** Affiche (ou retire avec `null`) une erreur générale au-dessus du bouton d'envoi (anti-robot, complet, réseau…). */
+export function afficherErreurFormulaire(message: string | null) {
+	const el = elements();
+	if (!el) return;
+	el.erreurFormulaire.hidden = !message;
+	el.erreurFormulaire.querySelector('[data-message-erreur]')!.textContent = message ?? '';
 }

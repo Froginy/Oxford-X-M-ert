@@ -11,10 +11,13 @@ import FeuillePapier from '../../assets/objets/feuille-seyes.svg';
 import Gaufre from '../../assets/objets/gaufre-caramel.svg';
 import CahierRouge from '../../assets/objets/cahier-bordeaux.svg';
 import ContinuiteHero from '../ContinuiteHero.astro';
+import RappelCourbe from '../RappelCourbe.astro';
 ---
 
 <section id="collab" class="relative overflow-hidden bg-[#FAF6EF] px-6 pt-[44vw] pb-16 md:px-12 md:pt-[37vw] md:pb-24 xl:pt-[25vw]">
   <ContinuiteHero />
+  <!-- Rappel de la courbe de la hero -->
+  <RappelCourbe cote="gauche" variante="goutte" class="top-[44%] left-0 aspect-[1/2.2] w-[clamp(64px,14.5vw,210px)]" />
 
     <div class=" absolute -right-70 -top-100 z-0 hidden w-1/2 -rotate-12 overflow-hidden md:block pointer-events-none">
   <img 
@@ -29,21 +32,21 @@ import ContinuiteHero from '../ContinuiteHero.astro';
     <img 
       src={FeuillePapier.src} 
       alt="" 
-      class="float-element absolute left-[2%] top-[8%] w-36 lg:w-48"
+      class="float-element absolute left-[2%] top-[10vw] w-28 lg:w-32 xl:top-[8%] xl:w-48"
     />
 
     
     <img 
       src={Gaufre.src} 
       alt="" 
-      class="float-element absolute left-[5%] top-[22%] w-40 lg:w-52"
+      class="float-element absolute left-[2%] top-[27vw] w-28 lg:w-32 xl:left-[5%] xl:top-[22%] xl:w-52"
     />
 
     
     <img 
       src={CahierRouge.src} 
       alt="" 
-      class="float-element absolute right-[8%] top-[25%] w-32 lg:w-40"
+      class="float-element absolute right-[3%] top-[21vw] w-24 lg:w-28 xl:right-[8%] xl:top-[25%] xl:w-40"
     />
   </div>
   <div class="relative z-10 mx-auto max-w-6xl">

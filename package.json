@@ -9,13 +9,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "places:reinitialiser": "bun scripts/reinitialiser-places.ts"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.4",
+    "@astrojs/vercel": "^11.0.21",
     "@tailwindcss/vite": "^4.3.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@upstash/redis": "^1.41.0",
     "astro": "^7.4.7",
     "gsap": "^3.15.1",
     "react": "^19.3.1",

@@ -1,0 +1,34 @@
+---
+// Rappel de la courbe de la hero (zone Oxford + ligne de division) : une petite forme crème foncé
+// qui sort d'un bord de section, bordée du même trait gris chaud sur sa courbe.
+// Décor discret : toujours derrière le contenu, positionné/dimensionné via `class`.
+interface Props {
+	cote?: 'gauche' | 'droite';
+	/** Dessin de la courbe (varié d'une section à l'autre). */
+	variante?: 'goutte' | 'arc' | 'vague';
+	class?: string;
+}
+
+const { cote = 'gauche', variante = 'goutte', class: classe } = Astro.props;
+
+// Courbes partant du bord (x = 0) en haut et y revenant en bas, dans un repère 200 × 400
+const courbes = {
+	// étroite en haut, ventrue en bas
+	goutte: 'M0 0C30 60 60 110 110 170C170 240 190 320 120 370C80 400 30 400 0 400',
+	// arc tendu, dans l'esprit de la diagonale de la hero
+	arc: 'M0 0C120 20 200 120 190 250C185 330 110 390 0 400',
+	// double ondulation
+	vague: 'M0 0C80 30 140 80 120 150C100 210 40 230 70 290C100 350 150 370 0 400',
+};
+const courbe = courbes[variante];
+---
+
+<svg
+	viewBox="0 0 200 400"
+	preserveAspectRatio="none"
+	class:list={['pointer-events-none absolute z-0', cote === 'droite' && '-scale-x-100', classe]}
+	aria-hidden="true"
+>
+	<path d={`${courbe}Z`} fill="var(--color-creme-oxford)"></path>
+	<path d={courbe} fill="none" stroke="var(--color-gris)" stroke-width="1.4" vector-effect="non-scaling-stroke"></path>
+</svg>
