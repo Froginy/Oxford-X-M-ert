@@ -32,7 +32,6 @@ const motifs = [
 		window.dispatchEvent(new Event('chargement:fini'));
 	}, 10000);
 </script>
-<noscript><style>#chargement { display: none; }</style></noscript>
 
 <div id="chargement" class="fixed inset-0 z-100 flex items-center justify-center" data-motifs={JSON.stringify(motifs)}>
 	<div class="absolute inset-y-0 left-0 w-1/2 overflow-hidden bg-creme" data-rideau aria-hidden="true">
