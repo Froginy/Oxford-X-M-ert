@@ -1,0 +1,33 @@
+---
+import motifGaufre from '../assets/motifs/gaufre.svg';
+
+// Haut de la section qui suit la hero : prolonge les éléments coupés par le bas de la hero
+// pour que les deux sections se lisent d'un seul tenant.
+// - La ligne de division (gris chaud) et la zone Oxford (crème foncé) repartent du point exact
+//   où elles quittent la hero, dans la même direction, puis s'arrondissent vers la droite et se referment.
+//   Une courbe par maquette : desktop 1440, tablette 768, mobile 390 (mêmes points de départ que la hero).
+// - La grande gaufre au trait (desktop) : suite du motif ancré au bas de la hero (centre à 5,4167vw au-dessus).
+// À placer en premier enfant d'une section `relative overflow-hidden` collée sous la hero.
+---
+
+<div class="pointer-events-none absolute inset-x-0 top-0 z-0" aria-hidden="true">
+	<svg class="absolute inset-x-0 top-0 h-[51.282vw] w-full md:hidden" viewBox="0 0 390 200" preserveAspectRatio="none">
+		<path d="M101.4 0C92 45 100 80 145 100C200 125 300 120 390 90L390 0Z" fill="var(--color-creme-oxford)" />
+		<path d="M101.4 0C92 45 100 80 145 100C200 125 300 120 390 90" fill="none" stroke="var(--color-gris)" stroke-width="1.4" />
+	</svg>
+	<svg class="absolute inset-x-0 top-0 hidden h-[41.667vw] w-full md:block xl:hidden" viewBox="0 0 768 320" preserveAspectRatio="none">
+		<path d="M199.68 0C165 95 175 160 250 195C350 240 560 235 768 170L768 0Z" fill="var(--color-creme-oxford)" />
+		<path d="M199.68 0C165 95 175 160 250 195C350 240 560 235 768 170" fill="none" stroke="var(--color-gris)" stroke-width="1.4" />
+	</svg>
+	<!-- Desktop : comme dans la hero, la ligne passe sous la zone Oxford -->
+	<svg class="absolute inset-x-0 top-0 hidden h-[29.167vw] w-full xl:block" viewBox="0 0 1440 420" preserveAspectRatio="none">
+		<path d="M540 0C528 120 560 200 650 240C760 290 1100 280 1440 200" fill="none" stroke="var(--color-gris)" stroke-width="1.5" />
+		<path d="M540 0C528 120 560 200 650 240C760 290 1100 280 1440 200L1440 0Z" fill="var(--color-creme-oxford)" />
+	</svg>
+
+	<img
+		src={motifGaufre.src}
+		alt=""
+		class="absolute top-[-5.4167vw] left-[17%] hidden h-auto w-[59.722%] max-w-none -translate-1/2 rotate-8 xl:block"
+	/>
+</div>

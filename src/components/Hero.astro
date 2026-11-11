@@ -8,6 +8,7 @@ import divisionDiagonale from '../assets/hero/division-diagonale.svg';
 import divisionDiagonaleTablette from '../assets/hero/division-diagonale-tablette.svg';
 import divisionDiagonaleMobile from '../assets/hero/division-diagonale-mobile.svg';
 import motifGaufre from '../assets/motifs/gaufre.svg';
+import motifCahier from '../assets/motifs/cahier.svg';
 import gaufreDoree from '../assets/objets/gaufre-doree.svg';
 import gaufreDoreePetite from '../assets/objets/gaufre-doree-petite.svg';
 import gaufreCaramel from '../assets/objets/gaufre-caramel.svg';
@@ -114,8 +115,17 @@ function visibilite(objet: Objet) {
 			src={motif.src.src}
 			alt=""
 			style={variables(motif)}
-			class="absolute top-(--d-y) left-(--d-x) hidden h-auto w-(--d-w) max-w-none -translate-1/2 rotate-(--d-r) xl:block"
+			class="absolute top-[calc(100%-5.4167vw)] left-(--d-x) hidden h-auto w-(--d-w) max-w-none -translate-1/2 rotate-(--d-r) xl:block"
 		/>
+
+		<!--
+			Continuité avec la section storytelling (ContinuiteHero.astro) :
+			- la gaufre ci-dessus est ancrée au bas de la hero (78 px sur 1440 = 5,4167vw), la storytelling dessine sa suite ;
+			- le grand carnet de la storytelling commence ici, au même endroit (son haut est à 400 px au-dessus de la storytelling).
+		-->
+		<div class="absolute top-[calc(100%-400px)] -right-70 hidden w-1/2 -rotate-12 md:block">
+			<img src={motifCahier.src} alt="" class="h-full w-full object-cover object-left opacity-90" />
+		</div>
 
 		<!-- Placeholders en attente des visuels de l'équipe multimédia (desktop uniquement) -->
 		<div class="absolute top-[26.667%] left-[8.333%] hidden aspect-[300/420] w-[20.833%] items-center justify-center border border-sable bg-creme-oxford text-xs text-gris xl:flex">
