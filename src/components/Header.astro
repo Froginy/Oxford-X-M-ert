@@ -1,5 +1,6 @@
 ---
 import burger from '../assets/header/burger.svg';
+import BoutonCoulis from './boutons/BoutonCoulis.astro';
 import contourDesktop from '../assets/header/contour-ouvert.svg';
 import contourTablette from '../assets/header/contour-ouvert-tablette.svg';
 
@@ -48,7 +49,7 @@ const liens = [
 
 			<div class="grid grid-cols-[1fr_auto] items-center">
 				<a href={liens[2].href} class="lien justify-self-center">{liens[2].texte}</a>
-				<button type="button" class="bouton-reserver flex" data-reservation-ouvrir>Réserver</button>
+				<BoutonCoulis libelle="Réserver" class="h-[38px] rounded-full px-[18px] text-sm font-medium whitespace-nowrap lg:h-11 lg:px-[22px] lg:text-[15px]" data-reservation-ouvrir />
 			</div>
 		</nav>
 	</div>
@@ -93,7 +94,7 @@ const liens = [
 
 		<hr class="my-7 border-sable" />
 
-		<button type="button" class="bouton-reserver flex justify-center self-center" data-reservation-ouvrir data-menu-lien>Réserver sa place</button>
+		<BoutonCoulis libelle="Réserver sa place" class="h-11 self-center rounded-full px-[22px] text-[15px] font-medium" data-reservation-ouvrir data-menu-lien />
 	</div>
 </dialog>
 
@@ -107,36 +108,6 @@ const liens = [
 	}
 	.lien:hover {
 		opacity: 0.7;
-	}
-	/* L'affichage (flex / hidden) reste dans les classes Tailwind pour garder les variantes responsive */
-	.bouton-reserver {
-		align-items: center;
-		height: 44px;
-		padding-inline: 22px;
-		border-radius: 9999px;
-		background: var(--color-dore);
-		font-size: 15px;
-		font-weight: 500;
-		color: var(--color-encre);
-		white-space: nowrap;
-		cursor: pointer;
-	}
-	@media (width >= 48rem) {
-		.bouton-reserver {
-			height: 38px;
-			padding-inline: 18px;
-			font-size: 14px;
-		}
-	}
-	@media (width >= 64rem) {
-		.lien,
-		.bouton-reserver {
-			font-size: 15px;
-		}
-		.bouton-reserver {
-			height: 44px;
-			padding-inline: 22px;
-		}
 	}
 	a:focus-visible,
 	button:focus-visible {

@@ -1,4 +1,5 @@
 ---
+import BoutonCahier from './boutons/BoutonCahier.astro';
 import tacheCafe from '../assets/modale/tache-cafe.svg';
 import gaufreCroquee from '../assets/modale/gaufre-croquee.svg';
 import numeroEntoure from '../assets/modale/numero-de-place-entoure.svg';
@@ -121,12 +122,7 @@ import coche from '../assets/modale/coche.svg';
 							Je ne suis pas un robot — widget CAPTCHA
 						</div>
 
-						<button
-							type="submit"
-							class="h-[52px] w-full cursor-pointer rounded-sm bg-dore text-[15px] font-semibold text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre"
-						>
-							Confirmer ma réservation
-						</button>
+						<BoutonCahier type="submit" libelle="Confirmer ma réservation" class="h-[52px] w-full text-[15px] font-semibold" />
 					</form>
 
 					<div class="flex items-center gap-3">
@@ -163,13 +159,7 @@ import coche from '../assets/modale/coche.svg';
 						Vous avez aussi choisi de recevoir les nouvelles de la collab&nbsp;: rendez-vous dans votre boîte mail.
 					</p>
 
-					<button
-						type="button"
-						class="h-[52px] w-full cursor-pointer rounded-sm bg-dore text-[15px] font-semibold text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre"
-						data-reservation-fermer
-					>
-						Retour au site
-					</button>
+					<BoutonCahier libelle="Retour au site" class="h-[52px] w-full text-[15px] font-semibold" data-reservation-fermer />
 
 					<div class="flex w-full items-center gap-3">
 						<!-- Lien agenda (.ics) à brancher avec le back -->

@@ -1,0 +1,170 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+// Bouton « cahier » (repris de test_sae_interspe, NotebookButton) aux couleurs de la collab :
+// couverture bordeaux à liseré et lettrage dorés, coin corné ; au survol le coin se déplie,
+// révèle une page à petits carreaux (comme le papier de la modale), puis le libellé est souligné au stylo.
+// Taille et typo se règlent avec les classes passées au composant.
+interface Props extends HTMLAttributes<'button'> {
+	libelle: string;
+}
+
+const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
+---
+
+<button type={type} class:list={['bouton-cahier', classe]} {...attributs}>
+	<span class="libelle-couverture">{libelle}</span>
+	<!-- la page porte sa propre copie du libellé (en bordeaux) : découpée par le même clip-path,
+	     la couleur change exactement le long du pli -->
+	<span class="page" aria-hidden="true">
+		<span class="libelle-page">
+			{libelle}
+			<svg class="soulignement" viewBox="0 0 200 16">
+				<path d="M3 10 C40 5 75 13 112 8 S172 6 197 10" pathLength="100"></path>
+			</svg>
+		</span>
+	</span>
+	<span class="rabat" aria-hidden="true"></span>
+</button>
+
+<style>
+	/* taille du coin déplié, animable grâce à @property */
+	@property --pli {
+		syntax: '<length>';
+		inherits: false;
+		initial-value: 16px;
+	}
+
+	.bouton-cahier {
+		--couverture: var(--color-bordeaux);
+		--couverture-dos: #4d1314; /* bordeaux plus sombre : revers du coin corné */
+		--dorure: var(--color-dore); /* liseré */
+		--dorure-claire: #d9b45e; /* lettrage : contraste 5,7:1 sur le bordeaux (le doré de la palette n'atteint que 3,9:1) */
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		border-radius: 6px;
+		background: var(--couverture);
+		color: var(--dorure-claire);
+		cursor: pointer;
+	}
+
+	/* liseré doré, comme sur une couverture de carnet */
+	.bouton-cahier::before {
+		content: '';
+		position: absolute;
+		inset: 4px;
+		border: 1.5px solid var(--dorure);
+		border-radius: 3px;
+	}
+
+	.libelle-couverture {
+		position: relative;
+	}
+
+	.page {
+		--pli: 16px;
+		position: absolute;
+		inset: 0;
+		display: grid;
+		place-items: center;
+		/* papier de la modale : petits carreaux sable et marge bordeaux */
+		background-color: var(--color-papier);
+		background-image:
+			linear-gradient(90deg, transparent 22px, rgb(110 30 31 / 0.5) 22px 23.2px, transparent 23.2px),
+			linear-gradient(rgb(217 205 187 / 0.7) 0 0.7px, transparent 0),
+			linear-gradient(90deg, rgb(217 205 187 / 0.7) 0 0.7px, transparent 0);
+		background-size:
+			100% 100%,
+			16px 16px,
+			16px 16px;
+		color: var(--couverture);
+		/* filet discret : une fois dépliée, la page garde la forme du bouton sur le papier de la modale */
+		box-shadow: inset 0 0 0 1px rgb(110 30 31 / 0.35);
+		border-radius: inherit;
+		clip-path: polygon(calc(100% - var(--pli)) 0, 100% 0, 100% var(--pli));
+		transition: --pli 0.45s cubic-bezier(0.5, 0, 0.75, 0);
+	}
+
+	.libelle-page {
+		position: relative;
+	}
+
+	.soulignement {
+		position: absolute;
+		top: calc(100% + 2px);
+		left: -6%;
+		width: 112%;
+		height: auto;
+		overflow: visible;
+	}
+
+	/* tiret plus long que le trait et décalé au-delà : aucun embout arrondi ne dépasse au repos */
+	.soulignement path {
+		fill: none;
+		stroke: var(--couverture);
+		stroke-width: 2.5;
+		stroke-linecap: round;
+		stroke-dasharray: 100 200;
+		stroke-dashoffset: 104;
+		opacity: 0;
+		transition:
+			opacity 0.15s,
+			stroke-dashoffset 0s 0.15s;
+	}
+
+	/* le coin de la couverture replié, vu de dos */
+	.rabat {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 16px;
+		height: 16px;
+		background: linear-gradient(225deg, transparent 50%, var(--couverture-dos) 50%);
+		box-shadow: -2px 2px 3px rgb(0 0 0 / 0.25);
+		clip-path: polygon(0 0, 0 100%, 100% 100%);
+		/* ne revient qu'une fois la page repliée */
+		transition:
+			transform 0.25s 0.4s,
+			opacity 0.2s 0.4s;
+	}
+
+	/* --- survol --- */
+	.bouton-cahier:is(:hover, :focus-visible) .page {
+		/* assez grand pour couvrir tout le bouton en diagonale */
+		--pli: 1200px;
+		transition: --pli 0.7s cubic-bezier(0.3, 0.6, 0.3, 1);
+	}
+
+	.bouton-cahier:is(:hover, :focus-visible) .rabat {
+		opacity: 0;
+		transform: translate(10px, -10px);
+		transition:
+			transform 0.2s,
+			opacity 0.15s;
+	}
+
+	.bouton-cahier:is(:hover, :focus-visible) .soulignement path {
+		opacity: 1;
+		stroke-dashoffset: 0;
+		transition:
+			opacity 0s 0.45s,
+			stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.45s;
+	}
+
+	.bouton-cahier:focus-visible {
+		outline: 2px solid var(--couverture);
+		outline-offset: 3px;
+	}
+
+	/* Mouvement réduit : la page apparaît sans dépliage */
+	@media (prefers-reduced-motion: reduce) {
+		.bouton-cahier .page,
+		.bouton-cahier .rabat,
+		.bouton-cahier .soulignement path {
+			transition: none !important;
+		}
+	}
+</style>

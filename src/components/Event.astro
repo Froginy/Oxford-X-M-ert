@@ -1,11 +1,20 @@
 ---
+import BoutonCoulis from './boutons/BoutonCoulis.astro';
 import Fouet from '../assets/motifs/fouet.svg';
+import MotifPoche from '../assets/motifs/poche-a-douille.svg';
 import PostIt from '../assets/objets/post-it-reserver.svg';
 import TicketMarron from '../assets/objets/ticket-atelier.svg';
 import ModaleReservation from './ModaleReservation.astro';
 ---
 
 <section id="evenement" class="relative overflow-hidden bg-creme px-6 py-16 md:px-12 md:py-24">
+
+  <!-- Suite de la poche à douille de la section produit (même position, 33 px au-dessus de cette section) -->
+  <img
+    src={MotifPoche.src}
+    alt=""
+    class="pointer-events-none absolute -top-[33px] left-[1.646%] z-0 hidden h-auto w-[291px] max-w-none -translate-1/2 rotate-14 xl:block"
+  />
 
     <div class="absolute -bottom-100 -right-25 pointer-events-none z-0 hidden lg:block opacity-60 w-64 md:w-80 lg:w-200 -rotate-12">
     <img src={Fouet.src} alt="" class="w-full h-auto object-contain" />
@@ -110,13 +119,11 @@ import ModaleReservation from './ModaleReservation.astro';
         </p>
 
         <!-- Bouton de réservation centré -->
-        <button
-          type="button"
-          class="mx-auto flex h-13 w-60 cursor-pointer items-center justify-center rounded-sm bg-dore text-sm font-medium text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre md:text-[15px] xl:h-14 xl:text-base shadow-md hover:opacity-95 transition-opacity"
+        <BoutonCoulis
+          libelle="Réserver sa place"
+          class="mx-auto h-13 w-60 rounded-sm text-sm font-medium shadow-md md:text-[15px] xl:h-14 xl:text-base"
           data-reservation-ouvrir
-        >
-			Réserver sa place
-		</button>
+        />
       </div>
 
     </div>
