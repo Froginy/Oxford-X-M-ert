@@ -19,6 +19,8 @@ import '../styles/global.css';
 		<Font cssVariable="--font-inter" preload />
 		<Font cssVariable="--font-playfair" />
 		<Font cssVariable="--font-caveat" />
+		<!-- Sans JavaScript, l'écran de chargement (Chargement.astro) ne s'ouvrirait jamais : on le masque -->
+		<noscript><style>#chargement { display: none; }</style></noscript>
 		<title>Méert × Oxford — Transmettre votre savoir-faire</title>
 	</head>
 	<body>
