@@ -7,7 +7,7 @@ import feuille from '../assets/objets/feuille-petits-carreaux.svg';
 // Visuels et vidéo du livre en placeholders, en attente de l'équipe multimédia.
 ---
 
-<section id="produit" class="relative overflow-hidden bg-creme px-6 pt-12 pb-12 md:px-12 md:pt-16 md:pb-16 xl:pb-14">
+<section id="produit" class="relative overflow-hidden bg-creme px-6 pt-12 pb-16 md:px-12 md:pt-16 md:pb-20 xl:pb-20">
 	<div class="pointer-events-none absolute inset-0" aria-hidden="true">
 		<!-- Grand motif poche à douille au trait (desktop) -->
 		<img
@@ -20,11 +20,11 @@ import feuille from '../assets/objets/feuille-petits-carreaux.svg';
 		<img
 			src={etiquette.src}
 			alt=""
-			class="absolute top-[61px] left-[15.6%] h-auto w-[105px] max-w-none -translate-1/2 md:top-[79px] md:left-[18.1%] md:w-[146px] xl:top-[667px] xl:left-[14.2%] xl:w-[194px]"
+			class="absolute top-[61px] left-[15.6%] h-auto w-[105px] max-w-none -translate-1/2 md:top-[79px] md:left-[18.1%] md:w-[146px] xl:top-[643px] xl:left-[14.2%] xl:w-[194px]"
 		/>
 
-		<!-- Feuille à petits carreaux qui flotte (ancrée en bas de la section, près du bouton) -->
-		<div class="absolute bottom-[61px] left-[94%] w-[79px] -translate-x-1/2 translate-y-1/2 md:bottom-[74px] md:left-[87%] md:w-[120px] xl:bottom-[181px] xl:left-[92.4%] xl:w-[168px]">
+		<!-- Feuille à petits carreaux qui flotte (ancrée en bas de la section, à droite du texte) -->
+		<div class="absolute bottom-[34px] left-[94%] w-[79px] -translate-x-1/2 translate-y-1/2 md:bottom-[46px] md:left-[91%] md:w-[120px] xl:bottom-[150px] xl:left-[92.4%] xl:w-[168px]">
 			<img src={feuille.src} alt="" class="block h-auto w-full" data-produit-flotte />
 		</div>
 	</div>
@@ -35,7 +35,7 @@ import feuille from '../assets/objets/feuille-petits-carreaux.svg';
 		</p>
 
 		<!-- Mobile/tablette : vidéo en pleine largeur puis les deux visuels ; desktop : visuel · vidéo · visuel -->
-		<div class="mb-14 flex w-full flex-wrap gap-4 md:mb-16 md:gap-6 xl:mb-26 xl:flex-nowrap xl:items-center">
+		<div class="mb-14 flex w-full flex-wrap gap-4 md:mb-16 md:gap-6 xl:mb-20 xl:flex-nowrap xl:items-center">
 			<div class="flex h-[150px] min-w-0 flex-1 flex-col items-center justify-center gap-1.5 border border-sable bg-creme-oxford px-2 md:h-[220px] xl:h-[340px] xl:w-[280px] xl:flex-none">
 				<p class="text-[13px] text-gris md:text-sm xl:text-[13px]">Visuel livre fermé</p>
 				<p class="text-[11px] text-gris-clair">Édition limitée</p>
@@ -52,21 +52,12 @@ import feuille from '../assets/objets/feuille-petits-carreaux.svg';
 			</div>
 		</div>
 
-		<h2 class="mb-9 text-2xl leading-8 font-bold text-encre md:mb-12 md:text-[30px] md:leading-[38px] xl:mb-3.5 xl:max-w-[900px] xl:text-4xl xl:leading-normal">
+		<h2 class="mb-4 text-2xl leading-8 font-bold text-encre md:mb-5 md:text-[30px] md:leading-[38px] xl:mb-3.5 xl:max-w-[900px] xl:text-4xl xl:leading-normal">
 			Le livre de recettes Méert × Oxford
 		</h2>
-		<p class="mb-7 text-sm leading-6 text-gris md:max-w-[585px] md:text-[15px] md:leading-[25px] xl:mb-9 xl:max-w-[900px] xl:text-[17px] xl:leading-7">
+		<p class="text-sm leading-6 text-gris md:max-w-[585px] md:text-[15px] md:leading-[25px] xl:max-w-[900px] xl:text-[17px] xl:leading-7">
 			Imaginé comme un livre de famille&nbsp;: un ouvrage à compléter, à faire vivre et à transmettre au fil des années. Chaque recette y trouve sa place, avec vos annotations et vos souvenirs.
 		</p>
-
-		<!-- Destination à définir (page ou fiche du livre) -->
-		<button
-			type="button"
-			class="flex h-[52px] w-60 cursor-pointer items-center justify-center rounded-sm bg-dore text-sm font-medium text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre md:text-[15px] xl:text-base"
-			data-decouvrir-livre
-		>
-			Découvrir le livre
-		</button>
 	</div>
 </section>
 
