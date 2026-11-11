@@ -1,0 +1,68 @@
+---
+import motifPoche from '../assets/motifs/poche-a-douille.svg';
+import etiquette from '../assets/objets/etiquette-numerotee.svg';
+import feuille from '../assets/objets/feuille-petits-carreaux.svg';
+
+// Section « Produit » — Figma : Section Produit (desktop 1440, tablette 768, mobile 390).
+// Visuels et vidéo du livre en placeholders, en attente de l'équipe multimédia.
+---
+
+<section id="produit" class="relative overflow-hidden bg-creme px-6 pt-12 pb-16 md:px-12 md:pt-16 md:pb-20 xl:pb-20">
+	<div class="pointer-events-none absolute inset-0" aria-hidden="true">
+		<!-- Grand motif poche à douille au trait (desktop) -->
+		<img
+			src={motifPoche.src}
+			alt=""
+			class="absolute top-[791px] left-[1.646%] hidden h-auto w-[291px] max-w-none -translate-1/2 rotate-14 xl:block"
+		/>
+
+		<!-- Étiquette « Édition limitée n° 042 / 500 » (rotation et ombre incluses dans l'asset) -->
+		<img
+			src={etiquette.src}
+			alt=""
+			class="absolute top-[61px] left-[15.6%] h-auto w-[105px] max-w-none -translate-1/2 md:top-[79px] md:left-[18.1%] md:w-[146px] xl:top-[643px] xl:left-[14.2%] xl:w-[194px]"
+		/>
+
+		<!-- Feuille à petits carreaux qui flotte (ancrée en bas de la section, à droite du texte) -->
+		<div class="absolute bottom-[34px] left-[94%] w-[79px] -translate-x-1/2 translate-y-1/2 md:bottom-[46px] md:left-[91%] md:w-[120px] xl:bottom-[150px] xl:left-[92.4%] xl:w-[168px]">
+			<img src={feuille.src} alt="" class="block h-auto w-full" data-produit-flotte />
+		</div>
+	</div>
+
+	<div class="relative mx-auto flex max-w-[342px] flex-col items-center text-center md:max-w-[672px] xl:max-w-[1088px]">
+		<p class="mb-8 rounded-full border-[1.2px] border-dore px-3 py-1.5 text-[11px] font-medium tracking-[1.2px] text-encre xl:mb-11 xl:px-3.5 xl:py-[7px] xl:text-xs xl:tracking-[1.5px]">
+			ÉDITION LIMITÉE
+		</p>
+
+		<!-- Mobile/tablette : vidéo en pleine largeur puis les deux visuels ; desktop : visuel · vidéo · visuel -->
+		<div class="mb-14 flex w-full flex-wrap gap-4 md:mb-16 md:gap-6 xl:mb-20 xl:flex-nowrap xl:items-center">
+			<div class="flex h-[150px] min-w-0 flex-1 flex-col items-center justify-center gap-1.5 border border-sable bg-creme-oxford px-2 md:h-[220px] xl:h-[340px] xl:w-[280px] xl:flex-none">
+				<p class="text-[13px] text-gris md:text-sm xl:text-[13px]">Visuel livre fermé</p>
+				<p class="text-[11px] text-gris-clair">Édition limitée</p>
+			</div>
+
+			<div class="order-first flex h-[200px] w-full flex-col items-center justify-center gap-1.5 border border-[#252529] bg-[#252529] md:h-[340px] xl:order-none xl:h-[400px] xl:w-[480px] xl:shrink-0">
+				<p class="text-[13px] text-sable-clair md:text-sm xl:text-[13px]">Vidéo — le livre feuilleté</p>
+				<span class="flex size-12 items-center justify-center rounded-full border border-sable-clair text-base text-sable-clair xl:size-14 xl:text-lg" aria-hidden="true">▶</span>
+			</div>
+
+			<div class="flex h-[150px] min-w-0 flex-1 flex-col items-center justify-center gap-1.5 border border-sable bg-creme-oxford px-2 md:h-[220px] xl:h-[340px] xl:w-[280px] xl:flex-none">
+				<p class="text-[13px] text-gris md:text-sm xl:text-[13px]">Visuel pages intérieures</p>
+				<p class="text-[11px] text-gris-clair">Recette exclusive</p>
+			</div>
+		</div>
+
+		<h2 class="mb-4 text-2xl leading-8 font-bold text-encre md:mb-5 md:text-[30px] md:leading-[38px] xl:mb-3.5 xl:max-w-[900px] xl:text-4xl xl:leading-normal">
+			Le livre de recettes Méert × Oxford
+		</h2>
+		<p class="text-sm leading-6 text-gris md:max-w-[585px] md:text-[15px] md:leading-[25px] xl:max-w-[900px] xl:text-[17px] xl:leading-7">
+			Imaginé comme un livre de famille&nbsp;: un ouvrage à compléter, à faire vivre et à transmettre au fil des années. Chaque recette y trouve sa place, avec vos annotations et vos souvenirs.
+		</p>
+	</div>
+</section>
+
+<script>
+	import { flottement } from '../scripts/animations/flottement';
+
+	flottement(document.querySelectorAll('#produit [data-produit-flotte]'));
+</script>
