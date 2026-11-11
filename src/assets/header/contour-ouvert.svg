@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="1200" height="84" viewBox="0 0 1200 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Contour gribouill&#195;&#169;" clip-path="url(#clip0_0_4)">
+<path id="Vector" d="M42 1C420 -1 780 3 1158 1C1194 2 1199 38 1199 42C1199 74 1190 83 1158 83C780 85 420 81 42 83C8 83 1 72 1 42C1 10 10 1 42 1Z" stroke="#1B1310" stroke-width="1.5" stroke-linecap="round"/>
+<path id="Vector_2" opacity="0.4" d="M44 3C420 1 780 5 1156 3C1194 4 1199 38 1197 42C1199 74 1190 83 1158 81C780 83 420 79 42 81C8 83 1 72 3 42C1 10 10 1 44 3Z" stroke="#1B1310" stroke-width="0.9" stroke-linecap="round"/>
+</g>
+<defs>
+<clipPath id="clip0_0_4">
+<rect width="1200" height="84" fill="white"/>
+</clipPath>
+</defs>
+</svg>

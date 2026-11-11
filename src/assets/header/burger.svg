@@ -1,0 +1,23 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Wireframe - 1">
+<g id="Header flottant">
+<g id="Header &#226;&#128;&#147; &#195;&#169;tat r&#195;&#169;duit (burger)">
+<circle id="Fond" cx="30" cy="30" r="28" fill="#FAF6EF"/>
+<g id="Contour gribouill&#195;&#169;" clip-path="url(#clip0_0_1)">
+<path id="Vector" d="M30 2.99999C21.6 0.999988 38.4 4.99999 30 2.99999ZM30 2.99999C52 3.99999 57 26 57 30C57 48 48 57 30 57M30 2.99999C12 2.99999 3 12 3 30C3 46 10 57 30 57M30 57C21.6 55 38.4 59 30 57Z" stroke="#1B1310" stroke-width="1.6" stroke-linecap="round"/>
+<path id="Vector_2" opacity="0.45" d="M30 54.8C48 57 57 48 54.8 30C57 26 52 6.2 27.8 5.2C38.4 7.2 21.6 3.2 32.2 5.2C12 3 3.00001 12 5.20001 30C3.00001 46 10 57 30 54.8ZM30 54.8C21.6 52.8 38.4 56.8 30 54.8Z" stroke="#1B1310" stroke-linecap="round"/>
+</g>
+<g id="Traits gribouill&#195;&#169;s">
+<path id="Vector_3" d="M20 24C27 22.4 37 25.2 44 23.4" stroke="#1B1310" stroke-width="2" stroke-linecap="round"/>
+<path id="Vector_4" d="M20 32C28 30.6 36 33.2 44 31.6" stroke="#1B1310" stroke-width="2" stroke-linecap="round"/>
+<path id="Vector_5" d="M20 40C26 38.6 38 41.2 44 39.4" stroke="#1B1310" stroke-width="2" stroke-linecap="round"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_1">
+<rect width="56" height="56" fill="white" transform="translate(2 2)"/>
+</clipPath>
+</defs>
+</svg>
