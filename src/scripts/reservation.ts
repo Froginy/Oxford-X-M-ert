@@ -95,8 +95,11 @@ export function afficherConfirmation(infos: { email: string; numero: number; new
 
 	formulaire.hidden = true;
 	confirmation.hidden = false;
-	if (!mouvementReduit()) gsap.fromTo(confirmation, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35 });
+	// opacité seule (pas autoAlpha) : un bloc en visibility: hidden ne peut pas recevoir le focus
+	if (!mouvementReduit()) gsap.fromTo(confirmation, { opacity: 0 }, { opacity: 1, duration: 0.35 });
 	feuille.querySelector('[data-papier]')?.scrollTo({ top: 0 });
+	// Le bouton d'envoi vient d'être masqué : on place le focus sur le titre pour que le lecteur d'écran l'annonce
+	confirmation.querySelector<HTMLElement>('[data-confirmation-titre]')!.focus();
 }
 
 /** Affiche (ou retire avec `null`) l'erreur sous le champ e-mail. */

@@ -21,7 +21,7 @@
   --color-sable-clair: #e8decd;
   --color-cacao: #55392a;
   --color-papier: #fffdf8; /* feuille de cahier, cases à cocher (modale) */
-  --color-gris-clair: #9a8a7a; /* texte d'exemple, mentions (modale) */
+  --color-gris-clair: #786858; /* texte d'exemple, mentions (modale) — contraste ≥ 4,5:1 sur les fonds crème et beige */
 }
 
 @layer base {
