@@ -1,0 +1,199 @@
+---
+import type { ImageMetadata } from 'astro';
+
+import moitieOxford from '../assets/hero/moitie-oxford.svg';
+import moitieOxfordTablette from '../assets/hero/moitie-oxford-tablette.svg';
+import moitieOxfordMobile from '../assets/hero/moitie-oxford-mobile.svg';
+import divisionDiagonale from '../assets/hero/division-diagonale.svg';
+import divisionDiagonaleTablette from '../assets/hero/division-diagonale-tablette.svg';
+import divisionDiagonaleMobile from '../assets/hero/division-diagonale-mobile.svg';
+import motifGaufre from '../assets/motifs/gaufre.svg';
+import gaufreDoree from '../assets/objets/gaufre-doree.svg';
+import gaufreDoreePetite from '../assets/objets/gaufre-doree-petite.svg';
+import gaufreCaramel from '../assets/objets/gaufre-caramel.svg';
+import gaufreBeige from '../assets/objets/gaufre-beige.svg';
+import cahierBordeaux from '../assets/objets/cahier-bordeaux.svg';
+import cahierDore from '../assets/objets/cahier-dore.svg';
+import cahierChocolat from '../assets/objets/cahier-chocolat.svg';
+import cahierBeige from '../assets/objets/cahier-beige.svg';
+import tampon from '../assets/objets/tampon.svg';
+import sticker from '../assets/objets/sticker.svg';
+import doodle from '../assets/objets/doodle.svg';
+import ruban from '../assets/objets/ruban.svg';
+import timbre from '../assets/objets/timbre.svg';
+import papierGaufres from '../assets/objets/papier-gaufres.svg';
+
+/**
+ * Positions reprises des maquettes Figma, en px de chaque maquette
+ * (mobile 390×660, tablette 768×760, desktop 1440×900) puis converties en %
+ * de la section : cx/cy = centre de l'objet, w = largeur, r = rotation (deg).
+ * Un objet sans position pour un breakpoint y est masqué.
+ */
+type Position = { cx: number; cy: number; w: number; r?: number };
+
+type Objet = {
+	src: ImageMetadata;
+	mobile?: Position;
+	tablette?: Position;
+	desktop?: Position;
+	/** Côté de la collab, pour l'intro « rideau » (gaufres Méert / cahiers Oxford). */
+	cote?: 'meert' | 'oxford';
+	/** Objet qui flotte (animation GSAP à venir). */
+	flotte?: boolean;
+	classe?: string;
+};
+
+const maquettes = {
+	mobile: { l: 390, h: 660, prefixe: 'm' },
+	tablette: { l: 768, h: 760, prefixe: 't' },
+	desktop: { l: 1440, h: 900, prefixe: 'd' },
+} as const;
+
+// Ordre = ordre de superposition de la maquette desktop (motif de fond et placeholders en dessous).
+const motif: Objet = { src: motifGaufre, desktop: { cx: 244.8, cy: 822, w: 860, r: 8 } };
+
+const objets: Objet[] = [
+	{ src: papierGaufres, cote: 'oxford', desktop: { cx: 1080, cy: 353.1, w: 197 }, tablette: { cx: 700, cy: 275, w: 129.7 }, mobile: { cx: 287, cy: 564.7, w: 106.6 } },
+	// Sur tablette le doodle passe au-dessus du ruban.
+	{ src: doodle, cote: 'oxford', desktop: { cx: 725.9, cy: 796.1, w: 210 }, tablette: { cx: 495, cy: 672, w: 146.8 }, classe: 'max-xl:z-10' },
+	{ src: sticker, cote: 'oxford', desktop: { cx: 905, cy: 775, w: 182 }, tablette: { cx: 690, cy: 516, w: 117.8, r: -13 } },
+	{ src: gaufreDoree, cote: 'meert', flotte: true, desktop: { cx: 106.7, cy: 122.4, w: 195, r: 6 }, tablette: { cx: 89, cy: 233, w: 91 }, mobile: { cx: 52, cy: 197, w: 65 } },
+	{ src: gaufreCaramel, cote: 'meert', flotte: true, desktop: { cx: 220.8, cy: 158.3, w: 117, r: -8 }, tablette: { cx: 39, cy: 695, w: 143 }, mobile: { cx: 24, cy: 610, w: 104 } },
+	{ src: gaufreBeige, cote: 'meert', flotte: true, desktop: { cx: 121.3, cy: 788.2, w: 195, r: -5 }, tablette: { cx: 31, cy: 146, w: 143 }, mobile: { cx: 16, cy: 119, w: 104 } },
+	{ src: gaufreDoreePetite, cote: 'meert', flotte: true, desktop: { cx: 208.3, cy: 840.8, w: 117, r: 8 } },
+	{ src: ruban, cote: 'oxford', desktop: { cx: 1183.3, cy: 780.8, w: 456 }, tablette: { cx: 619.3, cy: 709, w: 291.4 } },
+	{ src: timbre, cote: 'oxford', desktop: { cx: 1112, cy: 654.1, w: 103 }, tablette: { cx: 700, cy: 411.5, w: 68.9 }, mobile: { cx: 160, cy: 603.2, w: 56.1 } },
+	{ src: cahierBordeaux, cote: 'oxford', flotte: true, desktop: { cx: 1251.3, cy: 115.8, w: 134, r: 6 }, mobile: { cx: 341, cy: 586, w: 77 } },
+	{ src: cahierDore, cote: 'oxford', flotte: true, desktop: { cx: 1364.9, cy: 186.6, w: 123, r: -8 }, tablette: { cx: 718, cy: 158, w: 87 } },
+	{ src: cahierChocolat, cote: 'oxford', flotte: true, desktop: { cx: 1372.2, cy: 779, w: 142, r: -5 }, tablette: { cx: 704, cy: 670, w: 100 } },
+	{ src: cahierBeige, cote: 'oxford', flotte: true, desktop: { cx: 1233.5, cy: 844.9, w: 100, r: 6 }, mobile: { cx: 351, cy: 132, w: 67 } },
+	// Le lion est teinté en « multiply » sur le fond de page dans Figma : on fusionne l'image entière.
+	{ src: tampon, cote: 'oxford', desktop: { cx: 1112, cy: 518, w: 195 }, tablette: { cx: 536, cy: 116, w: 131 }, mobile: { cx: 262, cy: 80, w: 101.6 }, classe: 'mix-blend-multiply' },
+];
+
+const pourcent = (valeur: number, total: number) => `${((valeur / total) * 100).toFixed(3)}%`;
+
+function variables(objet: Objet) {
+	return (Object.keys(maquettes) as Array<keyof typeof maquettes>)
+		.flatMap((breakpoint) => {
+			const pos = objet[breakpoint];
+			if (!pos) return [];
+			const { l, h, prefixe } = maquettes[breakpoint];
+			return [
+				`--${prefixe}-x:${pourcent(pos.cx, l)}`,
+				`--${prefixe}-y:${pourcent(pos.cy, h)}`,
+				`--${prefixe}-w:${pourcent(pos.w, l)}`,
+				`--${prefixe}-r:${pos.r ?? 0}deg`,
+			];
+		})
+		.join(';');
+}
+
+function visibilite(objet: Objet) {
+	return [
+		objet.mobile ? 'block' : 'hidden',
+		objet.tablette ? 'md:block' : 'md:hidden',
+		objet.desktop ? 'xl:block' : 'xl:hidden',
+	].join(' ');
+}
+---
+
+<section
+	id="hero"
+	class="relative flex h-svh min-h-[660px] items-center justify-center overflow-hidden bg-creme px-6 md:min-h-[760px] xl:min-h-[62.5vw] xl:px-0"
+>
+	<div class="pointer-events-none absolute inset-0 isolate bg-creme" aria-hidden="true">
+		<!-- Zone Oxford (diagonale courbe), une forme par maquette -->
+		<img src={moitieOxfordMobile.src} alt="" class="absolute inset-0 size-full md:hidden" />
+		<img src={divisionDiagonaleMobile.src} alt="" class="absolute inset-0 size-full md:hidden" />
+		<img src={moitieOxfordTablette.src} alt="" class="absolute inset-0 hidden size-full md:block xl:hidden" />
+		<img src={divisionDiagonaleTablette.src} alt="" class="absolute inset-0 hidden size-full md:block xl:hidden" />
+		<img src={divisionDiagonale.src} alt="" class="absolute inset-0 hidden size-full xl:block" />
+		<img src={moitieOxford.src} alt="" class="absolute inset-0 hidden size-full xl:block" />
+
+		<img
+			src={motif.src.src}
+			alt=""
+			style={variables(motif)}
+			class="absolute top-(--d-y) left-(--d-x) hidden h-auto w-(--d-w) max-w-none -translate-1/2 rotate-(--d-r) xl:block"
+		/>
+
+		<!-- Placeholders en attente des visuels de l'équipe multimédia (desktop uniquement) -->
+		<div class="absolute top-[26.667%] left-[8.333%] hidden aspect-[300/420] w-[20.833%] items-center justify-center border border-sable bg-creme-oxford text-xs text-gris xl:flex">
+			Visu gaufre
+		</div>
+		<div class="absolute top-[5.556%] left-[65.278%] hidden aspect-[180/200] w-[12.5%] items-center justify-center border border-sable bg-sable-clair text-xs text-gris xl:flex">
+			Photo
+		</div>
+		<div class="absolute top-[28.889%] left-[83.333%] hidden aspect-[150/170] w-[10.417%] items-center justify-center border border-sable bg-sable-clair text-xs text-gris xl:flex">
+			Photo
+		</div>
+		<div class="absolute top-1/2 left-[83.75%] hidden aspect-[190/130] w-[13.194%] items-center justify-center border border-cacao bg-cacao text-xs text-sable-clair xl:flex">
+			Collage
+		</div>
+
+		{
+			objets.map((objet) => (
+				<img
+					src={objet.src.src}
+					alt=""
+					data-hero-cote={objet.cote}
+					data-hero-flotte={objet.flotte ? '' : undefined}
+					style={variables(objet)}
+					class:list={[
+						'absolute h-auto max-w-none -translate-1/2',
+						'top-(--m-y) left-(--m-x) w-(--m-w) rotate-(--m-r)',
+						'md:top-(--t-y) md:left-(--t-x) md:w-(--t-w) md:rotate-(--t-r)',
+						'xl:top-(--d-y) xl:left-(--d-x) xl:w-(--d-w) xl:rotate-(--d-r)',
+						visibilite(objet),
+						objet.classe,
+					]}
+				/>
+			))
+		}
+	</div>
+
+	<!-- Desktop : la carte garde la proportion de la maquette (600 / 1440) pour ne pas recouvrir les visuels -->
+	<div class="relative flex w-full max-w-[342px] flex-col items-center gap-5 border border-encre bg-creme px-5 py-6 text-center md:max-w-[498px] md:p-8 xl:mt-[22px] xl:w-[41.667%] xl:max-w-[600px] xl:gap-6 xl:p-9">
+		<!-- Logo collab : placeholder en attente du fichier -->
+		<div class="flex h-14 w-[150px] items-center justify-center border border-encre bg-creme text-xs text-gris md:w-[170px] xl:h-20 xl:w-60 xl:border-[1.5px]">
+			Logo
+		</div>
+
+		<div class="flex flex-col items-center gap-5 xl:gap-3">
+			<h1 class="flex flex-col items-center gap-0.5 text-[26px] leading-normal font-bold whitespace-nowrap md:text-[34px] xl:text-[44px]">
+				<span class="flex items-center gap-2.5 xl:gap-3.5">
+					Transmettre
+					<!-- Mot animé en machine à écrire (votre → notre → le), animation GSAP à venir -->
+					<span
+						class="flex h-[38px] items-center gap-[3px] border border-dashed border-bordeaux px-1.5 md:h-[49px] xl:h-16 xl:w-44 xl:gap-1 xl:px-2"
+						data-typewriter
+						data-typewriter-mots="votre,notre,le"
+					>
+						<span data-typewriter-mot>votre</span>
+						<span class="font-normal text-bordeaux" aria-hidden="true" data-typewriter-curseur>|</span>
+					</span>
+				</span>
+				<span>savoir-faire</span>
+			</h1>
+
+			<p class="text-sm leading-[22px] text-gris md:text-[15px] md:leading-[23px] xl:text-lg xl:leading-normal">
+				Deux maisons, deux expertises, une même conviction&nbsp;: ce qui a de la valeur mérite d’être transmis.
+			</p>
+		</div>
+
+		<!-- Ouvre la modale de réservation (issue dédiée) -->
+		<button
+			type="button"
+			class="flex h-[52px] w-60 cursor-pointer items-center justify-center rounded-sm bg-dore text-sm font-medium text-encre focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-encre md:text-[15px] xl:h-14 xl:text-base"
+			data-reservation-ouvrir
+		>
+			Réserver sa place
+		</button>
+
+		<p class="flex items-center gap-2 text-[13px] font-medium text-gris md:text-sm">
+			<span class="size-2 shrink-0 rounded-full bg-bordeaux xl:w-[18px] xl:border xl:border-encre" aria-hidden="true"></span>
+			<span><span data-places-restantes>XX</span> places restantes</span>
+		</p>
+	</div>
+</section>
