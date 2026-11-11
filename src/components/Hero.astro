@@ -45,6 +45,9 @@ const maquettes = {
 	desktop: { l: 1440, h: 900, prefixe: 'd' },
 } as const;
 
+// Mots du slogan « Transmettre ___ savoir-faire » (le premier est celui affiché sans animation)
+const motsSlogan = ['votre', 'notre', 'le'];
+
 // Ordre = ordre de superposition de la maquette desktop (motif de fond et placeholders en dessous).
 const motif: Objet = { src: motifGaufre, desktop: { cx: 244.8, cy: 822, w: 860, r: 8 } };
 
@@ -158,17 +161,24 @@ function visibilite(objet: Objet) {
 
 		<div class="flex flex-col items-center gap-5 xl:gap-3">
 			<h1 class="flex flex-col items-center gap-0.5 text-[26px] leading-normal font-bold whitespace-nowrap md:text-[34px] xl:text-[44px]">
-				<span class="flex items-center gap-2.5 xl:gap-3.5">
+				<span class="flex items-center gap-[0.28em]">
 					Transmettre
-					<!-- Mot animé en machine à écrire (votre → notre → le) ; largeur fixe pour que la ligne ne bouge pas -->
-					<span
-						class="flex h-[38px] min-w-[4em] items-center gap-[3px] border border-dashed border-bordeaux px-1.5 md:h-[49px] xl:h-16 xl:gap-1 xl:px-2"
-						data-typewriter
-						data-typewriter-mots="votre,notre,le"
-					>
-						<span class="sr-only">votre</span>
-						<span aria-hidden="true" data-typewriter-mot>votre</span>
-						<span class="font-normal text-bordeaux" aria-hidden="true" data-typewriter-curseur>|</span>
+					<!-- Mots qui tournent sur un pivot (votre → notre → le), empilés au même endroit : le plus long fixe la largeur -->
+					<span class="flex items-center" data-mots-tournants>
+						<span class="sr-only">{motsSlogan[0]}</span>
+						<span class="grid" aria-hidden="true">
+							{
+								motsSlogan.map((mot, i) => (
+									<span class:list={['col-start-1 row-start-1 whitespace-nowrap', i > 0 && 'opacity-0']} data-mot>
+										{[...mot].map((lettre) => (
+											<span class="inline-block" data-lettre>
+												{lettre}
+											</span>
+										))}
+									</span>
+								))
+							}
+						</span>
 					</span>
 				</span>
 				<span>savoir-faire</span>
@@ -197,13 +207,13 @@ function visibilite(objet: Objet) {
 
 <script>
 	import { flottement } from '../scripts/animations/flottement';
-	import { machineAEcrire } from '../scripts/animations/machine-a-ecrire';
+	import { motsTournants } from '../scripts/animations/mots-tournants';
 	import { apresChargement } from '../scripts/chargement';
 
 	flottement(document.querySelectorAll('#hero [data-hero-flotte]'));
 
 	apresChargement(() => {
-		const slogan = document.querySelector<HTMLElement>('#hero [data-typewriter]');
-		if (slogan) machineAEcrire(slogan);
+		const slogan = document.querySelector<HTMLElement>('#hero [data-mots-tournants]');
+		if (slogan) motsTournants(slogan);
 	});
 </script>
