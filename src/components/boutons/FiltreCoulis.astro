@@ -1,16 +1,21 @@
 <!-- Filtre SVG du bouton coulis (BoutonCoulis.astro), déclaré une seule fois dans la page -->
 <svg class="absolute size-0" aria-hidden="true" focusable="false">
 	<defs>
-		<!-- flou + seuil alpha : les gouttes fusionnent comme un liquide, puis on ajoute un reflet -->
+		<!--
+			Rendu « dessin » (cohérent avec les traits gribouillés du site) :
+			flou + seuil alpha pour que les gouttes fusionnent comme un liquide, en aplat,
+			puis un contour à l'encre tout autour (dilatation de la forme, sous l'aplat).
+		-->
 		<filter id="filtre-coulis" color-interpolation-filters="sRGB">
 			<feGaussianBlur in="SourceGraphic" stdDeviation="4" result="flou"></feGaussianBlur>
 			<feColorMatrix in="flou" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="liquide"></feColorMatrix>
-			<feGaussianBlur in="liquide" stdDeviation="2.5" result="relief"></feGaussianBlur>
-			<feSpecularLighting in="relief" surfaceScale="4" specularConstant="0.9" specularExponent="34" lighting-color="#fff3e2" result="reflet">
-				<feDistantLight azimuth="225" elevation="50"></feDistantLight>
-			</feSpecularLighting>
-			<feComposite in="reflet" in2="liquide" operator="in" result="refletDansLiquide"></feComposite>
-			<feComposite in="liquide" in2="refletDansLiquide" operator="arithmetic" k2="1" k3="0.8"></feComposite>
+			<feMorphology in="liquide" operator="dilate" radius="1.5" result="epaissi"></feMorphology>
+			<feFlood flood-color="#1b1310" result="encre"></feFlood>
+			<feComposite in="encre" in2="epaissi" operator="in" result="contour"></feComposite>
+			<feMerge>
+				<feMergeNode in="contour"></feMergeNode>
+				<feMergeNode in="liquide"></feMergeNode>
+			</feMerge>
 		</filter>
 	</defs>
 </svg>

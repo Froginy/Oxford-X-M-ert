@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'astro/types';
 
 // Bouton « cahier » (repris de test_sae_interspe, NotebookButton) aux couleurs de la collab :
 // couverture bordeaux à liseré et lettrage dorés, coin corné ; au survol le coin se déplie,
-// révèle une page à petits carreaux (comme le papier de la modale), puis le libellé est souligné au stylo.
+// révèle une page Seyès sur papier beige (distincte du papier à petits carreaux de la modale), puis le libellé est souligné au stylo.
 // Taille et typo se règlent avec les classes passées au composant.
 interface Props extends HTMLAttributes<'button'> {
 	libelle: string;
@@ -45,6 +45,8 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 		align-items: center;
 		justify-content: center;
 		overflow: hidden;
+		/* unités cqw/cqh : le pli s'arrête pile quand la page couvre tout le bouton */
+		container-type: size;
 		border-radius: 6px;
 		background: var(--couverture);
 		color: var(--dorure-claire);
@@ -70,19 +72,18 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 		inset: 0;
 		display: grid;
 		place-items: center;
-		/* papier de la modale : petits carreaux sable et marge bordeaux */
-		background-color: var(--color-papier);
+		/* page Seyès sur papier beige : se distingue du papier à petits carreaux de la modale */
+		background-color: var(--color-beige);
 		background-image:
-			linear-gradient(90deg, transparent 22px, rgb(110 30 31 / 0.5) 22px 23.2px, transparent 23.2px),
-			linear-gradient(rgb(217 205 187 / 0.7) 0 0.7px, transparent 0),
-			linear-gradient(90deg, rgb(217 205 187 / 0.7) 0 0.7px, transparent 0);
-		background-size:
-			100% 100%,
-			16px 16px,
-			16px 16px;
+			linear-gradient(90deg, transparent 22px, rgb(110 30 31 / 0.6) 22px 23.5px, transparent 23.5px),
+			repeating-linear-gradient(to bottom, transparent 0 31px, rgb(110 30 31 / 0.22) 31px 32px),
+			repeating-linear-gradient(to bottom, transparent 0 7px, rgb(107 91 78 / 0.18) 7px 8px),
+			repeating-linear-gradient(to right, transparent 0 31px, rgb(110 30 31 / 0.14) 31px 32px);
 		color: var(--couverture);
-		/* filet discret : une fois dépliée, la page garde la forme du bouton sur le papier de la modale */
-		box-shadow: inset 0 0 0 1px rgb(110 30 31 / 0.35);
+		/* filet bordeaux et léger creux : la page dépliée garde la forme du bouton */
+		box-shadow:
+			inset 0 0 0 1.5px rgb(110 30 31 / 0.55),
+			inset 0 -8px 12px -8px rgb(28 18 15 / 0.18);
 		border-radius: inherit;
 		clip-path: polygon(calc(100% - var(--pli)) 0, 100% 0, 100% var(--pli));
 		transition: --pli 0.45s cubic-bezier(0.5, 0, 0.75, 0);
@@ -134,8 +135,8 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 	/* --- survol --- */
 	.bouton-cahier:is(:hover, :focus-visible) .page {
 		/* assez grand pour couvrir tout le bouton en diagonale */
-		--pli: 1200px;
-		transition: --pli 0.7s cubic-bezier(0.3, 0.6, 0.3, 1);
+		--pli: calc(100cqw + 100cqh + 12px);
+		transition: --pli 1.2s cubic-bezier(0.35, 0.55, 0.3, 1);
 	}
 
 	.bouton-cahier:is(:hover, :focus-visible) .rabat {
@@ -150,8 +151,8 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 		opacity: 1;
 		stroke-dashoffset: 0;
 		transition:
-			opacity 0s 0.45s,
-			stroke-dashoffset 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.45s;
+			opacity 0s 0.9s,
+			stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.9s;
 	}
 
 	.bouton-cahier:focus-visible {
