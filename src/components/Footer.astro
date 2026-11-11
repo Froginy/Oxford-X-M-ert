@@ -1,0 +1,84 @@
+---
+import Crayon from '../assets/motifs/crayon.svg'; 
+import '../styles/global.css';
+---
+
+<footer class="relative overflow-hidden bg-creme px-6 py-12 md:px-12 md:py-16 border-t border-sable">
+  <div class="mx-auto max-w-6xl relative z-10">
+
+    <!-- Section Principale : Logo/Slogan à gauche, Listes de liens à droite -->
+    <div class="flex flex-col lg:flex-row justify-between items-start gap-12 mb-12">
+      
+      <!-- Bloc Logo & Slogan -->
+      <div class="flex flex-col gap-4">
+        <div class="border border-chocolat px-5 py-2 bg-creme rounded-full inline-flex items-center justify-center w-max shadow-sm">
+          <span class="text-sm tracking-wide font-medium text-encre">Logo</span>
+        </div>
+        <p class="text-sm md:text-base text-gris">
+          Méert × Oxford — Transmettez votre savoir-faire
+        </p>
+      </div>
+
+      <!-- Bloc Listes de liens (Le site / Les marques) -->
+      <div class="grid grid-cols-2 gap-12 sm:gap-20 w-full lg:w-auto">
+        
+        <!-- Le site -->
+        <div class="flex flex-col gap-3">
+          <p class="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-gris">
+            Le site
+          </p>
+          <ul class="flex flex-col gap-2.5">
+            <li><a href="#collab" class="text-base text-encre hover:underline transition-opacity">La collab</a></li>
+            <li><a href="#produit" class="text-base text-encre hover:underline transition-opacity">Le produit</a></li>
+            <li><a href="#evenement" class="text-base text-encre hover:underline transition-opacity">L’événement</a></li>
+            <li><a href="#reserver" class="text-base text-encre hover:underline transition-opacity">Réserver</a></li>
+          </ul>
+        </div>
+
+        <!-- Les marques -->
+        <div class="flex flex-col gap-3">
+          <p class="text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-gris">
+            Les marques
+          </p>
+          <ul class="flex flex-col gap-2.5">
+            <li><a href="https://www.meert.fr" target="_blank" rel="noopener" class="text-base text-encre transition-opacity hover:underline">Méert</a></li>
+            <li><a href="https://www.oxford.fr" target="_blank" rel="noopener" class="text-base text-encre transition-opacity hover:underline">Oxford</a></li>
+            <li><a href="#contact" class="text-base text-encre transition-opacity hover:underline">Contact</a></li>
+            <li><a href="#presse" class="text-base text-encre transition-opacity hover:underline">Presse</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- IMAGE DU CRAYON (Affichée uniquement sur grand écran / Desktop) -->
+    <div class="hidden lg:block relative w-full my-8 pointer-events-none">
+      <img 
+        src={Crayon.src} 
+        alt="" 
+        class="w-3/4 max-w-2xl h-auto object-contain opacity-90" 
+      />
+    </div>
+
+
+    <!-- Ligne de séparation -->
+    <div class="w-full h-px bg-sable my-8"></div>
+
+
+    <!-- Bas du footer : Copyright & Mentions légales -->
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-gris">
+      
+      <p>© 2026 Méert × Oxford</p>
+
+      <div class="flex flex-wrap gap-x-6 gap-y-2">
+        <a href="#mentions-legales" class="hover:underline transition-colors">Mentions légales</a>
+        <a href="#confidentialite" class=" hover:underline transition-colors">Politique de confidentialité</a>
+        <a href="#cookies" class=" transition-colors hover:underline">Cookies</a>
+        <a href="#cgv" class=" transition-colors hover:underline">CGV</a>
+      </div>
+
+    </div>
+
+  </div>
+</footer>
