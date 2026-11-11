@@ -36,10 +36,6 @@ type Objet = {
 	mobile?: Position;
 	tablette?: Position;
 	desktop?: Position;
-	/** Côté de la collab, pour l'intro « rideau » (gaufres Méert / cahiers Oxford). */
-	cote?: 'meert' | 'oxford';
-	/** Objet qui flotte (animation GSAP à venir). */
-	flotte?: boolean;
 	classe?: string;
 };
 
@@ -53,22 +49,22 @@ const maquettes = {
 const motif: Objet = { src: motifGaufre, desktop: { cx: 244.8, cy: 822, w: 860, r: 8 } };
 
 const objets: Objet[] = [
-	{ src: papierGaufres, cote: 'oxford', desktop: { cx: 1080, cy: 353.1, w: 197 }, tablette: { cx: 700, cy: 275, w: 129.7 }, mobile: { cx: 287, cy: 564.7, w: 106.6 } },
+	{ src: papierGaufres, desktop: { cx: 1080, cy: 353.1, w: 197 }, tablette: { cx: 700, cy: 275, w: 129.7 }, mobile: { cx: 287, cy: 564.7, w: 106.6 } },
 	// Sur tablette le doodle passe au-dessus du ruban.
-	{ src: doodle, cote: 'oxford', desktop: { cx: 725.9, cy: 796.1, w: 210 }, tablette: { cx: 495, cy: 672, w: 146.8 }, classe: 'max-xl:z-10' },
-	{ src: sticker, cote: 'oxford', desktop: { cx: 905, cy: 775, w: 182 }, tablette: { cx: 690, cy: 516, w: 117.8, r: -13 } },
-	{ src: gaufreDoree, cote: 'meert', flotte: true, desktop: { cx: 106.7, cy: 122.4, w: 195, r: 6 }, tablette: { cx: 89, cy: 233, w: 91 }, mobile: { cx: 52, cy: 197, w: 65 } },
-	{ src: gaufreCaramel, cote: 'meert', flotte: true, desktop: { cx: 220.8, cy: 158.3, w: 117, r: -8 }, tablette: { cx: 39, cy: 695, w: 143 }, mobile: { cx: 24, cy: 610, w: 104 } },
-	{ src: gaufreBeige, cote: 'meert', flotte: true, desktop: { cx: 121.3, cy: 788.2, w: 195, r: -5 }, tablette: { cx: 31, cy: 146, w: 143 }, mobile: { cx: 16, cy: 119, w: 104 } },
-	{ src: gaufreDoreePetite, cote: 'meert', flotte: true, desktop: { cx: 208.3, cy: 840.8, w: 117, r: 8 } },
-	{ src: ruban, cote: 'oxford', desktop: { cx: 1183.3, cy: 780.8, w: 456 }, tablette: { cx: 619.3, cy: 709, w: 291.4 } },
-	{ src: timbre, cote: 'oxford', desktop: { cx: 1112, cy: 654.1, w: 103 }, tablette: { cx: 700, cy: 411.5, w: 68.9 }, mobile: { cx: 160, cy: 603.2, w: 56.1 } },
-	{ src: cahierBordeaux, cote: 'oxford', flotte: true, desktop: { cx: 1251.3, cy: 115.8, w: 134, r: 6 }, mobile: { cx: 341, cy: 586, w: 77 } },
-	{ src: cahierDore, cote: 'oxford', flotte: true, desktop: { cx: 1364.9, cy: 186.6, w: 123, r: -8 }, tablette: { cx: 718, cy: 158, w: 87 } },
-	{ src: cahierChocolat, cote: 'oxford', flotte: true, desktop: { cx: 1372.2, cy: 779, w: 142, r: -5 }, tablette: { cx: 704, cy: 670, w: 100 } },
-	{ src: cahierBeige, cote: 'oxford', flotte: true, desktop: { cx: 1233.5, cy: 844.9, w: 100, r: 6 }, mobile: { cx: 351, cy: 132, w: 67 } },
+	{ src: doodle, desktop: { cx: 725.9, cy: 796.1, w: 210 }, tablette: { cx: 495, cy: 672, w: 146.8 }, classe: 'max-xl:z-10' },
+	{ src: sticker, desktop: { cx: 905, cy: 775, w: 182 }, tablette: { cx: 690, cy: 516, w: 117.8, r: -13 } },
+	{ src: gaufreDoree, desktop: { cx: 106.7, cy: 122.4, w: 195, r: 6 }, tablette: { cx: 89, cy: 233, w: 91 }, mobile: { cx: 52, cy: 197, w: 65 } },
+	{ src: gaufreCaramel, desktop: { cx: 220.8, cy: 158.3, w: 117, r: -8 }, tablette: { cx: 39, cy: 695, w: 143 }, mobile: { cx: 24, cy: 610, w: 104 } },
+	{ src: gaufreBeige, desktop: { cx: 121.3, cy: 788.2, w: 195, r: -5 }, tablette: { cx: 31, cy: 146, w: 143 }, mobile: { cx: 16, cy: 119, w: 104 } },
+	{ src: gaufreDoreePetite, desktop: { cx: 208.3, cy: 840.8, w: 117, r: 8 } },
+	{ src: ruban, desktop: { cx: 1183.3, cy: 780.8, w: 456 }, tablette: { cx: 619.3, cy: 709, w: 291.4 } },
+	{ src: timbre, desktop: { cx: 1112, cy: 654.1, w: 103 }, tablette: { cx: 700, cy: 411.5, w: 68.9 }, mobile: { cx: 160, cy: 603.2, w: 56.1 } },
+	{ src: cahierBordeaux, desktop: { cx: 1251.3, cy: 115.8, w: 134, r: 6 }, mobile: { cx: 341, cy: 586, w: 77 } },
+	{ src: cahierDore, desktop: { cx: 1364.9, cy: 186.6, w: 123, r: -8 }, tablette: { cx: 718, cy: 158, w: 87 } },
+	{ src: cahierChocolat, desktop: { cx: 1372.2, cy: 779, w: 142, r: -5 }, tablette: { cx: 704, cy: 670, w: 100 } },
+	{ src: cahierBeige, desktop: { cx: 1233.5, cy: 844.9, w: 100, r: 6 }, mobile: { cx: 351, cy: 132, w: 67 } },
 	// Le lion est teinté en « multiply » sur le fond de page dans Figma : on fusionne l'image entière.
-	{ src: tampon, cote: 'oxford', desktop: { cx: 1112, cy: 518, w: 195 }, tablette: { cx: 536, cy: 116, w: 131 }, mobile: { cx: 262, cy: 80, w: 101.6 }, classe: 'mix-blend-multiply' },
+	{ src: tampon, desktop: { cx: 1112, cy: 518, w: 195 }, tablette: { cx: 536, cy: 116, w: 131 }, mobile: { cx: 262, cy: 80, w: 101.6 }, classe: 'mix-blend-multiply' },
 ];
 
 const pourcent = (valeur: number, total: number) => `${((valeur / total) * 100).toFixed(3)}%`;
@@ -133,22 +129,22 @@ function visibilite(objet: Objet) {
 		</div>
 
 		{
+			// Le conteneur place l'objet (CSS par breakpoint) ; l'image à l'intérieur flotte (GSAP),
+			// pour que l'animation ne fige pas le translate/rotate responsive.
 			objets.map((objet) => (
-				<img
-					src={objet.src.src}
-					alt=""
-					data-hero-cote={objet.cote}
-					data-hero-flotte={objet.flotte ? '' : undefined}
+				<div
 					style={variables(objet)}
 					class:list={[
-						'absolute h-auto max-w-none -translate-1/2',
+						'absolute -translate-1/2',
 						'top-(--m-y) left-(--m-x) w-(--m-w) rotate-(--m-r)',
 						'md:top-(--t-y) md:left-(--t-x) md:w-(--t-w) md:rotate-(--t-r)',
 						'xl:top-(--d-y) xl:left-(--d-x) xl:w-(--d-w) xl:rotate-(--d-r)',
 						visibilite(objet),
 						objet.classe,
 					]}
-				/>
+				>
+					<img src={objet.src.src} alt="" class="block h-auto w-full" data-hero-flotte />
+				</div>
 			))
 		}
 	</div>
@@ -164,13 +160,14 @@ function visibilite(objet: Objet) {
 			<h1 class="flex flex-col items-center gap-0.5 text-[26px] leading-normal font-bold whitespace-nowrap md:text-[34px] xl:text-[44px]">
 				<span class="flex items-center gap-2.5 xl:gap-3.5">
 					Transmettre
-					<!-- Mot animé en machine à écrire (votre → notre → le), animation GSAP à venir -->
+					<!-- Mot animé en machine à écrire (votre → notre → le) ; largeur fixe pour que la ligne ne bouge pas -->
 					<span
-						class="flex h-[38px] items-center gap-[3px] border border-dashed border-bordeaux px-1.5 md:h-[49px] xl:h-16 xl:w-44 xl:gap-1 xl:px-2"
+						class="flex h-[38px] min-w-[4em] items-center gap-[3px] border border-dashed border-bordeaux px-1.5 md:h-[49px] xl:h-16 xl:gap-1 xl:px-2"
 						data-typewriter
 						data-typewriter-mots="votre,notre,le"
 					>
-						<span data-typewriter-mot>votre</span>
+						<span class="sr-only">votre</span>
+						<span aria-hidden="true" data-typewriter-mot>votre</span>
 						<span class="font-normal text-bordeaux" aria-hidden="true" data-typewriter-curseur>|</span>
 					</span>
 				</span>
@@ -197,3 +194,16 @@ function visibilite(objet: Objet) {
 		</p>
 	</div>
 </section>
+
+<script>
+	import { flottement } from '../scripts/animations/flottement';
+	import { machineAEcrire } from '../scripts/animations/machine-a-ecrire';
+	import { apresChargement } from '../scripts/chargement';
+
+	flottement(document.querySelectorAll('#hero [data-hero-flotte]'));
+
+	apresChargement(() => {
+		const slogan = document.querySelector<HTMLElement>('#hero [data-typewriter]');
+		if (slogan) machineAEcrire(slogan);
+	});
+</script>

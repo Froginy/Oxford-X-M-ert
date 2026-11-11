@@ -10,4 +10,7 @@ import { TextPlugin } from 'gsap/TextPlugin';
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
+/** Vrai si l'utilisateur a demandé à réduire les animations (réglage système). */
+export const mouvementReduit = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export { gsap, ScrollTrigger };
