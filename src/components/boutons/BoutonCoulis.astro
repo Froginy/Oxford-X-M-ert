@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from 'astro/types';
 
 // Bouton « coulis de chocolat » (repris de test_sae_interspe, DripButton) : au survol, le chocolat coule
-// du haut puis nappe tout le bouton. Au repos : bordeaux, liseré et texte dorés.
+// du haut puis nappe tout le bouton. Au repos : bordeaux, texte blanc crème.
 // Taille, rayon et typo se règlent avec les classes passées au composant.
 // Nécessite le filtre #filtre-coulis (FiltreCoulis.astro, inclus une fois dans le layout).
 interface Props extends HTMLAttributes<'button'> {
@@ -23,7 +23,7 @@ const coulures = [
 ];
 ---
 
-<button type={type} class:list={['bouton-coulis flex items-center justify-center bg-bordeaux text-dore-clair', classe]} {...attributs}>
+<button type={type} class:list={['bouton-coulis flex items-center justify-center bg-bordeaux text-creme', classe]} {...attributs}>
 	<span class="chocolat" aria-hidden="true">
 		<span class="nappe"></span>
 		{coulures.map((c) => <span class="coulure" style={`--x:${c.x}%;--l:${c.l}px;--long:${c.long}%;--retard:${c.retard}ms`} />)}
@@ -37,16 +37,6 @@ const coulures = [
 		isolation: isolate;
 		overflow: hidden;
 		cursor: pointer;
-	}
-
-	/* liseré doré intérieur : reste visible par-dessus le chocolat */
-	.bouton-coulis::before {
-		content: '';
-		position: absolute;
-		inset: 3px;
-		border: 1px solid var(--color-dore);
-		border-radius: inherit;
-		pointer-events: none;
 	}
 
 	/* déborde un peu : le filtre ne crée pas de bord arrondi sur les côtés */
