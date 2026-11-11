@@ -1,6 +1,7 @@
 ---
 import Burger from '../assets/header/burger.svg';
 import Contour from '../assets/header/contour-ouvert.svg';
+import globalStyles from '../styles/global.css';
 ---
 
 <header class="fixed top-4 inset-x-0 z-50 px-4 transition-all duration-300">
@@ -8,7 +9,7 @@ import Contour from '../assets/header/contour-ouvert.svg';
 
     <nav 
       id="main-nav"
-      class="relative flex items-center justify-between px-6 py-3 bg-[#FAF6EF] transition-all duration-300"
+      class="relative flex items-center justify-around px-6 py-3 bg-creme transition-all duration-300"
     >
 
     <img 
@@ -18,28 +19,27 @@ import Contour from '../assets/header/contour-ouvert.svg';
     >
 
       <div class="flex md:hidden items-center">
-        <a 
-          href="#reserver" 
-          class="rounded-full bg-[#C09022] px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#a67b1b] transition-colors"
+        <a href="#reserver" 
+          class="rounded-full bg-dore px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
         >
           Réserver
         </a>
       </div>
 
       <div class="hidden md:flex items-center gap-6 lg:gap-10">
-        <a href="#collab" class="text-base font-semibold text-[#211914] hover:opacity-75 transition-opacity">
+        <a href="#collab" class="text-base font-semibold hover:opacity-75 transition-opacity">
           La collab
         </a>
-        <a href="#produit" class="text-base font-semibold text-[#211914] hover:opacity-75 transition-opacity">
+        <a href="#produit" class="text-base font-semibold hover:opacity-75 transition-opacity">
           Le produit
         </a>
       </div>
 
 
-      <div class="flex items-center justify-center">
+      <div class="flex items-center justify-between">
         <a href="/" class="flex items-center">
-          <div class="border border-[#211914] px-4 py-1.5 bg-[#FAF6EF]">
-            <span class="text-sm tracking-wide font-medium text-[#211914]">Logo</span>
+          <div class="border border-chocolat px-4 py-1.5 bg-creme rounded-full flex flex-col items-center">
+            <span class="text-sm tracking-wide font-medium ">Logo</span>
           </div>
         </a>
       </div>
@@ -49,9 +49,8 @@ import Contour from '../assets/header/contour-ouvert.svg';
         <a href="#evenement" class="text-base font-semibold text-[#211914] hover:opacity-75 transition-opacity">
           L’événement
         </a>
-        <a 
-          href="#reserver" 
-          class="rounded-full bg-[#C09022] px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:bg-[#a67b1b] transition-colors"
+        <a href="#reserver" 
+          class="rounded-full bg-dore px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
         >
           Réserver
         </a>
@@ -59,11 +58,11 @@ import Contour from '../assets/header/contour-ouvert.svg';
 
       <div class="flex md:hidden items-center">
         <button id="mobile-menu-btn" aria-label="Menu" class="p-1 focus:outline-none">
-          <svg class="w-8 h-8 text-[#211914]" viewBox="0 0 40 40" fill="none" stroke="currentColor">
-            <path d="M 8 12 Q 20 11 32 12" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M 7 20 Q 20 21 33 20" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M 9 28 Q 20 27 31 28" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
+          <img 
+          src={Burger.src} 
+          alt="" 
+          class="absolute inset-0 w-full h-full object-contain"
+        />
         </button>
       </div>
 
@@ -75,9 +74,8 @@ import Contour from '../assets/header/contour-ouvert.svg';
       id="scroll-nav"
       class="hidden lg:flex items-center justify-end gap-3 absolute right-0 top-0 transition-all duration-300 opacity-0 pointer-events-none -translate-y-2.5"
     >
-      <a 
-        href="#reserver" 
-        class="rounded-full bg-[#C09022] px-6 py-2.5 text-base font-semibold text-white shadow-md hover:bg-[#a67b1b] transition-colors"
+      <a href="#reserver" 
+          class="rounded-full bg-dore px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
       >
         Réserver
       </a>
@@ -86,74 +84,15 @@ import Contour from '../assets/header/contour-ouvert.svg';
       <button 
         id="desktop-burger-btn"
         aria-label="Ouvrir le menu"
-        class="relative flex items-center justify-center w-12 h-12 bg-[#FAF6EF] rounded-full shadow-md hover:scale-105 transition-transform"
+        class="relative flex items-center justify-center w-12 h-12 bg-creme rounded-full shadow-md hover:scale-105 transition-transform"
       >
-        <svg class="absolute inset-0 w-full h-full text-[#211914]" viewBox="0 0 50 50" fill="none">
-          <circle cx="25" cy="25" r="22" stroke="currentColor" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-dasharray="120" stroke-dashoffset="2"/>
-          <circle cx="25" cy="25" r="23" stroke="currentColor" stroke-width="0.8" vector-effect="non-scaling-stroke" opacity="0.6"/>
-        </svg>
-
-        <svg class="w-6 h-6 text-[#211914] relative z-10" viewBox="0 0 30 30" fill="none" stroke="currentColor">
-          <path d="M 6 10 C 12 8, 18 12, 24 10" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 5 15 C 11 17, 19 13, 25 15" stroke-width="2" stroke-linecap="round"/>
-          <path d="M 7 20 C 13 18, 17 22, 23 20" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+      <img 
+          src={Burger.src} 
+          alt="" 
+          class="absolute inset-0 w-full h-full object-contain"
+        />
       </button>
     </div>
 
   </div>
 </header>
-
-<script>
-  let lastScrollY = window.scrollY;
-  const mainNav = document.getElementById('main-nav');
-  const scrollNav = document.getElementById('scroll-nav');
-
-  const menuOverlay = document.getElementById('menu-overlay');
-  const closeBtn = document.getElementById('close-menu-btn');
-  const burgerTriggers = document.querySelectorAll('.burger-trigger');
-  const menuLinks = document.querySelectorAll('.menu-link');
-
-  window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-
-    
-    function openMenu() {
-        menuOverlay?.classList.remove('opacity-0', 'pointer-events-none');
-        menuOverlay?.classList.add('opacity-100', 'pointer-events-auto');
-        document.body.style.overflow = 'hidden'; 
-    }
-
-  function closeMenu() {
-    menuOverlay?.classList.add('opacity-0', 'pointer-events-none');
-    menuOverlay?.classList.remove('opacity-100', 'pointer-events-auto');
-    document.body.style.overflow = ''; 
-  }
-
-  burgerTriggers.forEach(btn => {
-    btn.addEventListener('click', openMenu);
-  });
-
-  closeBtn?.addEventListener('click', closeMenu);
-  
-  menuLinks.forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });;
-    
-if (window.innerWidth >= 1024) {
-  if (currentScrollY > 120 && currentScrollY > lastScrollY) {
-    mainNav?.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
-    
-    scrollNav?.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-    scrollNav?.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-  } else if (currentScrollY < lastScrollY || currentScrollY <= 80) {
-    mainNav?.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-4');
-    
-    scrollNav?.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-    scrollNav?.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-  }
-}
-
-lastScrollY = currentScrollY;
-})
-</script>
