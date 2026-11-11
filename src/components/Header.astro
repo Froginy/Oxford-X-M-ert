@@ -1,98 +1,211 @@
 ---
-import Burger from '../assets/header/burger.svg';
-import Contour from '../assets/header/contour-ouvert.svg';
-import globalStyles from '../styles/global.css';
+import burger from '../assets/header/burger.svg';
+import contourDesktop from '../assets/header/contour-ouvert.svg';
+import contourTablette from '../assets/header/contour-ouvert-tablette.svg';
+import contourMobile1 from '../assets/header/contour-mobile-trait-1.svg';
+import contourMobile2 from '../assets/header/contour-mobile-trait-2.svg';
+import traitsBurger from '../assets/header/traits-burger.svg';
+
+// Header flottant — Figma : « Header flottant » (état 1 haut de page, état 2 au scroll) + tablette 768 et mobile 390.
+// État 1 : barre au contour gribouillé (liens · logo · L'événement + Réserver).
+// État 2 (tablette/desktop, au scroll vers le bas) : la barre s'efface, il reste « Réserver » + un burger dans le coin haut droit.
+const liens = [
+	{ href: '#collab', texte: 'La collab' },
+	{ href: '#produit', texte: 'Le produit' },
+	{ href: '#evenement', texte: 'L’événement' },
+];
 ---
 
-<header class="fixed top-4 inset-x-0 z-50 px-4 transition-all duration-300">
-  <div class="mx-auto max-w-6xl relative">
+<header id="header" class="group pointer-events-none fixed inset-x-0 top-0 z-50" data-etat="ouvert">
+	<!-- État 1 : barre complète -->
+	<div
+		class="pointer-events-auto relative mx-6 mt-[27px] h-16 transition-[opacity,translate] duration-300 ease-out group-data-[etat=reduit]:pointer-events-none group-data-[etat=reduit]:-translate-y-4 group-data-[etat=reduit]:opacity-0 motion-reduce:transition-none md:mx-auto md:w-[672px] lg:mt-8 lg:h-[84px] lg:w-[min(1200px,calc(100%-80px))]"
+		data-barre
+	>
+		<!-- Fond crème arrondi sous le contour gribouillé (un contour par maquette) -->
+		<div class="absolute inset-0 rounded-[32px] bg-creme lg:rounded-[42px]" aria-hidden="true"></div>
+		<div class="pointer-events-none absolute inset-[0.66%_0.29%] md:hidden" aria-hidden="true">
+			<img src={contourMobile1.src} alt="" class="block size-full" />
+		</div>
+		<div class="pointer-events-none absolute inset-[3.79%_0.76%_3.79%_0.78%] md:hidden" aria-hidden="true">
+			<img src={contourMobile2.src} alt="" class="block size-full" />
+		</div>
+		<img src={contourTablette.src} alt="" class="pointer-events-none absolute inset-0 hidden size-full md:block lg:hidden" aria-hidden="true" />
+		<img src={contourDesktop.src} alt="" class="pointer-events-none absolute inset-0 hidden size-full lg:block" aria-hidden="true" />
 
-    <nav 
-      id="main-nav"
-      class="relative flex items-center justify-around px-6 py-3 bg-creme transition-all duration-300"
-    >
+		<nav class="relative grid h-full grid-cols-[1fr_auto_1fr] items-center px-[11px] md:px-8 lg:px-[42px]" aria-label="Navigation principale">
+			<!-- Gauche : Réserver (mobile) ou liens (tablette/desktop) -->
+			<div class="flex items-center md:grid md:grid-cols-2">
+				<button type="button" class="bouton-reserver flex md:hidden" data-reservation-ouvrir>Réserver</button>
+				{
+					liens.slice(0, 2).map((lien) => (
+						<a href={lien.href} class="lien hidden md:block">
+							{lien.texte}
+						</a>
+					))
+				}
+			</div>
 
-    <img 
-        src={Contour.src} 
-        alt="" 
-        class="absolute inset-0 w-full h-full pointer-events-none "
-    >
+			<!-- Logo collab : placeholder en attente du fichier -->
+			<a
+				href="#hero"
+				class="flex h-[34px] w-[92px] items-center justify-center border border-encre text-[11px] text-gris md:h-10 md:w-[110px] lg:h-12 lg:w-[150px] lg:text-xs"
+				aria-label="Méert × Oxford — retour en haut de page"
+			>
+				Logo
+			</a>
 
-      <div class="flex md:hidden items-center">
-        <a href="#reserver" 
-          class="rounded-full bg-dore px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
-        >
-          Réserver
-        </a>
-      </div>
+			<!-- Droite : burger (mobile) ou L'événement + Réserver (tablette/desktop) -->
+			<div class="flex items-center justify-end md:grid md:grid-cols-[1fr_auto]">
+				<a href={liens[2].href} class="lien hidden justify-self-center md:block">{liens[2].texte}</a>
+				<button type="button" class="bouton-reserver hidden md:flex" data-reservation-ouvrir>Réserver</button>
+				<button
+					type="button"
+					class="mr-[21px] cursor-pointer p-1 md:hidden"
+					aria-label="Menu"
+					aria-expanded="false"
+					aria-controls="header-menu"
+					data-menu-mobile
+				>
+					<img src={traitsBurger.src} alt="" class="h-6 w-7" />
+				</button>
+			</div>
+		</nav>
 
-      <div class="hidden md:flex items-center gap-6 lg:gap-10">
-        <a href="#collab" class="text-base font-semibold hover:opacity-75 transition-opacity">
-          La collab
-        </a>
-        <a href="#produit" class="text-base font-semibold hover:opacity-75 transition-opacity">
-          Le produit
-        </a>
-      </div>
+		<!-- Menu mobile (le burger mobile n'a pas d'écran dédié dans la maquette) -->
+		<div
+			id="header-menu"
+			class="absolute inset-x-0 top-full mt-2 hidden flex-col items-center gap-4 rounded-[24px] border border-sable bg-creme py-5 shadow-[0_8px_24px_rgba(28,18,15,0.12)] data-ouvert:flex md:hidden"
+			data-menu
+		>
+			{
+				liens.map((lien) => (
+					<a href={lien.href} class="lien" data-menu-lien>
+						{lien.texte}
+					</a>
+				))
+			}
+		</div>
+	</div>
 
-
-      <div class="flex items-center justify-between">
-        <a href="/" class="flex items-center">
-          <div class="border border-chocolat px-4 py-1.5 bg-creme rounded-full flex flex-col items-center">
-            <span class="text-sm tracking-wide font-medium ">Logo</span>
-          </div>
-        </a>
-      </div>
-
-
-      <div class="hidden md:flex items-center gap-6 lg:gap-10">
-        <a href="#evenement" class="text-base font-semibold text-[#211914] hover:opacity-75 transition-opacity">
-          L’événement
-        </a>
-        <a href="#reserver" 
-          class="rounded-full bg-dore px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
-        >
-          Réserver
-        </a>
-      </div>
-
-      <div class="flex md:hidden items-center">
-        <button id="mobile-menu-btn" aria-label="Menu" class="p-1 focus:outline-none">
-          <img 
-          src={Burger.src} 
-          alt="" 
-          class="absolute inset-0 w-full h-full object-contain"
-        />
-        </button>
-      </div>
-
-    </nav>
-
-
-
-    <div 
-      id="scroll-nav"
-      class="hidden lg:flex items-center justify-end gap-3 absolute right-0 top-0 transition-all duration-300 opacity-0 pointer-events-none -translate-y-2.5"
-    >
-      <a href="#reserver" 
-          class="rounded-full bg-dore px-6 py-2.5 text-base font-semibold text-white shadow-sm hover:opacity-90 transition-opacity"
-      >
-        Réserver
-      </a>
-
-      
-      <button 
-        id="desktop-burger-btn"
-        aria-label="Ouvrir le menu"
-        class="relative flex items-center justify-center w-12 h-12 bg-creme rounded-full shadow-md hover:scale-105 transition-transform"
-      >
-      <img 
-          src={Burger.src} 
-          alt="" 
-          class="absolute inset-0 w-full h-full object-contain"
-        />
-      </button>
-    </div>
-
-  </div>
+	<!-- État 2 : Réserver + burger dans le coin haut droit (tablette/desktop) -->
+	<div
+		class="pointer-events-none absolute top-[27px] right-12 hidden translate-y-[-8px] items-center gap-3 opacity-0 transition-[opacity,translate] duration-300 ease-out group-data-[etat=reduit]:pointer-events-auto group-data-[etat=reduit]:translate-y-0 group-data-[etat=reduit]:opacity-100 motion-reduce:transition-none md:flex lg:top-8 lg:right-[max(40px,calc((100%-1200px)/2))]"
+		data-compact
+	>
+		<button type="button" class="bouton-reserver flex" data-reservation-ouvrir>Réserver</button>
+		<button type="button" class="size-[60px] cursor-pointer transition-transform hover:scale-105" aria-label="Afficher le menu" data-rouvrir>
+			<img src={burger.src} alt="" class="size-full" />
+		</button>
+	</div>
 </header>
+
+<style>
+	.lien {
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--color-encre);
+		white-space: nowrap;
+		transition: opacity 150ms;
+	}
+	.lien:hover {
+		opacity: 0.7;
+	}
+	/* L'affichage (flex / hidden) reste dans les classes Tailwind pour garder les variantes responsive */
+	.bouton-reserver {
+		align-items: center;
+		height: 34px;
+		padding-inline: 14px;
+		border-radius: 9999px;
+		background: var(--color-dore);
+		font-size: 13px;
+		font-weight: 500;
+		color: var(--color-encre);
+		white-space: nowrap;
+		cursor: pointer;
+	}
+	@media (width >= 48rem) {
+		.bouton-reserver {
+			height: 38px;
+			padding-inline: 18px;
+			font-size: 14px;
+		}
+	}
+	@media (width >= 64rem) {
+		.lien,
+		.bouton-reserver {
+			font-size: 15px;
+		}
+		.bouton-reserver {
+			height: 44px;
+			padding-inline: 22px;
+		}
+	}
+	.lien:focus-visible,
+	.bouton-reserver:focus-visible,
+	button:focus-visible {
+		outline: 2px solid var(--color-encre);
+		outline-offset: 2px;
+	}
+</style>
+
+<script>
+	const header = document.getElementById('header');
+
+	if (header) {
+		const SEUIL = 120; // en dessous, la barre reste toujours ouverte
+		const ECART = 6; // ignore les micro-défilements
+		let dernierY = window.scrollY;
+		let rouvertManuellement = false;
+
+		const definirEtat = (etat: 'ouvert' | 'reduit') => {
+			header.dataset.etat = etat;
+		};
+
+		// État 2 au scroll vers le bas (tablette/desktop) ; retour à l'état 1 au scroll vers le haut
+		let enAttente = false;
+		window.addEventListener(
+			'scroll',
+			() => {
+				if (enAttente) return;
+				enAttente = true;
+				requestAnimationFrame(() => {
+					enAttente = false;
+					const y = window.scrollY;
+					const delta = y - dernierY;
+					if (Math.abs(delta) < ECART) return;
+					const ecranLarge = window.matchMedia('(min-width: 768px)').matches;
+
+					if (!ecranLarge || y <= SEUIL || delta < 0) {
+						definirEtat('ouvert');
+						if (y <= SEUIL) rouvertManuellement = false;
+					} else if (!rouvertManuellement) {
+						definirEtat('reduit');
+					}
+					dernierY = y;
+				});
+			},
+			{ passive: true },
+		);
+
+		// Burger de l'état 2 : réaffiche la barre jusqu'au prochain retour en haut de page
+		header.querySelector('[data-rouvrir]')?.addEventListener('click', () => {
+			rouvertManuellement = true;
+			definirEtat('ouvert');
+		});
+
+		// Menu mobile
+		const boutonMenu = header.querySelector<HTMLButtonElement>('[data-menu-mobile]')!;
+		const menu = header.querySelector<HTMLElement>('[data-menu]')!;
+		const basculerMenu = (ouvrir: boolean) => {
+			menu.toggleAttribute('data-ouvert', ouvrir);
+			boutonMenu.setAttribute('aria-expanded', String(ouvrir));
+		};
+		boutonMenu.addEventListener('click', () => basculerMenu(!menu.hasAttribute('data-ouvert')));
+		menu.querySelectorAll('[data-menu-lien]').forEach((lien) => lien.addEventListener('click', () => basculerMenu(false)));
+		document.addEventListener('keydown', (evenement) => evenement.key === 'Escape' && basculerMenu(false));
+		document.addEventListener('click', (evenement) => {
+			if (!header.contains(evenement.target as Node)) basculerMenu(false);
+		});
+	}
+</script>
