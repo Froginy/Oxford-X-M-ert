@@ -1,0 +1,64 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+// Lien texte souligné au stylo au survol (même trait que le bouton cahier) : le trait se dessine
+// sous le libellé, puis se retire quand on quitte le lien. Couleur = couleur du texte.
+// Sans `href`, rend un <button> (ex. « Réserver » qui ouvre la modale).
+type Props = HTMLAttributes<'a'> & HTMLAttributes<'button'>;
+
+const { href, class: classe, ...attributs } = Astro.props;
+const Balise = href ? 'a' : 'button';
+---
+
+<Balise href={href} type={href ? undefined : 'button'} class:list={['lien-souligne', classe]} {...attributs}>
+	<slot />
+	<svg class="trait" viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true">
+		<path d="M3 10 C40 5 75 13 112 8 S172 6 197 10" pathLength="100"></path>
+	</svg>
+</Balise>
+
+<style>
+	.lien-souligne {
+		position: relative;
+		display: inline-block;
+		cursor: pointer;
+	}
+
+	.trait {
+		position: absolute;
+		top: calc(100% + 1px);
+		left: -4%;
+		width: 108%;
+		height: 7px;
+		overflow: visible;
+		pointer-events: none;
+	}
+
+	/* tiret plus long que le trait et décalé au-delà : aucun embout arrondi ne dépasse au repos */
+	.trait path {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.6;
+		stroke-linecap: round;
+		vector-effect: non-scaling-stroke;
+		stroke-dasharray: 100 200;
+		stroke-dashoffset: 104;
+		transition: stroke-dashoffset 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.lien-souligne:is(:hover, :focus-visible) .trait path {
+		stroke-dashoffset: 0;
+		transition-duration: 0.5s;
+	}
+
+	.lien-souligne:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 4px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.trait path {
+			transition: none;
+		}
+	}
+</style>

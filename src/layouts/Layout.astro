@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets';
 import Chargement from '../components/Chargement.astro';
 import FiltreCoulis from '../components/boutons/FiltreCoulis.astro';
+import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import ModaleReservation from '../components/ModaleReservation.astro';
 import '../styles/global.css';
@@ -25,6 +26,7 @@ import '../styles/global.css';
 		<Chargement />
 		<Header />
 		<slot />
+		<Footer />
 		<ModaleReservation />
 	</body>
 </html>

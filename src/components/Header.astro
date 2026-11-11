@@ -1,6 +1,7 @@
 ---
 import burger from '../assets/header/burger.svg';
 import BoutonCoulis from './boutons/BoutonCoulis.astro';
+import LienSouligne from './LienSouligne.astro';
 import contourDesktop from '../assets/header/contour-ouvert.svg';
 import contourTablette from '../assets/header/contour-ouvert-tablette.svg';
 
@@ -31,9 +32,9 @@ const liens = [
 			<div class="grid grid-cols-2 items-center">
 				{
 					liens.slice(0, 2).map((lien) => (
-						<a href={lien.href} class="lien">
+						<LienSouligne href={lien.href} class="justify-self-start text-sm font-medium whitespace-nowrap text-encre lg:text-[15px]">
 							{lien.texte}
-						</a>
+						</LienSouligne>
 					))
 				}
 			</div>
@@ -48,7 +49,9 @@ const liens = [
 			</a>
 
 			<div class="grid grid-cols-[1fr_auto] items-center">
-				<a href={liens[2].href} class="lien justify-self-center">{liens[2].texte}</a>
+				<LienSouligne href={liens[2].href} class="justify-self-center text-sm font-medium whitespace-nowrap text-encre lg:text-[15px]">
+					{liens[2].texte}
+				</LienSouligne>
 				<BoutonCoulis libelle="Réserver" class="h-[38px] rounded-full px-[18px] text-sm font-medium whitespace-nowrap lg:h-11 lg:px-[22px] lg:text-[15px]" data-reservation-ouvrir />
 			</div>
 		</nav>
@@ -85,9 +88,9 @@ const liens = [
 		<nav class="mt-8 flex flex-col items-center gap-6" aria-label="Navigation principale">
 			{
 				liens.map((lien) => (
-					<a href={lien.href} class="text-xl font-medium text-encre" data-menu-lien>
+					<LienSouligne href={lien.href} class="text-xl font-medium text-encre" data-menu-lien>
 						{lien.texte}
-					</a>
+					</LienSouligne>
 				))
 			}
 		</nav>
@@ -99,16 +102,6 @@ const liens = [
 </dialog>
 
 <style>
-	.lien {
-		font-size: 14px;
-		font-weight: 500;
-		color: var(--color-encre);
-		white-space: nowrap;
-		transition: opacity 150ms;
-	}
-	.lien:hover {
-		opacity: 0.7;
-	}
 	a:focus-visible,
 	button:focus-visible {
 		outline: 2px solid var(--color-encre);
