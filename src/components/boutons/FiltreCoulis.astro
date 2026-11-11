@@ -1,0 +1,21 @@
+<!-- Filtre SVG du bouton coulis (BoutonCoulis.astro), déclaré une seule fois dans la page -->
+<svg class="absolute size-0" aria-hidden="true" focusable="false">
+	<defs>
+		<!--
+			Rendu « dessin » (cohérent avec les traits gribouillés du site) :
+			flou + seuil alpha pour que les gouttes fusionnent comme un liquide, en aplat,
+			puis un contour à l'encre tout autour (dilatation de la forme, sous l'aplat).
+		-->
+		<filter id="filtre-coulis" color-interpolation-filters="sRGB">
+			<feGaussianBlur in="SourceGraphic" stdDeviation="4" result="flou"></feGaussianBlur>
+			<feColorMatrix in="flou" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" result="liquide"></feColorMatrix>
+			<feMorphology in="liquide" operator="dilate" radius="1.5" result="epaissi"></feMorphology>
+			<feFlood flood-color="#1b1310" result="encre"></feFlood>
+			<feComposite in="encre" in2="epaissi" operator="in" result="contour"></feComposite>
+			<feMerge>
+				<feMergeNode in="contour"></feMergeNode>
+				<feMergeNode in="liquide"></feMergeNode>
+			</feMerge>
+		</filter>
+	</defs>
+</svg>

@@ -1,0 +1,130 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+// Bouton « coulis de chocolat » (repris de test_sae_interspe, DripButton) : au survol, le chocolat coule
+// du haut puis nappe tout le bouton. Au repos : bordeaux, texte blanc crème.
+// Taille, rayon et typo se règlent avec les classes passées au composant.
+// Nécessite le filtre #filtre-coulis (FiltreCoulis.astro, inclus une fois dans le layout).
+interface Props extends HTMLAttributes<'button'> {
+	libelle: string;
+}
+
+const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
+
+// position (%), largeur (px), longueur (% de la hauteur), retard (ms) de chaque coulure
+const coulures = [
+	{ x: 9, l: 12, long: 70, retard: 0 },
+	{ x: 22, l: 9, long: 45, retard: 140 },
+	{ x: 35, l: 14, long: 92, retard: 60 },
+	{ x: 50, l: 10, long: 58, retard: 220 },
+	{ x: 63, l: 13, long: 80, retard: 30 },
+	{ x: 77, l: 9, long: 50, retard: 180 },
+	{ x: 90, l: 12, long: 72, retard: 100 },
+];
+---
+
+<button type={type} class:list={['bouton-coulis flex items-center justify-center bg-bordeaux text-creme', classe]} {...attributs}>
+	<span class="chocolat" aria-hidden="true">
+		<span class="nappe"></span>
+		{coulures.map((c) => <span class="coulure" style={`--x:${c.x}%;--l:${c.l}px;--long:${c.long}%;--retard:${c.retard}ms`} />)}
+	</span>
+	<span class="libelle">{libelle}</span>
+</button>
+
+<style>
+	.bouton-coulis {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		cursor: pointer;
+	}
+
+	/* déborde un peu : le filtre ne crée pas de bord arrondi sur les côtés */
+	.chocolat {
+		position: absolute;
+		inset: -12px -12px 0;
+		z-index: -1;
+		filter: url(#filtre-coulis);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.35s 0.15s;
+	}
+
+	.nappe,
+	.coulure {
+		position: absolute;
+		top: 0;
+		height: 12px;
+		background: var(--color-chocolat);
+		transition: height 0.4s cubic-bezier(0.5, 0, 0.75, 0);
+	}
+
+	.nappe {
+		left: 0;
+		right: 0;
+	}
+
+	.coulure {
+		left: var(--x);
+		width: var(--l);
+		border-radius: 0 0 999px 999px;
+		transform: translateX(-50%);
+	}
+
+	/* goutte au bout de la coulure */
+	.coulure::after {
+		content: '';
+		position: absolute;
+		bottom: -3px;
+		left: 50%;
+		width: calc(var(--l) + 5px);
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: inherit;
+		transform: translateX(-50%);
+	}
+
+	.libelle {
+		position: relative;
+		transition: color 0.25s;
+	}
+
+	/* --- survol --- */
+	.bouton-coulis:is(:hover, :focus-visible) .chocolat {
+		opacity: 1;
+		transition: opacity 0s;
+	}
+
+	.bouton-coulis:is(:hover, :focus-visible) .coulure {
+		height: var(--long);
+		transition: height 0.9s cubic-bezier(0.3, 0.7, 0.4, 1) var(--retard);
+	}
+
+	.bouton-coulis:is(:hover, :focus-visible) .nappe {
+		height: 100%;
+		transition: height 0.9s cubic-bezier(0.6, 0, 0.3, 1) 0.45s;
+	}
+
+	.bouton-coulis:is(:hover, :focus-visible) .libelle {
+		color: var(--color-creme);
+		transition: color 0.4s 0.75s;
+	}
+
+	.bouton-coulis:focus-visible {
+		outline: 2px solid var(--color-encre);
+		outline-offset: 3px;
+	}
+
+	/* Mouvement réduit : le chocolat recouvre le bouton sans couler */
+	@media (prefers-reduced-motion: reduce) {
+		.bouton-coulis .chocolat,
+		.bouton-coulis .nappe,
+		.bouton-coulis .coulure,
+		.bouton-coulis .libelle {
+			transition: none !important;
+		}
+		.bouton-coulis:is(:hover, :focus-visible) .nappe {
+			height: 100%;
+		}
+	}
+</style>

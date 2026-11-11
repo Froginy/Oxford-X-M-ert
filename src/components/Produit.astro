@@ -9,11 +9,11 @@ import feuille from '../assets/objets/feuille-petits-carreaux.svg';
 
 <section id="produit" class="relative overflow-hidden bg-creme px-6 pt-12 pb-16 md:px-12 md:pt-16 md:pb-20 xl:pb-20">
 	<div class="pointer-events-none absolute inset-0" aria-hidden="true">
-		<!-- Grand motif poche à douille au trait (desktop) -->
+		<!-- Grand motif poche à douille au trait (desktop) : ancré au bas de la section, la section événement dessine sa suite -->
 		<img
 			src={motifPoche.src}
 			alt=""
-			class="absolute top-[791px] left-[1.646%] hidden h-auto w-[291px] max-w-none -translate-1/2 rotate-14 xl:block"
+			class="absolute top-[calc(100%-33px)] left-[1.646%] hidden h-auto w-[291px] max-w-none -translate-1/2 rotate-14 xl:block"
 		/>
 
 		<!-- Étiquette « Édition limitée n° 042 / 500 » (rotation et ombre incluses dans l'asset) -->

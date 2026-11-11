@@ -14,6 +14,7 @@
   --color-chocolat: #3c261b; /* chocolat — couleur dominante */
   --color-beige: #ede4d3; /* beige doux — fonds alternés */
   --color-dore: #be9120; /* doré — accent principal */
+  --color-dore-clair: #d9b45e; /* doré clair — texte doré sur bordeaux (contraste 5,7:1) */
 
   /* Teintes de la maquette hors palette (zone Oxford, placeholders) */
   --color-creme-oxford: #f3ede2;
