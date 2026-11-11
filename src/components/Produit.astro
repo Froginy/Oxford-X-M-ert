@@ -2,12 +2,15 @@
 import motifPoche from '../assets/motifs/poche-a-douille.svg';
 import etiquette from '../assets/objets/etiquette-numerotee.svg';
 import feuille from '../assets/objets/feuille-petits-carreaux.svg';
+import RappelCourbe from './RappelCourbe.astro';
 
 // Section « Produit » — Figma : Section Produit (desktop 1440, tablette 768, mobile 390).
 // Visuels et vidéo du livre en placeholders, en attente de l'équipe multimédia.
 ---
 
 <section id="produit" class="relative overflow-hidden bg-creme px-6 pt-12 pb-16 md:px-12 md:pt-16 md:pb-20 xl:pb-20">
+	<!-- Rappel de la courbe de la hero -->
+	<RappelCourbe cote="droite" variante="arc" class="top-[4%] right-0 aspect-[1/2.3] w-[clamp(60px,13vw,190px)]" />
 	<div class="pointer-events-none absolute inset-0" aria-hidden="true">
 		<!-- Grand motif poche à douille au trait (desktop) : ancré au bas de la section, la section événement dessine sa suite -->
 		<img

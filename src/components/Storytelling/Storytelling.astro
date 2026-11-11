@@ -11,10 +11,13 @@ import FeuillePapier from '../../assets/objets/feuille-seyes.svg';
 import Gaufre from '../../assets/objets/gaufre-caramel.svg';
 import CahierRouge from '../../assets/objets/cahier-bordeaux.svg';
 import ContinuiteHero from '../ContinuiteHero.astro';
+import RappelCourbe from '../RappelCourbe.astro';
 ---
 
 <section id="collab" class="relative overflow-hidden bg-[#FAF6EF] px-6 pt-[44vw] pb-16 md:px-12 md:pt-[37vw] md:pb-24 xl:pt-[25vw]">
   <ContinuiteHero />
+  <!-- Rappel de la courbe de la hero -->
+  <RappelCourbe cote="gauche" variante="goutte" class="top-[44%] left-0 aspect-[1/2.2] w-[clamp(64px,14.5vw,210px)]" />
 
     <div class=" absolute -right-70 -top-100 z-0 hidden w-1/2 -rotate-12 overflow-hidden md:block pointer-events-none">
   <img 
