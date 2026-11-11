@@ -24,10 +24,19 @@ import '../styles/global.css';
 		<title>Méert × Oxford — Transmettre votre savoir-faire</title>
 	</head>
 	<body>
+		<!-- Lien d'évitement : premier arrêt au clavier, visible seulement au focus -->
+		<a
+			href="#contenu"
+			class="fixed top-3 left-3 z-60 -translate-y-24 rounded-full bg-encre px-5 py-3 text-sm font-medium text-creme focus-visible:translate-y-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux"
+		>
+			Aller au contenu
+		</a>
 		<FiltreCoulis />
 		<Chargement />
 		<Header />
-		<slot />
+		<main id="contenu" tabindex="-1" class="outline-none">
+			<slot />
+		</main>
 		<Footer />
 		<ModaleReservation />
 	</body>

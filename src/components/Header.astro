@@ -58,7 +58,7 @@ const liens = [
 	<!-- Burger : toujours visible sur mobile ; sur tablette/desktop uniquement quand la barre est masquée -->
 	<button
 		type="button"
-		class="pointer-events-auto absolute top-5 right-5 size-[56px] cursor-pointer transition-[opacity,translate,scale] duration-300 ease-out hover:scale-105 motion-reduce:transition-none md:pointer-events-none md:top-[27px] md:right-12 md:size-[60px] md:-translate-y-2 md:opacity-0 md:group-data-[etat=reduit]:pointer-events-auto md:group-data-[etat=reduit]:translate-y-0 md:group-data-[etat=reduit]:opacity-100 lg:top-8 lg:right-[max(40px,calc((100%-1200px)/2))]"
+		class="pointer-events-auto absolute top-5 right-5 size-[56px] cursor-pointer transition-[opacity,translate,scale,visibility] duration-300 ease-out hover:scale-105 motion-reduce:transition-none md:pointer-events-none md:invisible md:top-[27px] md:right-12 md:size-[60px] md:-translate-y-2 md:opacity-0 md:group-data-[etat=reduit]:pointer-events-auto md:group-data-[etat=reduit]:visible md:group-data-[etat=reduit]:translate-y-0 md:group-data-[etat=reduit]:opacity-100 lg:top-8 lg:right-[max(40px,calc((100%-1200px)/2))]"
 		aria-label="Menu"
 		aria-haspopup="dialog"
 		aria-controls="menu-mobile"
@@ -170,6 +170,9 @@ const liens = [
 			gsap.to(voile, { autoAlpha: 0, duration: 0.25, ease: 'power1.in' });
 			gsap.to(panneau, { autoAlpha: 0, y: mouvementReduit() ? 0 : -12, duration: 0.25, ease: 'power2.in', onComplete: fin });
 		};
+
+		// Clavier : un lien de la barre masquée qui reçoit le focus la fait réapparaître
+		header.querySelector('[data-barre]')!.addEventListener('focusin', () => definirEtat('ouvert'));
 
 		header.querySelector('[data-burger]')!.addEventListener('click', () => {
 			if (ecranLarge()) definirEtat('ouvert');
