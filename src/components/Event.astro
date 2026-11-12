@@ -6,10 +6,10 @@ import RappelCourbe from './RappelCourbe.astro';
 import PostIt from '../assets/objets/post-it-reserver.svg';
 import TicketMarron from '../assets/objets/ticket-atelier.svg';
 import { Picture } from 'astro:assets';
-import espaceMeert from '../assets/medias/espace-meert.jpg';
+import standMeert from '../assets/medias/stand-meert.png';
 import atelierEcriture from '../assets/medias/atelier-ecriture.jpg';
 import conference from '../assets/medias/conference.jpg';
-import espaceOxford from '../assets/medias/espace-oxford.jpg';
+import standOxford from '../assets/medias/stand-oxford.png';
 import ModaleReservation from './ModaleReservation.astro';
 ---
 
@@ -58,14 +58,14 @@ import ModaleReservation from './ModaleReservation.astro';
       <!-- Carte 1 : L'espace Méert -->
       <article class="flex flex-col">
         <Picture
-          src={espaceMeert}
+          src={standMeert}
           formats={['avif', 'webp']}
           fallbackFormat="jpg"
           widths={[400, 800]}
           sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
-          alt="Le stand « L’Espace Méert » : dégustation des créations exclusives, gaufres et biscuits crayons au comptoir"
+          alt="Le stand Méert : vitrine de gaufres et de biscuits crayons, servis par l’équipe de la maison"
           pictureAttributes={{ class: 'mb-6 block h-56' }}
-          class="size-full rounded-lg border border-sable object-cover object-[35%_50%]"
+          class="size-full rounded-lg border border-sable object-cover object-[50%_62%]"
         />
         <h3 class="mb-3 text-xl font-bold text-encre">L’espace Méert</h3>
         <p class="text-sm leading-relaxed text-gris">
@@ -76,14 +76,14 @@ import ModaleReservation from './ModaleReservation.astro';
       <!-- Carte 2 : L'espace Oxford -->
       <article class="flex flex-col">
         <Picture
-          src={espaceOxford}
+          src={standOxford}
           formats={['avif', 'webp']}
           fallbackFormat="jpg"
           widths={[400, 800]}
           sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
-          alt="Le stand « L’Espace Oxford » chez Méert : piles du livre de recettes en édition limitée, que des visiteurs feuillettent"
+          alt="Le stand Oxford : le livre de recettes en édition limitée présenté sur des chevalets, avec l’équipe Oxford"
           pictureAttributes={{ class: 'mb-6 block h-56' }}
-          class="size-full rounded-lg border border-sable object-cover object-[30%_50%]"
+          class="size-full rounded-lg border border-sable object-cover object-[50%_62%]"
         />
         <h3 class="mb-3 text-xl font-bold text-encre">L’espace Oxford</h3>
         <p class="text-sm leading-relaxed text-gris">
