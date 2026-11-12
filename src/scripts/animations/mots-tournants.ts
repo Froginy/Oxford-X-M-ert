@@ -8,7 +8,8 @@ const SORTIE = { rotationX: 75, opacity: 0 }; // le mot affiché part par le des
 /**
  * Mots qui « tournent » dans `[data-mots-tournants]` : comme sur un tambour, le mot affiché
  * bascule vers le haut sur un pivot horizontal en fondu, pendant que le suivant arrive du bas.
- * Les mots `[data-mot]` sont empilés au même endroit (le plus long fixe la largeur).
+ * Les mots `[data-mot]` sont empilés au même endroit (le plus long fixe la largeur) et calés à gauche :
+ * « Transmettre » ne bouge pas et un mot court (« le ») arrive juste à côté de lui.
  */
 export function motsTournants(conteneur: HTMLElement) {
 	const mots = Array.from(conteneur.querySelectorAll<HTMLElement>('[data-mot]'));
