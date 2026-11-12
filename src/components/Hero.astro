@@ -11,6 +11,11 @@ import divisionDiagonaleTablette from '../assets/hero/division-diagonale-tablett
 import divisionDiagonaleMobile from '../assets/hero/division-diagonale-mobile.svg';
 import motifGaufre from '../assets/motifs/gaufre.svg';
 import motifCahier from '../assets/motifs/cahier.svg';
+import { Picture } from 'astro:assets';
+import photoUstensiles from '../assets/medias/hero-ustensiles.jpg';
+import photoLivreOuvert from '../assets/medias/hero-livre-ouvert.jpg';
+import photoLivreCrayons from '../assets/medias/hero-livre-crayons.jpg';
+import photoFouetLivre from '../assets/medias/hero-fouet-livre.jpg';
 import gaufreDoree from '../assets/objets/gaufre-doree.svg';
 import gaufreDoreePetite from '../assets/objets/gaufre-doree-petite.svg';
 import gaufreCaramel from '../assets/objets/gaufre-caramel.svg';
@@ -129,19 +134,30 @@ function visibilite(objet: Objet) {
 			<img src={motifCahier.src} alt="" class="h-full w-full object-cover object-left opacity-90" />
 		</div>
 
-		<!-- Placeholders en attente des visuels de l'équipe multimédia (desktop uniquement) -->
-		<div class="absolute top-[26.667%] left-[8.333%] hidden aspect-[300/420] w-[20.833%] items-center justify-center border border-sable bg-creme-oxford text-xs text-gris xl:flex">
-			Visu gaufre
-		</div>
-		<div class="absolute top-[5.556%] left-[65.278%] hidden aspect-[180/200] w-[12.5%] items-center justify-center border border-sable bg-sable-clair text-xs text-gris xl:flex">
-			Photo
-		</div>
-		<div class="absolute top-[28.889%] left-[83.333%] hidden aspect-[150/170] w-[10.417%] items-center justify-center border border-sable bg-sable-clair text-xs text-gris xl:flex">
-			Photo
-		</div>
-		<div class="absolute top-1/2 left-[83.75%] hidden aspect-[190/130] w-[13.194%] items-center justify-center border border-cacao bg-cacao text-xs text-sable-clair xl:flex">
-			Collage
-		</div>
+		<!--
+			Photos de la séance de l'équipe multimédia (livre provisoire), desktop uniquement :
+			côté Méert l'univers cuisine, côté Oxford le papier, et le collage réunit les deux (fouet + livre).
+			Décor : alt vide, le contenu est porté par le texte de la carte.
+		-->
+		{
+			[
+				{ src: photoUstensiles, cadre: 'top-[26.667%] left-[8.333%] aspect-[300/420] w-[20.833%]', taille: '20.833vw', point: 'object-[45%_50%]' },
+				{ src: photoLivreOuvert, cadre: 'top-[5.556%] left-[65.278%] aspect-[180/200] w-[12.5%]', taille: '12.5vw', point: 'object-center' },
+				{ src: photoLivreCrayons, cadre: 'top-[28.889%] left-[83.333%] aspect-[150/170] w-[10.417%]', taille: '10.417vw', point: 'object-[58%_50%]' },
+				{ src: photoFouetLivre, cadre: 'top-1/2 left-[83.75%] aspect-[190/130] w-[13.194%]', taille: '13.194vw', point: 'object-center' },
+			].map((photo) => (
+				<Picture
+					src={photo.src}
+					formats={['avif', 'webp']}
+					fallbackFormat="jpg"
+					widths={[240, 480, 800]}
+					sizes={photo.taille}
+					alt=""
+					pictureAttributes={{ class: `absolute hidden xl:block ${photo.cadre}` }}
+					class={`size-full border border-sable object-cover ${photo.point}`}
+				/>
+			))
+		}
 
 		{
 			// Le conteneur place l'objet (CSS par breakpoint) ; l'image à l'intérieur flotte (GSAP),
