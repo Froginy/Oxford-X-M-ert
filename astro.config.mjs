@@ -22,6 +22,8 @@ export default defineConfig({
       RESEND_API_KEY: envField.string({ context: 'server', access: 'secret', optional: true }),
       RESEND_EXPEDITEUR: envField.string({ context: 'server', access: 'secret', default: 'Méert × Oxford <onboarding@resend.dev>' }),
       PLACES_TOTAL: envField.number({ context: 'server', access: 'secret', default: 10 }),
+      // Clé du lien d'export des inscrits (/api/inscrits.csv?cle=…) ; sans clé, l'export est fermé
+      EXPORT_INSCRITS_CLE: envField.string({ context: 'server', access: 'secret', optional: true }),
       // Clé de test Cloudflare par défaut (toujours valide)
       PUBLIC_TURNSTILE_SITE_KEY: envField.string({ context: 'client', access: 'public', default: '1x00000000000000000000AA' }),
     },

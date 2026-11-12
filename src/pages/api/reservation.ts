@@ -7,6 +7,22 @@ import { verifierCaptcha } from '../../lib/turnstile';
 export const prerender = false;
 
 const FORMAT_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const FORMAT_CODE_POSTAL = /^[0-9A-Za-z][0-9A-Za-z -]{2,9}$/;
+
+/**
+ * Numéro français → « 06 12 34 56 78 » ; international → « +32 470 12 34 56 » (espaces conservés, ou ajoutés
+ * après l'indicatif : sans espace, un tableur lirait un nombre et perdrait le « + ») ; sinon null.
+ */
+function normaliserTelephone(brut: string) {
+	const chiffres = brut.replace(/[\s.\-()]/g, '');
+	const national = /^0[1-9]\d{8}$/.test(chiffres) ? chiffres : /^(\+|00)33[1-9]\d{8}$/.test(chiffres) ? '0' + chiffres.slice(-9) : null;
+	if (national) return national.replace(/(\d{2})(?=\d)/g, '$1 ');
+	if (/^(\+|00)[1-9]\d{6,14}$/.test(chiffres)) {
+		const lisible = brut.trim().replace(/^00/, '+').replace(/[.\-()]/g, ' ').replace(/\s+/g, ' ');
+		return /\s/.test(lisible) ? lisible : lisible.replace(/^(\+\d{2})/, '$1 ');
+	}
+	return null;
+}
 
 const repondre = (statut: number, corps: Record<string, unknown>) =>
 	Response.json(corps, { status: statut, headers: { 'Cache-Control': 'no-store' } });
@@ -22,11 +38,21 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 	const nom = String(donnees.get('nom') ?? '').trim();
 	const email = String(donnees.get('email') ?? '').trim().toLowerCase();
 	const newsletter = donnees.get('newsletter') !== null;
+	const telephone = normaliserTelephone(String(donnees.get('telephone') ?? ''));
+	const rue = String(donnees.get('rue') ?? '').trim();
+	const codePostal = String(donnees.get('code_postal') ?? '').trim();
+	const ville = String(donnees.get('ville') ?? '').trim();
 
 	if (!nom || nom.length > 100) return repondre(400, { erreur: 'invalide', champ: 'nom', message: 'Indiquez votre nom et prénom.' });
 	if (email.length > 254 || !FORMAT_EMAIL.test(email)) {
 		return repondre(400, { erreur: 'invalide', champ: 'email', message: 'Cette adresse e-mail n’est pas valide.' });
 	}
+	if (!telephone) {
+		return repondre(400, { erreur: 'invalide', champ: 'telephone', message: 'Ce numéro de téléphone n’est pas valide (ex. 06 12 34 56 78).' });
+	}
+	if (rue.length < 3 || rue.length > 200) return repondre(400, { erreur: 'invalide', champ: 'rue', message: 'Indiquez le numéro et la rue de votre domicile.' });
+	if (!FORMAT_CODE_POSTAL.test(codePostal)) return repondre(400, { erreur: 'invalide', champ: 'code_postal', message: 'Ce code postal n’est pas valide.' });
+	if (!ville || ville.length > 100) return repondre(400, { erreur: 'invalide', champ: 'ville', message: 'Indiquez votre ville.' });
 	if (donnees.get('rgpd') === null) {
 		return repondre(400, { erreur: 'invalide', champ: 'rgpd', message: 'Merci d’accepter la politique de confidentialité.' });
 	}
@@ -36,7 +62,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 	}
 
 	try {
-		const resultat = await reserverPlace({ email, nom, newsletter });
+		const resultat = await reserverPlace({ email, nom, telephone, rue, codePostal, ville, newsletter });
 		const places = await lirePlaces();
 
 		if (resultat.statut === 'deja-inscrit') {

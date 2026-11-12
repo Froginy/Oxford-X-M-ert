@@ -76,6 +76,7 @@ export function afficherFormulaire() {
 	el.formulaire.hidden = false;
 	el.confirmation.hidden = true;
 	el.formulaire.querySelector('form')?.reset();
+	el.formulaire.querySelectorAll('[aria-invalid]').forEach((champ) => champ.removeAttribute('aria-invalid'));
 	afficherErreurEmail(null);
 	afficherErreurFormulaire(null);
 }
