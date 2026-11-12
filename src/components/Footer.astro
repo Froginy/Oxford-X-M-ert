@@ -1,5 +1,5 @@
 ---
-import Crayon from '../assets/motifs/crayon.svg';
+import CrayonTrait from './CrayonTrait.astro';
 import LienSouligne from './LienSouligne.astro';
 import Logo from '../assets/logo/logo-de-main-en-main.svg';
 import '../styles/global.css';
@@ -52,18 +52,8 @@ import '../styles/global.css';
     </div>
 
 
-    <!-- IMAGE DU CRAYON (Affichée uniquement sur grand écran / Desktop) -->
-    <div class="hidden lg:block relative w-full my-8 pointer-events-none">
-      <img 
-        src={Crayon.src} 
-        alt="" 
-        class="w-3/4 max-w-2xl h-auto object-contain opacity-90" 
-      />
-    </div>
-
-
-    <!-- Ligne de séparation -->
-    <div class="w-full h-px bg-sable my-8"></div>
+    <!-- Filet de séparation tracé par le crayon -->
+    <CrayonTrait />
 
 
     <!-- Bas du footer : Copyright & Mentions légales -->
