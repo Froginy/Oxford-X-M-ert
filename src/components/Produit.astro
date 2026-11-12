@@ -3,9 +3,13 @@ import motifPoche from '../assets/motifs/poche-a-douille.svg';
 import etiquette from '../assets/objets/etiquette-numerotee.svg';
 import feuille from '../assets/objets/feuille-petits-carreaux.svg';
 import RappelCourbe from './RappelCourbe.astro';
+import VideoBoucle from './VideoBoucle.astro';
+import { Picture } from 'astro:assets';
+import livreEleganceBordeaux from '../assets/medias/livre-elegance-bordeaux.png';
+import livreChandelles from '../assets/medias/livre-chandelles.png';
 
 // Section « Produit » — Figma : Section Produit (desktop 1440, tablette 768, mobile 390).
-// Visuels et vidéo du livre en placeholders, en attente de l'équipe multimédia.
+// Visuels et vidéo du livre : réalisations de l'équipe multimédia (dossier « Projet Inter-spé »).
 ---
 
 <section id="produit" class="relative overflow-hidden bg-creme px-6 pt-12 pb-16 md:px-12 md:pt-16 md:pb-20 xl:pb-20">
@@ -31,20 +35,33 @@ import RappelCourbe from './RappelCourbe.astro';
 		
 		<!-- Mobile/tablette : vidéo en pleine largeur puis les deux visuels ; desktop : visuel · vidéo · visuel -->
 		<div class="mb-14 flex w-full flex-wrap gap-4 md:mb-16 md:gap-6 xl:mb-20 xl:flex-nowrap xl:items-center">
-			<div class="flex h-[150px] min-w-0 flex-1 flex-col items-center justify-center gap-1.5 border border-sable bg-creme-oxford px-2 md:h-[220px] xl:h-[340px] xl:w-[280px] xl:flex-none">
-				<p class="text-[13px] text-gris md:text-sm xl:text-[13px]">Visuel livre fermé</p>
-				<p class="text-[11px] text-gris-clair">Édition limitée</p>
-			</div>
+			<Picture
+				src={livreEleganceBordeaux}
+				formats={['avif', 'webp']}
+				fallbackFormat="jpg"
+				widths={[320, 640]}
+				sizes="(min-width: 1280px) 280px, (min-width: 768px) 324px, 163px"
+				alt="Le livre de recettes Méert × Oxford fermé, couverture crème au cachet bordeaux, posé dans la pénombre"
+				pictureAttributes={{ class: 'h-[150px] min-w-0 flex-1 md:h-[220px] xl:h-[340px] xl:w-[280px] xl:flex-none' }}
+				class="size-full border border-sable object-cover"
+			/>
 			
-			<div class="order-first flex h-[200px] w-full flex-col items-center justify-center gap-1.5 border border-[#252529] bg-[#252529] md:h-[340px] xl:order-none xl:h-[400px] xl:w-[480px] xl:shrink-0">
-				<p class="text-[13px] text-sable-clair md:text-sm xl:text-[13px]">Vidéo — le livre feuilleté</p>
-				<span class="flex size-12 items-center justify-center rounded-full border border-sable-clair text-base text-sable-clair xl:size-14 xl:text-lg" aria-hidden="true">▶</span>
-			</div>
+			<VideoBoucle
+				nom="transmission-livre"
+				description="Vidéo : le livre de recettes passe d’une main à l’autre, sur fond bordeaux"
+				class="order-first h-[200px] w-full bg-bordeaux md:h-[340px] xl:order-none xl:h-[400px] xl:w-[480px] xl:shrink-0"
+			/>
 			
-			<div class="flex h-[150px] min-w-0 flex-1 flex-col items-center justify-center gap-1.5 border border-sable bg-creme-oxford px-2 md:h-[220px] xl:h-[340px] xl:w-[280px] xl:flex-none">
-				<p class="text-[13px] text-gris md:text-sm xl:text-[13px]">Visuel pages intérieures</p>
-				<p class="text-[11px] text-gris-clair">Recette exclusive</p>
-			</div>
+			<Picture
+				src={livreChandelles}
+				formats={['avif', 'webp']}
+				fallbackFormat="jpg"
+				widths={[320, 640]}
+				sizes="(min-width: 1280px) 280px, (min-width: 768px) 324px, 163px"
+				alt="Le livre de recettes debout entre deux bougies allumées"
+				pictureAttributes={{ class: 'h-[150px] min-w-0 flex-1 md:h-[220px] xl:h-[340px] xl:w-[280px] xl:flex-none' }}
+				class="size-full border border-sable object-cover"
+			/>
 		</div>
 		
 		<div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-sable bg-creme shadow-sm">
