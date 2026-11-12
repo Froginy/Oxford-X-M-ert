@@ -105,6 +105,72 @@ import coche from '../assets/modale/coche.svg';
 							</p>
 						</div>
 
+						<label class="flex flex-col gap-1.5">
+							<span class="text-xs font-medium text-gris">Téléphone *</span>
+							<input
+								type="tel"
+								name="telephone"
+								autocomplete="tel"
+								inputmode="tel"
+								required
+								placeholder="06 12 34 56 78"
+								class="h-[34px] border-b-[1.2px] border-bordeaux bg-transparent font-manuscrit text-xl text-encre outline-none placeholder:text-gris-clair focus:shadow-[inset_0_-1px_0_var(--color-bordeaux)] aria-invalid:border-b-[2.2px]"
+							/>
+						</label>
+
+						<!-- Adresse du domicile : suggestions de l'API Adresse (IGN / Géoplateforme) ou position de l'appareil -->
+						<div class="flex flex-col gap-3" role="group" aria-labelledby="reservation-adresse-titre" data-adresse>
+							<div class="flex items-center justify-between gap-3">
+								<span id="reservation-adresse-titre" class="text-xs font-medium text-gris">Adresse du domicile *</span>
+								<button
+									type="button"
+									class="flex cursor-pointer items-center gap-1.5 text-xs font-medium text-bordeaux underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux disabled:cursor-progress disabled:opacity-60"
+									data-adresse-position
+								>
+									<svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"></path><circle cx="12" cy="10" r="2.3"></circle></svg>
+									Utiliser ma position
+								</button>
+							</div>
+
+							<div class="relative flex flex-col gap-1.5">
+								<label for="reservation-rue" class="sr-only">Numéro et rue</label>
+								<input
+									id="reservation-rue"
+									type="text"
+									name="rue"
+									autocomplete="address-line1"
+									required
+									placeholder="Numéro et rue"
+									role="combobox"
+									aria-autocomplete="list"
+									aria-expanded="false"
+									aria-controls="reservation-adresse-suggestions"
+									class="h-[34px] border-b-[1.2px] border-bordeaux bg-transparent font-manuscrit text-xl text-encre outline-none placeholder:text-gris-clair focus:shadow-[inset_0_-1px_0_var(--color-bordeaux)] aria-invalid:border-b-[2.2px]"
+									data-adresse-rue
+								/>
+								<ul
+									id="reservation-adresse-suggestions"
+									role="listbox"
+									aria-label="Adresses suggérées"
+									class="absolute top-full right-0 left-0 z-20 mt-1 max-h-60 overflow-y-auto rounded-sm border border-sable bg-papier text-sm text-encre shadow-[0_8px_18px_rgba(28,18,15,0.15)]"
+									hidden
+									data-adresse-suggestions
+								></ul>
+							</div>
+
+							<div class="grid grid-cols-[7.5rem_1fr] gap-4">
+								<label class="flex flex-col gap-1.5">
+									<span class="sr-only">Code postal</span>
+									<input type="text" name="code_postal" autocomplete="postal-code" inputmode="numeric" required placeholder="Code postal" class="h-[34px] border-b-[1.2px] border-bordeaux bg-transparent font-manuscrit text-xl text-encre outline-none placeholder:text-gris-clair focus:shadow-[inset_0_-1px_0_var(--color-bordeaux)] aria-invalid:border-b-[2.2px] min-w-0" data-adresse-cp />
+								</label>
+								<label class="flex flex-col gap-1.5">
+									<span class="sr-only">Ville</span>
+									<input type="text" name="ville" autocomplete="address-level2" required placeholder="Ville" class="h-[34px] border-b-[1.2px] border-bordeaux bg-transparent font-manuscrit text-xl text-encre outline-none placeholder:text-gris-clair focus:shadow-[inset_0_-1px_0_var(--color-bordeaux)] aria-invalid:border-b-[2.2px] min-w-0" data-adresse-ville />
+								</label>
+							</div>
+							<p class="text-[11px] text-gris-clair" aria-live="polite" data-adresse-statut></p>
+						</div>
+
 						<hr class="border-sable" />
 
 						<label class="flex items-start gap-2.5 text-[13px] leading-[19px] text-encre">
@@ -113,7 +179,7 @@ import coche from '../assets/modale/coche.svg';
 						</label>
 						<label class="flex items-start gap-2.5 text-[13px] leading-[19px] text-encre">
 							<input type="checkbox" name="rgpd" required class="case" style={`--coche: url(${coche.src})`} />
-							J’accepte la politique de confidentialité et le traitement de mes données. *
+							J’accepte la politique de confidentialité et l’utilisation de mes coordonnées pour l’organisation de l’événement. *
 						</label>
 
 						<!-- Widget anti-robot Cloudflare Turnstile (rendu à l'ouverture de la modale) -->
@@ -223,6 +289,7 @@ import coche from '../assets/modale/coche.svg';
 </style>
 
 <script>
+	import { adresse } from '../scripts/adresse';
 	import { afficherCaptcha, relancerCaptcha } from '../scripts/captcha';
 	import { actualiserPlaces, afficherPlaces } from '../scripts/places';
 	import { afficherConfirmation, afficherErreurEmail, afficherErreurFormulaire, fermerReservation, ouvrirReservation } from '../scripts/reservation';
@@ -234,6 +301,16 @@ import coche from '../assets/modale/coche.svg';
 		const envoyer = formulaire.querySelector<HTMLButtonElement>('[data-reservation-envoyer]')!;
 
 		actualiserPlaces();
+		adresse(formulaire.querySelector<HTMLElement>('[data-adresse]')!);
+
+		// Champ signalé par le serveur (hors e-mail, qui a son propre message) : marqué invalide et focalisé
+		const signalerChamp = (nom: string) => {
+			const champ = formulaire.querySelector<HTMLInputElement>(`[name="${nom}"]`);
+			if (!champ) return;
+			champ.setAttribute('aria-invalid', 'true');
+			champ.addEventListener('input', () => champ.removeAttribute('aria-invalid'), { once: true });
+			champ.focus();
+		};
 
 		// Tout bouton du site portant data-reservation-ouvrir ouvre la modale (hero, header, section event…)
 		document.addEventListener('click', (evenement) => {
@@ -293,6 +370,7 @@ import coche from '../assets/modale/coche.svg';
 				} else {
 					relancerCaptcha();
 					afficherErreurFormulaire(resultat.message ?? 'La réservation n’a pas abouti. Merci de réessayer.');
+					if (resultat.champ) signalerChamp(resultat.champ);
 				}
 			} catch {
 				relancerCaptcha();
