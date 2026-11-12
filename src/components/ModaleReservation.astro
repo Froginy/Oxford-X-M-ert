@@ -175,10 +175,6 @@ import coche from '../assets/modale/coche.svg';
 						<hr class="border-sable" />
 
 						<label class="flex items-start gap-2.5 text-[13px] leading-[19px] text-encre">
-							<input type="checkbox" name="newsletter" class="case" style={`--coche: url(${coche.src})`} />
-							Je souhaite recevoir des informations sur la collab et les prochains événements (newsletter).
-						</label>
-						<label class="flex items-start gap-2.5 text-[13px] leading-[19px] text-encre">
 							<input type="checkbox" name="rgpd" required class="case" style={`--coche: url(${coche.src})`} />
 							J’accepte la politique de confidentialité et l’utilisation de mes coordonnées pour l’organisation de l’événement. *
 						</label>
@@ -227,9 +223,6 @@ import coche from '../assets/modale/coche.svg';
 						<span class="relative">Place n° <span data-confirmation-numero>XXX</span> / <span data-places-total>XX</span></span>
 					</p>
 
-					<p class="text-[13px] leading-[19px] text-gris" data-confirmation-newsletter>
-						Vous avez aussi choisi de recevoir les nouvelles de la collab&nbsp;: rendez-vous dans votre boîte mail.
-					</p>
 
 					<BoutonCahier libelle="Retour au site" class="h-[52px] w-full text-[15px] font-semibold" data-reservation-fermer />
 
@@ -361,7 +354,6 @@ import coche from '../assets/modale/coche.svg';
 					afficherConfirmation({
 						email: String(donnees.get('email')).trim(),
 						numero: resultat.numero,
-						newsletter: donnees.has('newsletter'),
 						emailEnvoye: resultat.emailEnvoye,
 					});
 				} else if (resultat.champ === 'email') {

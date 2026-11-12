@@ -8,7 +8,7 @@ import { lireInscrits } from '../../lib/reservations';
 // - Excel : https://…/api/inscrits.csv?cle=…&excel=1 — fichier téléchargé, séparateur « ; » et accents corrects.
 export const prerender = false;
 
-const COLONNES = ['N° de place', 'Nom et prénom', 'E-mail', 'Téléphone', 'Numéro et rue', 'Code postal', 'Ville', 'Newsletter', 'Inscrit le'];
+const COLONNES = ['N° de place', 'Nom et prénom', 'E-mail', 'Téléphone', 'Numéro et rue', 'Code postal', 'Ville', 'Inscrit le'];
 
 const empreinte = (texte: string) => createHash('sha256').update(texte).digest();
 // comparaison à temps constant (empreintes de même longueur)
@@ -36,7 +36,7 @@ export const GET: APIRoute = async ({ url }) => {
 	const inscrits = await lireInscrits();
 	const lignes = [
 		COLONNES,
-		...inscrits.map((i) => [i.numero, i.nom, i.email, i.telephone, i.rue, i.codePostal, i.ville, i.newsletter ? 'oui' : 'non', i.date ? dateFr.format(new Date(i.date)) : '']),
+		...inscrits.map((i) => [i.numero, i.nom, i.email, i.telephone, i.rue, i.codePostal, i.ville, i.date ? dateFr.format(new Date(i.date)) : '']),
 	].map((ligne) => ligne.map((v, colonne) => cellule(v, separateur, colonne !== 3)).join(separateur));
 
 	return new Response((excel ? '\uFEFF' : '') + lignes.join('\r\n') + '\r\n', {

@@ -7,7 +7,7 @@ import { RESEND_API_KEY, RESEND_EXPEDITEUR } from 'astro:env/server';
 const echapper = (texte: string) =>
 	texte.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
-export async function envoyerConfirmation(infos: { email: string; nom: string; numero: number; total: number; newsletter: boolean }): Promise<boolean> {
+export async function envoyerConfirmation(infos: { email: string; nom: string; numero: number; total: number }): Promise<boolean> {
 	if (!RESEND_API_KEY) return false;
 
 	const nom = echapper(infos.nom);
@@ -16,7 +16,6 @@ export async function envoyerConfirmation(infos: { email: string; nom: string; n
 	<h1 style="font-style:italic;font-weight:normal;font-size:28px;margin:0 0 20px">Votre place est réservée</h1>
 	<p style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5">Bonjour ${nom},<br>votre réservation pour l’événement Méert × Oxford est confirmée. Cet e-mail fait office de billet&nbsp;: présentez-le à l’entrée.</p>
 	<p style="display:inline-block;border:2px solid #6e1e1f;border-radius:999px;padding:10px 24px;font-size:26px;color:#6e1e1f;font-weight:bold">Place n° ${infos.numero} / ${infos.total}</p>
-	${infos.newsletter ? '<p style="font-family:Arial,sans-serif;font-size:13px;color:#6b5b4e">Vous recevrez aussi les nouvelles de la collab.</p>' : ''}
 	<p style="font-family:Arial,sans-serif;font-size:13px;color:#6b5b4e">À très vite autour d’une gaufre&nbsp;!</p>
 </div>`;
 

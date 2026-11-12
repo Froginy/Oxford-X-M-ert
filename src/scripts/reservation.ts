@@ -82,14 +82,13 @@ export function afficherFormulaire() {
 }
 
 /** Passe à l'écran « C'est noté ! » avec les informations de la réservation. */
-export function afficherConfirmation(infos: { email: string; numero: number; newsletter: boolean; emailEnvoye: boolean }) {
+export function afficherConfirmation(infos: { email: string; numero: number; emailEnvoye: boolean }) {
 	const el = elements();
 	if (!el) return;
 	const { formulaire, confirmation, feuille } = el;
 
 	confirmation.querySelectorAll('[data-confirmation-email]').forEach((email) => (email.textContent = infos.email));
 	confirmation.querySelector('[data-confirmation-numero]')!.textContent = String(infos.numero);
-	confirmation.querySelector<HTMLElement>('[data-confirmation-newsletter]')!.hidden = !infos.newsletter;
 	// E-mail non parti (Resend non configuré ou en mode test) : on invite à noter le numéro
 	confirmation.querySelector<HTMLElement>('[data-confirmation-mail-envoye]')!.hidden = !infos.emailEnvoye;
 	confirmation.querySelector<HTMLElement>('[data-confirmation-mail-absent]')!.hidden = infos.emailEnvoye;

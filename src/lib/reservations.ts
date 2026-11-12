@@ -3,7 +3,7 @@ import { KV_REST_API_TOKEN, KV_REST_API_URL, PLACES_TOTAL } from 'astro:env/serv
 
 // Réservations de l'événement, stockées dans Upstash Redis :
 // - `reservation:prises` : nombre de places attribuées (sert aussi de numéro de place) ;
-// - `reservation:inscrit:<email>` : une fiche par adresse (numéro, coordonnées, newsletter, date).
+// - `reservation:inscrit:<email>` : une fiche par adresse (numéro, coordonnées, date).
 
 export const CLE_PRISES = 'reservation:prises';
 export const PREFIXE_INSCRIT = 'reservation:inscrit:';
@@ -43,7 +43,6 @@ export type Inscription = {
 	rue: string;
 	codePostal: string;
 	ville: string;
-	newsletter: boolean;
 };
 
 export async function reserverPlace(inscription: Inscription): Promise<Resultat> {
@@ -53,7 +52,6 @@ export async function reserverPlace(inscription: Inscription): Promise<Resultat>
 		rue: inscription.rue,
 		code_postal: inscription.codePostal,
 		ville: inscription.ville,
-		newsletter: inscription.newsletter ? '1' : '0',
 		date: new Date().toISOString(),
 	};
 	const retour = await reserver.exec(
@@ -65,7 +63,7 @@ export async function reserverPlace(inscription: Inscription): Promise<Resultat>
 	return { statut: 'reservee', numero: Number(retour) };
 }
 
-export type Inscrit = Omit<Inscription, 'newsletter'> & { numero: number; newsletter: boolean; date: string };
+export type Inscrit = Inscription & { numero: number; date: string };
 
 /** Toutes les fiches, par numéro de place (export pour tableur). */
 export async function lireInscrits(): Promise<Inscrit[]> {
@@ -97,7 +95,6 @@ export async function lireInscrits(): Promise<Inscrit[]> {
 			rue: f?.rue ?? '',
 			codePostal: f?.code_postal ?? '',
 			ville: f?.ville ?? '',
-			newsletter: f?.newsletter === '1',
 			date: f?.date ?? '',
 		}))
 		.sort((a, b) => a.numero - b.numero);
