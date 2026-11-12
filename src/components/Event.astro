@@ -8,6 +8,8 @@ import TicketMarron from '../assets/objets/ticket-atelier.svg';
 import VideoBoucle from './VideoBoucle.astro';
 import { Picture } from 'astro:assets';
 import biscuitCrayon from '../assets/medias/biscuit-crayon.png';
+import atelierEcriture from '../assets/medias/atelier-ecriture.jpg';
+import conference from '../assets/medias/conference.jpg';
 import ModaleReservation from './ModaleReservation.astro';
 ---
 
@@ -86,9 +88,16 @@ import ModaleReservation from './ModaleReservation.astro';
 
       <!-- Carte 3 : L'atelier d'écriture en chocolat -->
       <article class="flex flex-col">
-        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
-          <span class="text-sm text-gris-clair italic">Visuel atelier</span>
-        </div>
+        <Picture
+          src={atelierEcriture}
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[400, 800]}
+          sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
+          alt="Des participants écrivent leurs recettes à table, entourés de gaufres, dans le salon de thé Méert"
+          pictureAttributes={{ class: 'mb-6 block h-56' }}
+          class="size-full rounded-lg border border-sable object-cover object-[40%_50%]"
+        />
         <h3 class="mb-3 text-xl font-bold text-encre">L’atelier d’écriture en chocolat</h3>
         <p class="text-sm leading-relaxed text-gris">
           Une expérience artisanale autour de l’art de l’écriture gastronomique. Chacun repart avec sa propre réalisation.
@@ -97,9 +106,16 @@ import ModaleReservation from './ModaleReservation.astro';
 
       <!-- Carte 4 : Les conférences -->
       <article class="flex flex-col">
-        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
-          <span class="text-sm text-gris-clair italic">Visuel conférence</span>
-        </div>
+        <Picture
+          src={conference}
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[400, 800]}
+          sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
+          alt="Une conférence Méert × Oxford : des intervenants au micro devant le public, sous une bannière « Transmission & savoir-faire »"
+          pictureAttributes={{ class: 'mb-6 block h-56' }}
+          class="size-full rounded-lg border border-sable object-cover object-[68%_50%]"
+        />
         <h3 class="mb-3 text-xl font-bold text-encre">Les conférences</h3>
         <p class="text-sm leading-relaxed text-gris">
           Un temps d’échange autour de la transmission, des savoir-faire et de l’importance de préserver ce qui nous est cher.
