@@ -102,12 +102,12 @@ import ModaleReservation from './ModaleReservation.astro';
 
       <!-- Post-it décoratif (Gauche) : sur le coin du cadre en tablette, à l'extérieur sur PC -->
       <div class="absolute -left-3 -top-14 z-20 w-28 -rotate-12 pointer-events-none hidden sm:block lg:-left-36 lg:top-4 lg:w-36 xl:-left-72 xl:-top-6 xl:w-40">
-        <img src={PostIt.src} alt="Ne pas oublier : réserver sa place" class="w-full h-auto drop-shadow-md" />
+        <img src={PostIt.src} alt="Ne pas oublier : réserver sa place" class="w-full h-auto drop-shadow-md" data-flotte />
       </div>
 
       <!-- Ticket marron décoratif (Droite) : déborde du coin bas en tablette, à l'extérieur sur PC -->
       <div class="absolute -right-3 -bottom-12 z-20 w-40 rotate-6 pointer-events-none hidden sm:block lg:-right-36 lg:-bottom-6 lg:w-52 xl:-right-72 xl:top-25 xl:bottom-auto xl:w-62">
-        <img src={TicketMarron.src} alt="" class="w-full h-auto drop-shadow-md" />
+        <img src={TicketMarron.src} alt="" class="w-full h-auto drop-shadow-md" data-flotte />
       </div>
 
       <!-- Encadré principal de réservation -->

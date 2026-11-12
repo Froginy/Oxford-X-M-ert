@@ -42,6 +42,13 @@ import '../styles/global.css';
 	</body>
 </html>
 
+<script>
+	import { flottement } from '../scripts/animations/flottement';
+
+	// Petits objets décoratifs des sections (feuille, étiquette, post-it, ticket…) : même flottement que la hero
+	flottement(document.querySelectorAll('[data-flotte]'));
+</script>
+
 <style>
 	html,
 	body {
