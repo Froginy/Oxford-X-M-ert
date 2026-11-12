@@ -32,8 +32,8 @@ const crayon = 'M238.096 53.1225L344.286 19.9384L668.661 19.1088L667.831 85.4771
 
 	const MINE = { x: 238.096, y: 53.1225 }; // pointe du crayon dans le repère du dessin
 	const INCLINAISON = -7; // degrés : crayon penché, gomme vers le haut, comme tenu en main
-	const DUREE_FILET = 1.5; // s
-	const DUREE_GRIBOUILLIS = 1.35; // s : on accélère en « écrivant »
+	const DUREE_FILET = 0.9; // s
+	const DUREE_GRIBOUILLIS = 0.85; // s : on accélère en « écrivant »
 
 	const gauss = (u: number, centre: number, largeur: number) => Math.exp(-(((u - centre) / largeur) ** 2));
 
