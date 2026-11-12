@@ -5,9 +5,11 @@ import MotifPoche from '../assets/motifs/poche-a-douille.svg';
 import RappelCourbe from './RappelCourbe.astro';
 import PostIt from '../assets/objets/post-it-reserver.svg';
 import TicketMarron from '../assets/objets/ticket-atelier.svg';
-import VideoBoucle from './VideoBoucle.astro';
 import { Picture } from 'astro:assets';
-import biscuitCrayon from '../assets/medias/biscuit-crayon.png';
+import espaceMeert from '../assets/medias/espace-meert.jpg';
+import atelierEcriture from '../assets/medias/atelier-ecriture.jpg';
+import conference from '../assets/medias/conference.jpg';
+import espaceOxford from '../assets/medias/espace-oxford.jpg';
 import ModaleReservation from './ModaleReservation.astro';
 ---
 
@@ -56,14 +58,14 @@ import ModaleReservation from './ModaleReservation.astro';
       <!-- Carte 1 : L'espace Méert -->
       <article class="flex flex-col">
         <Picture
-          src={biscuitCrayon}
+          src={espaceMeert}
           formats={['avif', 'webp']}
           fallbackFormat="jpg"
           widths={[400, 800]}
           sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
-          alt="La création pâtissière de la collab : un biscuit en forme de crayon, chocolat et noix"
+          alt="Le stand « L’Espace Méert » : dégustation des créations exclusives, gaufres et biscuits crayons au comptoir"
           pictureAttributes={{ class: 'mb-6 block h-56' }}
-          class="size-full rounded-lg border border-sable bg-[#fcf3dd] object-contain"
+          class="size-full rounded-lg border border-sable object-cover object-[35%_50%]"
         />
         <h3 class="mb-3 text-xl font-bold text-encre">L’espace Méert</h3>
         <p class="text-sm leading-relaxed text-gris">
@@ -73,10 +75,15 @@ import ModaleReservation from './ModaleReservation.astro';
 
       <!-- Carte 2 : L'espace Oxford -->
       <article class="flex flex-col">
-        <VideoBoucle
-          nom="livre-pose-table"
-          description="Vidéo : des mains posent le livre de recettes Méert × Oxford sur une table"
-          class="h-56 mb-6 rounded-lg border border-sable bg-beige/60"
+        <Picture
+          src={espaceOxford}
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[400, 800]}
+          sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
+          alt="Le stand « L’Espace Oxford » chez Méert : piles du livre de recettes en édition limitée, que des visiteurs feuillettent"
+          pictureAttributes={{ class: 'mb-6 block h-56' }}
+          class="size-full rounded-lg border border-sable object-cover object-[30%_50%]"
         />
         <h3 class="mb-3 text-xl font-bold text-encre">L’espace Oxford</h3>
         <p class="text-sm leading-relaxed text-gris">
@@ -86,9 +93,16 @@ import ModaleReservation from './ModaleReservation.astro';
 
       <!-- Carte 3 : L'atelier d'écriture en chocolat -->
       <article class="flex flex-col">
-        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
-          <span class="text-sm text-gris-clair italic">Visuel atelier</span>
-        </div>
+        <Picture
+          src={atelierEcriture}
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[400, 800]}
+          sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
+          alt="Lettres calligraphiées au chocolat sur une feuille, à côté du cornet en papier qui a servi à les tracer"
+          pictureAttributes={{ class: 'mb-6 block h-56' }}
+          class="size-full rounded-lg border border-sable object-cover object-[55%_50%]"
+        />
         <h3 class="mb-3 text-xl font-bold text-encre">L’atelier d’écriture en chocolat</h3>
         <p class="text-sm leading-relaxed text-gris">
           Une expérience artisanale autour de l’art de l’écriture gastronomique. Chacun repart avec sa propre réalisation.
@@ -97,9 +111,16 @@ import ModaleReservation from './ModaleReservation.astro';
 
       <!-- Carte 4 : Les conférences -->
       <article class="flex flex-col">
-        <div class="h-56 mb-6 rounded-lg bg-beige/60 border border-sable flex items-center justify-center p-4">
-          <span class="text-sm text-gris-clair italic">Visuel conférence</span>
-        </div>
+        <Picture
+          src={conference}
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[400, 800]}
+          sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
+          alt="Une conférence Méert × Oxford : des intervenants au micro devant le public, sous une bannière « Transmission & savoir-faire »"
+          pictureAttributes={{ class: 'mb-6 block h-56' }}
+          class="size-full rounded-lg border border-sable object-cover object-[68%_50%]"
+        />
         <h3 class="mb-3 text-xl font-bold text-encre">Les conférences</h3>
         <p class="text-sm leading-relaxed text-gris">
           Un temps d’échange autour de la transmission, des savoir-faire et de l’importance de préserver ce qui nous est cher.

@@ -11,10 +11,11 @@ import coche from '../assets/modale/coche.svg';
 // Mobile (< 768) : feuille collée en bas de l'écran ; tablette 560 px ; desktop (≥ 1280) 600 px.
 ---
 
+<!-- Gris de la modale assombris (sur le papier : 8,8:1 et 7:1) pour un meilleur contraste des textes secondaires -->
 <dialog
 	id="modale-reservation"
 	aria-labelledby="modale-reservation-titre"
-	class="fixed inset-0 m-0 size-full max-h-none max-w-none overflow-hidden bg-transparent p-0 backdrop:bg-transparent"
+	class="fixed inset-0 m-0 size-full [--color-gris-clair:#64554a] [--color-gris:#55473c] max-h-none max-w-none overflow-hidden bg-transparent p-0 backdrop:bg-transparent"
 >
 	<div class="absolute inset-0 bg-encre/60" data-voile></div>
 

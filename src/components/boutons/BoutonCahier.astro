@@ -36,10 +36,11 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 	}
 
 	.bouton-cahier {
-		--couverture: var(--color-bordeaux);
-		--couverture-dos: #4d1314; /* bordeaux plus sombre : revers du coin corné */
+		/* bordeaux foncé : lettrage doré à 7:1 (AAA) ; aussi la couleur du texte de la page dépliée */
+		--couverture: #561617;
+		--couverture-dos: #3d0f10; /* plus sombre encore : revers du coin corné */
 		--dorure: var(--color-dore); /* liseré */
-		--dorure-claire: var(--color-dore-clair); /* lettrage : contraste 5,7:1 sur le bordeaux (le doré de la palette n'atteint que 3,9:1) */
+		--dorure-claire: var(--color-dore-clair); /* lettrage : contraste 7:1 sur la couverture (le doré de la palette n'atteint que 3,9:1 sur le bordeaux) */
 		position: relative;
 		display: flex;
 		align-items: center;
