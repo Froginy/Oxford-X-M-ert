@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'astro/types';
 
 // Bouton « cahier » (repris de test_sae_interspe, NotebookButton) aux couleurs de la collab :
 // couverture bordeaux à liseré et lettrage dorés, coin corné ; au survol le coin se déplie,
-// révèle une page Seyès sur papier beige (distincte du papier à petits carreaux de la modale), puis le libellé est souligné au stylo.
+// révèle une page à petits carreaux alignés sur ceux de la feuille du fond (modale), puis le libellé est souligné au stylo.
 // Taille et typo se règlent avec les classes passées au composant.
 interface Props extends HTMLAttributes<'button'> {
 	libelle: string;
@@ -77,13 +77,14 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 		inset: 0;
 		display: grid;
 		place-items: center;
-		/* page Seyès sur papier beige : se distingue du papier à petits carreaux de la modale */
-		background-color: var(--color-beige);
+		/* mêmes petits carreaux que la feuille de la modale (16 px) ; le décalage --grille-x/y,
+		   calculé par le script, les fait tomber pile dans l'alignement de ceux du fond */
+		background-color: var(--color-papier);
 		background-image:
-			linear-gradient(90deg, transparent 22px, rgb(110 30 31 / 0.6) 22px 23.5px, transparent 23.5px),
-			repeating-linear-gradient(to bottom, transparent 0 31px, rgb(110 30 31 / 0.22) 31px 32px),
-			repeating-linear-gradient(to bottom, transparent 0 7px, rgb(107 91 78 / 0.18) 7px 8px),
-			repeating-linear-gradient(to right, transparent 0 31px, rgb(110 30 31 / 0.14) 31px 32px);
+			linear-gradient(rgb(217 205 187 / 0.7) 0 0.7px, transparent 0),
+			linear-gradient(90deg, rgb(217 205 187 / 0.7) 0 0.7px, transparent 0);
+		background-size: 16px 16px;
+		background-position: var(--grille-x, 0) var(--grille-y, 0);
 		color: var(--couverture);
 		/* filet bordeaux et léger creux : la page dépliée garde la forme du bouton */
 		box-shadow:
@@ -174,3 +175,27 @@ const { libelle, class: classe, type = 'button', ...attributs } = Astro.props;
 		}
 	}
 </style>
+
+<script>
+	// Aligne les carreaux de la page sur ceux de la feuille qui contient le bouton ([data-papier], fond
+	// à 16 px qui défile avec son contenu). Calculé juste avant le dépliage : survol ou focus clavier.
+	const CARREAU = 16;
+	const modulo = (n: number) => ((n % CARREAU) + CARREAU) % CARREAU;
+
+	document.querySelectorAll<HTMLElement>('.bouton-cahier').forEach((bouton) => {
+		const aligner = () => {
+			const feuille = bouton.closest<HTMLElement>('[data-papier]');
+			const page = bouton.querySelector<HTMLElement>('.page');
+			if (!feuille || !page) return;
+			const f = feuille.getBoundingClientRect();
+			const b = bouton.getBoundingClientRect();
+			// origine des carreaux de la feuille : coin haut gauche de son contenu, qui suit le défilement
+			const x = b.left - (f.left + feuille.clientLeft - feuille.scrollLeft);
+			const y = b.top - (f.top + feuille.clientTop - feuille.scrollTop);
+			page.style.setProperty('--grille-x', `${-modulo(x)}px`);
+			page.style.setProperty('--grille-y', `${-modulo(y)}px`);
+		};
+		bouton.addEventListener('pointerenter', aligner);
+		bouton.addEventListener('focus', aligner);
+	});
+</script>
