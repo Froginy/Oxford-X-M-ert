@@ -1,7 +1,7 @@
 ---
-import Crayon from '../assets/motifs/crayon.svg';
+import CrayonTrait from './CrayonTrait.astro';
 import LienSouligne from './LienSouligne.astro';
-import Logo from '../assets/logo/logo-de-main-en-main.svg';
+import Embleme from '../assets/logo/embleme-de-main-en-main.svg';
 import '../styles/global.css';
 ---
 
@@ -13,7 +13,7 @@ import '../styles/global.css';
       
       <!-- Bloc Logo & Slogan -->
       <div class="flex flex-col gap-4">
-        <Logo class="h-24 w-auto self-start text-encre md:h-28" />
+        <Embleme class="h-16 w-auto self-start text-encre md:h-20" />
         <p class="text-sm md:text-base text-gris">
           Méert × Oxford — Transmettez votre savoir-faire
         </p>
@@ -42,9 +42,7 @@ import '../styles/global.css';
           </h2>
           <ul class="flex flex-col gap-2.5">
             <li><LienSouligne href="https://www.meert.fr" target="_blank" rel="noopener" class="text-base text-encre">Méert</LienSouligne></li>
-            <li><LienSouligne href="https://www.oxford.fr" target="_blank" rel="noopener" class="text-base text-encre">Oxford</LienSouligne></li>
-            <li><LienSouligne href="#contact" class="text-base text-encre">Contact</LienSouligne></li>
-            <li><LienSouligne href="#presse" class="text-base text-encre">Presse</LienSouligne></li>
+            <li><LienSouligne href="https://www.my-oxford.com/fr/" target="_blank" rel="noopener" class="text-base text-encre">Oxford</LienSouligne></li>
           </ul>
         </div>
 
@@ -52,18 +50,8 @@ import '../styles/global.css';
     </div>
 
 
-    <!-- IMAGE DU CRAYON (Affichée uniquement sur grand écran / Desktop) -->
-    <div class="hidden lg:block relative w-full my-8 pointer-events-none">
-      <img 
-        src={Crayon.src} 
-        alt="" 
-        class="w-3/4 max-w-2xl h-auto object-contain opacity-90" 
-      />
-    </div>
-
-
-    <!-- Ligne de séparation -->
-    <div class="w-full h-px bg-sable my-8"></div>
+    <!-- Filet de séparation tracé par le crayon -->
+    <CrayonTrait />
 
 
     <!-- Bas du footer : Copyright & Mentions légales -->

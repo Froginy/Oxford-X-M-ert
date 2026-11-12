@@ -1,0 +1,161 @@
+---
+// Trait du footer dessiné par le crayon : le filet de séparation part du bord gauche, finit en gribouillis
+// et s'arrête sur la mine du crayon (dessin repris de assets/motifs/crayon.svg).
+// Animation : à l'arrivée dans l'écran, le crayon trace le trait puis le gribouillis (mine qui suit la ligne).
+// Sans JS ou en mouvement réduit : état final, statique.
+const gribouillis = 'M0 53.1225L38.9914 53.1225L39.821 45.6561L38.9914 42.3377L36.5026 36.5305L34.8434 34.8713L32.3546 33.212L30.6954 32.3824L28.2066 33.212L26.5474 34.0416L24.8881 34.8713L23.2289 37.3601L21.5697 39.8489L20.7401 43.1673V50.6337L22.3993 58.1002L25.7177 65.5666L30.6954 71.3738L34.0138 73.8626L37.3322 75.5218L40.6506 76.3514L43.969 77.181L48.117 76.3514L51.4355 75.5218L54.7539 73.8626L57.2427 71.3738L62.2203 65.5666L63.8795 62.2482L66.3683 54.7817V51.4633L65.5387 45.6561L64.7091 43.1673L61.3907 39.8489L59.7315 39.0193H58.0723H56.4131L53.0947 42.3377L52.2651 43.9969L50.6059 49.8041V53.1225L52.2651 59.7594L55.5835 66.3962L60.5611 71.3738L63.8795 73.8626L67.1979 74.6922L70.5164 75.5218L74.6644 76.3514L77.9828 75.5218L81.3012 74.6922L84.6196 73.033L89.5972 68.0554L92.9157 62.2482L95.4045 55.6113V52.2929L94.5749 46.4857L92.9157 42.3377L91.2564 40.6785L88.7676 39.8489L85.4492 40.6785L84.6196 42.3377L82.9604 46.4857L82.1308 51.4633L83.79 58.1002L86.2788 63.9074L90.4268 68.885L95.4045 71.3738L101.212 73.033L107.849 71.3738L112.826 68.885L117.804 63.9074L121.122 58.1002L122.781 52.2929V49.8041V44.8265L121.122 41.5081L119.463 40.6785L116.974 39.8489L115.315 41.5081L113.656 42.3377L112.826 46.4857V48.9745L113.656 53.9521L115.315 56.4409L118.633 60.589L122.781 64.737L125.27 65.5666L131.077 66.3962L136.885 65.5666L142.692 62.2482L145.181 60.589L149.329 55.6113L150.158 53.1225L151.818 48.1449L152.647 43.1673L151.818 39.0193L150.158 36.5305H147.67L146.01 37.3601L145.181 38.1897L144.351 41.5081V45.6561L146.01 50.6337L148.499 54.7817L150.988 56.4409L155.136 58.9298L157.625 59.7594L162.602 60.589L167.58 59.7594L172.558 56.4409L175.876 53.1225L178.365 48.9745L179.194 43.1673L178.365 38.1897V37.3601L176.706 36.5305L175.046 37.3601L174.217 39.8489V43.1673L175.046 47.3153L178.365 53.1225L181.683 56.4409L184.172 57.2706L189.15 58.9298H193.298L198.275 58.1002L201.594 55.6113L204.912 53.1225L207.401 48.1449L208.231 43.9969V42.3377L207.401 41.5081L205.742 43.1673V47.3153L208.231 51.4633L209.89 54.7817L213.208 57.2706L217.356 58.9298L223.163 59.7594L227.311 58.9298L230.63 57.2706L233.119 55.6113L235.608 53.1225H238.096';
+const crayon = 'M238.096 53.1225L344.286 19.9384L668.661 19.1088L667.831 85.4771H678.616L680.275 20.768H690.23L689.401 86.3067H700.186L701.015 19.9384H712.63V87.1363L710.97 19.1088H713.459L718.437 19.9384L722.585 21.5976L726.733 24.0864L731.711 29.064L734.199 33.212L736.688 37.3601L738.347 42.3377L740.007 50.6337V58.1002L739.177 63.0778L736.688 69.7146L734.199 74.6922L730.881 78.0106L727.563 81.3291L723.415 83.8179L716.778 85.4771L712.63 86.3067L668.661 87.1363L345.945 85.4771L236.437 53.9521L268.792 43.1673H269.621L271.28 43.9969L272.94 45.6561L274.599 48.9745L275.428 53.1225L273.769 58.1002L272.94 60.589L270.451 62.2482H269.621L238.096 53.1225ZM238.096 53.1225L344.286 20.768L340.138 23.2568L336.819 26.5752L335.16 29.8936L334.33 31.5528L335.16 33.212L336.819 35.7009L345.115 42.3377L667.831 41.5081L668.661 63.9074H345.115L337.649 69.7146L335.16 73.033V74.6922V76.3514L337.649 78.8402L345.115 85.4771';
+---
+
+<div class="pointer-events-none mt-10 mb-8 flex items-center text-sable md:mt-14 lg:mt-20" aria-hidden="true" data-crayon-trait>
+	<!-- filet extensible : même hauteur que le trait du dessin (≈ 1,5 px) -->
+	<span class="h-[1.5px] flex-1 origin-left rounded-full bg-current" data-trait></span>
+	<!-- la mine (x 238, y 53) est au milieu vertical du dessin : le filet arrive pile sur le gribouillis -->
+	<svg
+		viewBox="0 17.1225 744 72"
+		class="w-56 shrink-0 overflow-visible md:w-96 lg:w-[620px]"
+		fill="none"
+		stroke="currentColor"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	>
+		<!-- épaisseur en unités du dessin, ajustée par taille pour rester à ≈ 1,5 px à l'écran -->
+		<g class="[stroke-width:5] md:[stroke-width:2.9] lg:[stroke-width:1.8]">
+			<path d={gribouillis} data-gribouillis></path>
+			<path d={crayon} transform="rotate(-7 238.096 53.1225)" data-crayon></path>
+		</g>
+	</svg>
+</div>
+
+<script>
+	import { gsap, mouvementReduit, ScrollTrigger } from '../scripts/gsap';
+
+	const MINE = { x: 238.096, y: 53.1225 }; // pointe du crayon dans le repère du dessin
+	const INCLINAISON = -7; // degrés : crayon penché, gomme vers le haut, comme tenu en main
+	const DUREE_FILET = 1.5; // s
+	const DUREE_GRIBOUILLIS = 1.35; // s : on accélère en « écrivant »
+
+	const gauss = (u: number, centre: number, largeur: number) => Math.exp(-(((u - centre) / largeur) ** 2));
+
+	/**
+	 * Profil temps → distance qui imite une main : le filet avance par à-coups (deux hésitations, freinage
+	 * avant les boucles) ; dans le gribouillis, la vitesse suit la loi de puissance 2/3 du geste humain
+	 * (lente dans les virages serrés, rapide dans les pleins), s'accélère au fil des boucles et freine à la fin.
+	 */
+	function profil(filet: number, chemin: SVGPathElement, longueur: number) {
+		const distances = [0];
+		const temps = [0];
+		const ajouter = (morceaux: { ds: number; v: number }[], duree: number) => {
+			const brut = morceaux.reduce((total, m) => total + m.ds / m.v, 0);
+			let t = temps[temps.length - 1];
+			let s = distances[distances.length - 1];
+			for (const m of morceaux) {
+				t += ((m.ds / m.v) * duree) / brut;
+				s += m.ds;
+				temps.push(t);
+				distances.push(s);
+			}
+		};
+
+		// Filet
+		const pasFilet = Math.max(filet / 200, 0.5);
+		const filetMorceaux = [];
+		for (let s = pasFilet; s <= filet + 1e-6; s += pasFilet) {
+			const u = s / filet;
+			let v = 1 + 0.22 * Math.sin(u * 9.7 + 0.6) + 0.1 * Math.sin(u * 23 + 1.3);
+			v *= 1 - 0.7 * gauss(u, 0.37, 0.045) - 0.55 * gauss(u, 0.71, 0.035);
+			v *= Math.min(1, 0.2 + u * 7) * (1 - 0.55 * gauss(u, 1, 0.07));
+			filetMorceaux.push({ ds: pasFilet, v: Math.max(v, 0.08) });
+		}
+		ajouter(filetMorceaux, DUREE_FILET);
+
+		// Gribouillis : courbure lissée, puis vitesse ∝ courbure^(-1/3)
+		const pas = 1;
+		const n = Math.floor(longueur / pas);
+		const points = Array.from({ length: n + 1 }, (_, i) => chemin.getPointAtLength(i * pas));
+		const angles = points.slice(1).map((p, i) => Math.atan2(p.y - points[i].y, p.x - points[i].x));
+		const courbure = angles.map((a, i) => {
+			if (i === 0) return 0;
+			let d = a - angles[i - 1];
+			d = Math.atan2(Math.sin(d), Math.cos(d));
+			return Math.abs(d) / pas;
+		});
+		const lisse = courbure.map((_, i) => {
+			const fenetre = courbure.slice(Math.max(0, i - 5), i + 6);
+			return fenetre.reduce((a, b) => a + b, 0) / fenetre.length;
+		});
+		const gribouillisMorceaux = lisse.map((k, i) => {
+			const u = i / lisse.length;
+			let v = Math.min(Math.max((k + 0.01) ** (-1 / 3) / 4.6, 0.3), 1.5);
+			v *= (0.55 + 0.9 * u) * (1 - 0.6 * gauss(u, 1, 0.06)) * Math.min(1, 0.45 + u * 12);
+			return { ds: pas, v };
+		});
+		ajouter(gribouillisMorceaux, DUREE_GRIBOUILLIS);
+
+		return { distances, temps, duree: temps[temps.length - 1] };
+	}
+
+	document.querySelectorAll<HTMLElement>('[data-crayon-trait]').forEach((racine) => {
+		if (mouvementReduit()) return;
+		const trait = racine.querySelector<HTMLElement>('[data-trait]')!;
+		const svg = racine.querySelector('svg')!;
+		const gribouillis = racine.querySelector<SVGPathElement>('[data-gribouillis]')!;
+		const crayon = racine.querySelector<SVGPathElement>('[data-crayon]')!;
+		const longueur = gribouillis.getTotalLength();
+		// longueur du filet ramenée au repère du dessin
+		const mesurer = () => trait.offsetWidth / (svg.getBoundingClientRect().width / 744) || 1;
+		let filet = mesurer();
+
+		let angle = INCLINAISON;
+		let precedent = { x: -filet, y: MINE.y };
+		const placer = (s: number, t: number) => {
+			let pointe;
+			if (s < filet) {
+				trait.style.scale = `${s / filet} 1`;
+				gribouillis.style.strokeDashoffset = String(longueur);
+				pointe = { x: s - filet, y: MINE.y };
+			} else {
+				const trace = Math.min(s - filet, longueur);
+				trait.style.scale = '1 1';
+				gribouillis.style.strokeDashoffset = String(longueur - trace);
+				pointe = gribouillis.getPointAtLength(trace);
+			}
+			// Inclinaison : penché en permanence, petit tremblement de la main, et le crayon bascule
+			// légèrement selon que la mine monte ou descend
+			const dy = pointe.y - precedent.y;
+			const dx = Math.hypot(pointe.x - precedent.x, dy) || 1;
+			const cible = INCLINAISON + Math.max(-5, Math.min(5, (dy / dx) * 6)) + 0.7 * Math.sin(t * 7.1) + 0.4 * Math.sin(t * 13.3);
+			angle += (cible - angle) * 0.18;
+			precedent = pointe;
+			crayon.setAttribute('transform', `translate(${pointe.x - MINE.x} ${pointe.y - MINE.y}) rotate(${angle} ${MINE.x} ${MINE.y})`);
+		};
+
+		gribouillis.style.strokeDasharray = String(longueur);
+		placer(0, 0);
+
+		// Au premier passage dans l'écran : mesure du filet (la mise en page a pu changer), puis tracé
+		ScrollTrigger.create({
+			trigger: racine,
+			start: 'top 90%',
+			once: true,
+			onEnter: () => {
+				filet = mesurer();
+				precedent = { x: -filet, y: MINE.y };
+				const { temps, distances, duree } = profil(filet, gribouillis, longueur);
+				const horloge = { t: 0 };
+				let i = 0;
+				gsap.to(horloge, {
+					t: duree,
+					duration: duree,
+					ease: 'none',
+					onUpdate: () => {
+						const { t } = horloge;
+						while (i < temps.length - 2 && temps[i + 1] < t) i++;
+						const f = Math.min(1, Math.max(0, (t - temps[i]) / (temps[i + 1] - temps[i] || 1)));
+						placer(distances[i] + f * (distances[i + 1] - distances[i]), t);
+					},
+				});
+			},
+		});
+	});
+</script>

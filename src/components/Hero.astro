@@ -1,6 +1,6 @@
 ---
 import BoutonCoulis from './boutons/BoutonCoulis.astro';
-import Logo from '../assets/logo/logo-de-main-en-main.svg';
+import Logo from '../assets/logo/embleme-de-main-en-main.svg';
 import type { ImageMetadata } from 'astro';
 
 import moitieOxford from '../assets/hero/moitie-oxford.svg';
@@ -176,7 +176,7 @@ function visibilite(objet: Objet) {
 					<!-- Mots qui tournent sur un pivot (votre → notre → le), empilés au même endroit : le plus long fixe la largeur -->
 					<span class="flex items-center" data-mots-tournants>
 						<span class="sr-only">{motsSlogan[0]}</span>
-						<span class="grid" aria-hidden="true">
+						<span class="grid justify-items-start" aria-hidden="true">
 							{
 								motsSlogan.map((mot, i) => (
 									<span class:list={['col-start-1 row-start-1 whitespace-nowrap', i > 0 && 'opacity-0']} data-mot>
@@ -191,7 +191,7 @@ function visibilite(objet: Objet) {
 			</h1>
 
 			<p class="text-sm leading-[22px] text-gris md:text-[15px] md:leading-[23px] xl:text-lg xl:leading-normal">
-				Deux maisons, deux expertises, une même conviction&nbsp;: ce qui a de la valeur mérite d’être transmis.
+				Deux maisons, deux expertises, une même conviction&nbsp;:<br> ce qui a de la valeur mérite d’être transmis.
 			</p>
 		</div>
 
