@@ -1,0 +1,78 @@
+---
+// Courte vidéo muette en boucle (fichiers dans public/videos/) : lecture quand elle est à l'écran,
+// pause hors écran ; bouton lecture/pause toujours disponible (WCAG 2.2.2). Avec « réduire les animations »,
+// rien ne démarre seul : l'image d'aperçu s'affiche et le bouton permet de lancer la vidéo.
+interface Props {
+	/** Nom du fichier sans extension, ex. « transmission-livre » (→ .mp4 et .jpg d'aperçu). */
+	nom: string;
+	/** Description de la vidéo pour les lecteurs d'écran. */
+	description: string;
+	class?: string;
+}
+
+const { nom, description, class: classe } = Astro.props;
+---
+
+<div class:list={['video-boucle group relative overflow-hidden', classe]} data-video-boucle>
+	<video
+		class="size-full object-cover"
+		src={`/videos/${nom}.mp4`}
+		poster={`/videos/${nom}.jpg`}
+		muted
+		loop
+		playsinline
+		preload="none"
+		aria-label={description}
+	></video>
+	<button
+		type="button"
+		class="absolute right-2.5 bottom-2.5 flex size-9 cursor-pointer items-center justify-center rounded-full bg-encre/55 text-creme opacity-80 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-creme"
+		aria-label="Lire la vidéo"
+		data-video-bouton
+	>
+		<!-- icônes : lecture (vidéo en pause) / pause (vidéo en cours) -->
+		<svg viewBox="0 0 24 24" class="size-4 fill-current group-data-[lecture]:hidden" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"></path></svg>
+		<svg viewBox="0 0 24 24" class="hidden size-4 fill-current group-data-[lecture]:block" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"></path></svg>
+	</button>
+</div>
+
+<script>
+	import { mouvementReduit } from '../scripts/gsap';
+
+	document.querySelectorAll<HTMLElement>('[data-video-boucle]').forEach((bloc) => {
+		const video = bloc.querySelector('video')!;
+		const bouton = bloc.querySelector<HTMLButtonElement>('[data-video-bouton]')!;
+		let arretManuel = mouvementReduit(); // l'utilisateur (ou son réglage système) a mis en pause
+		let visible = false;
+
+		const etat = () => {
+			const enLecture = !video.paused;
+			bloc.toggleAttribute('data-lecture', enLecture);
+			bouton.setAttribute('aria-label', enLecture ? 'Mettre la vidéo en pause' : 'Lire la vidéo');
+		};
+		video.addEventListener('play', etat);
+		video.addEventListener('pause', etat);
+
+		const lire = () => video.play().catch(() => {}); // lecture bloquée par le navigateur : l'aperçu reste affiché
+
+		bouton.addEventListener('click', () => {
+			if (video.paused) {
+				arretManuel = false;
+				lire();
+			} else {
+				arretManuel = true;
+				video.pause();
+			}
+		});
+
+		// Lecture seulement à l'écran (économise batterie et données)
+		new IntersectionObserver(
+			([entree]) => {
+				visible = entree.isIntersecting;
+				if (visible && !arretManuel) lire();
+				else if (!visible) video.pause();
+			},
+			{ threshold: 0.25 },
+		).observe(bloc);
+	});
+</script>
