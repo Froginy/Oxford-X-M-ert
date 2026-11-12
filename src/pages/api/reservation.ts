@@ -37,7 +37,6 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
 	const nom = String(donnees.get('nom') ?? '').trim();
 	const email = String(donnees.get('email') ?? '').trim().toLowerCase();
-	const newsletter = donnees.get('newsletter') !== null;
 	const telephone = normaliserTelephone(String(donnees.get('telephone') ?? ''));
 	const rue = String(donnees.get('rue') ?? '').trim();
 	const codePostal = String(donnees.get('code_postal') ?? '').trim();
@@ -62,7 +61,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 	}
 
 	try {
-		const resultat = await reserverPlace({ email, nom, telephone, rue, codePostal, ville, newsletter });
+		const resultat = await reserverPlace({ email, nom, telephone, rue, codePostal, ville });
 		const places = await lirePlaces();
 
 		if (resultat.statut === 'deja-inscrit') {
@@ -72,7 +71,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 			return repondre(410, { erreur: 'complet', message: 'Il n’y a plus de place disponible : l’événement est complet.', ...places });
 		}
 
-		const emailEnvoye = await envoyerConfirmation({ email, nom, numero: resultat.numero, total: places.total, newsletter });
+		const emailEnvoye = await envoyerConfirmation({ email, nom, numero: resultat.numero, total: places.total });
 		return repondre(200, { numero: resultat.numero, emailEnvoye, ...places });
 	} catch (erreur) {
 		console.error('[reservation] échec', erreur);
