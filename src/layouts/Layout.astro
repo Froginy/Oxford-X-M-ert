@@ -42,6 +42,14 @@ import '../styles/global.css';
 	</body>
 </html>
 
+<script>
+	import { flottement } from '../scripts/animations/flottement';
+
+	// Petits objets décoratifs des sections (feuille, étiquette, post-it, ticket…) : flottement de la hero,
+	// un peu plus ample pour rester perceptible (≈ 7 à 12 px, jusqu'à 2° d'oscillation)
+	flottement(document.querySelectorAll('[data-flotte]'), 1.7);
+</script>
+
 <style>
 	html,
 	body {
