@@ -176,7 +176,7 @@ function visibilite(objet: Objet) {
 					<!-- Mots qui tournent sur un pivot (votre → notre → le), empilés au même endroit : le plus long fixe la largeur -->
 					<span class="flex items-center" data-mots-tournants>
 						<span class="sr-only">{motsSlogan[0]}</span>
-						<span class="grid" aria-hidden="true">
+						<span class="grid justify-items-start" aria-hidden="true">
 							{
 								motsSlogan.map((mot, i) => (
 									<span class:list={['col-start-1 row-start-1 whitespace-nowrap', i > 0 && 'opacity-0']} data-mot>
