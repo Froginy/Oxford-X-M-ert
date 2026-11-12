@@ -53,7 +53,7 @@ const maquettes = {
 	desktop: { l: 1440, h: 900, prefixe: 'd' },
 } as const;
 
-// Mots du slogan « Transmettre ___ savoir-faire » (le premier est celui affiché sans animation)
+// Mots du slogan « Transmettez ___ savoir-faire » (le premier est celui affiché sans animation)
 const motsSlogan = ['votre', 'notre', 'le'];
 
 // Ordre = ordre de superposition de la maquette desktop (motif de fond et placeholders en dessous).
@@ -188,7 +188,7 @@ function visibilite(objet: Objet) {
 		<div class="flex flex-col items-center gap-5 xl:gap-3">
 			<h1 class="flex flex-col items-center gap-0.5 text-[26px] leading-normal font-bold whitespace-nowrap md:text-[34px] xl:text-[44px]">
 				<span class="flex items-center gap-[0.28em]">
-					Transmettre
+					Transmettez
 					<!-- Mots qui tournent sur un pivot (votre → notre → le), empilés au même endroit : le plus long fixe la largeur -->
 					<span class="flex items-center" data-mots-tournants>
 						<span class="sr-only">{motsSlogan[0]}</span>
