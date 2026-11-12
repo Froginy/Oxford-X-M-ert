@@ -6,7 +6,7 @@ import RappelCourbe from './RappelCourbe.astro';
 import PostIt from '../assets/objets/post-it-reserver.svg';
 import TicketMarron from '../assets/objets/ticket-atelier.svg';
 import { Picture } from 'astro:assets';
-import biscuitCrayon from '../assets/medias/biscuit-crayon.png';
+import espaceMeert from '../assets/medias/espace-meert.jpg';
 import atelierEcriture from '../assets/medias/atelier-ecriture.jpg';
 import conference from '../assets/medias/conference.jpg';
 import espaceOxford from '../assets/medias/espace-oxford.jpg';
@@ -58,14 +58,14 @@ import ModaleReservation from './ModaleReservation.astro';
       <!-- Carte 1 : L'espace Méert -->
       <article class="flex flex-col">
         <Picture
-          src={biscuitCrayon}
+          src={espaceMeert}
           formats={['avif', 'webp']}
           fallbackFormat="jpg"
           widths={[400, 800]}
           sizes="(min-width: 1024px) 264px, (min-width: 768px) 50vw, 100vw"
-          alt="La création pâtissière de la collab : un biscuit en forme de crayon, chocolat et noix"
+          alt="Le stand « L’Espace Méert » : dégustation des créations exclusives, gaufres et biscuits crayons au comptoir"
           pictureAttributes={{ class: 'mb-6 block h-56' }}
-          class="size-full rounded-lg border border-sable bg-[#fcf3dd] object-contain"
+          class="size-full rounded-lg border border-sable object-cover object-[35%_50%]"
         />
         <h3 class="mb-3 text-xl font-bold text-encre">L’espace Méert</h3>
         <p class="text-sm leading-relaxed text-gris">
